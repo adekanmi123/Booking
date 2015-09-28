@@ -1,0 +1,19 @@
+#search-banner {
+	min-height: 500px;
+}
+
+#search-form h1 {
+	text-align: center;
+}
+
+#search-form .row div {
+	margin: 5px 0;
+}
+
+#search-form .row div .input-group select {
+	padding: 0 10px;
+}
+
+#title h2 {
+	color: #fff;
+}

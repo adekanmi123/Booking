@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xwkj.booking.domain">
+	<class name="Room" table="room">
+		<id name="rid" type="string" column="rid">
+			<generator class="uuid"/>
+		</id>
+		<property name="rname" column="rname" type="string" not-null="true"/>
+		<property name="number" column="number" type="integer" not-null="true"/>
+		<property name="location" column="location" type="string" not-null="true"/>
+		<property name="area" column="area" type="double" not-null="true"/>
+		<property name="price" column="price" type="double" not-null="true"/>
+		<property name="descriptor" column="descriptor" type="text" not-null="true"/>
+		<property name="createDate" column="createDate" type="java.util.Date" not-null="true"/>	
+		<set name="photos" cascade="delete" inverse="true">
+		 	<key><column name="rid" not-null="true" /></key>
+		 	<one-to-many class="Photo"/>
+		</set>
+	</class>
+</hibernate-mapping>
