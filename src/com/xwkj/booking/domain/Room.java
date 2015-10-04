@@ -16,6 +16,7 @@ public class Room implements Serializable {
 	private Double price;
 	private String descriptor;
 	private Date createDate;
+	private Photo cover;
 	private Set<Photo> photos;
 	
 	public String getRid() {
@@ -71,6 +72,12 @@ public class Room implements Serializable {
 	}
 	public void setPhotos(Set<Photo> photos) {
 		this.photos = photos;
+	}
+	public Photo getCover() {
+		return cover;
+	}
+	public void setCover(Photo cover) {
+		this.cover = cover;
 	}
 
 }

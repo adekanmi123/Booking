@@ -14,6 +14,7 @@
 		<property name="price" column="price" type="double" not-null="true"/>
 		<property name="descriptor" column="descriptor" type="text" not-null="true"/>
 		<property name="createDate" column="createDate" type="java.util.Date" not-null="true"/>	
+		<many-to-one name="cover" column="cover" class="Photo"  lazy="false" unique="true"/>
 		<set name="photos" cascade="delete" inverse="true">
 		 	<key><column name="rid" not-null="true" /></key>
 		 	<one-to-many class="Photo"/>

@@ -10,8 +10,11 @@
 		<create creator="spring" javascript="RoomManager"> 
 			<param name="beanName" value="roomManager"/>
 		</create>
+		<create creator="spring" javascript="PhotoManager"> 
+			<param name="beanName" value="photoManager"/>
+		</create>
 		<!-- 定义使用Bean转换器处理如下Java类 -->
 		<convert converter="bean" match="com.xwkj.booking.bean.RoomBean"/>
-
+		<convert converter="bean" match="com.xwkj.booking.bean.PhotoBean"/>
 	</allow>
 </dwr>

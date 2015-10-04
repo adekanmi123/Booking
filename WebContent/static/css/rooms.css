@@ -1,7 +1,27 @@
-#add-room-modal .modal-dialog .modal-content .modal-body .input-group {
+.modal-dialog .modal-content .modal-body .input-group {
 	margin: 5px 0;
 }
 
 .form-icon i {
 	width: 25px;
+}
+
+#upload-room-photo-progress {
+	display: none;
+}
+
+#room-upload-photo-button {
+	width: 100%;
+}
+
+.room-photo-delete {
+    position: absolute;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.room-photo-cover {
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 5px;
 }

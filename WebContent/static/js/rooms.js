@@ -1,5 +1,14 @@
-$(document).ready(function() {
+//正在修改的房间id
+var modifyingRid;
 
+$(document).ready(function() {
+	$.messager.model = {
+			ok:{ text: "确定", classed: 'btn-danger' },
+			cancel: { text: "取消", classed: 'btn-default' }
+		};
+	
+	loadRooms();
+	
 	//添加房间
 	$("#add-room-submit").click(function() {
 		var rname=$("#add-room-rname").val();
@@ -53,8 +62,142 @@ $(document).ready(function() {
 		$("#add-room-form .input-group textarea").val("");
 	});
 
+	//修改房间
+	$("#modify-room-submit").click(function() {
+		var rname=$("#modify-room-rname").val();
+		var number=$("#modify-room-number").val();
+		var location=$("#modify-room-location").val();
+		var area=$("#modify-room-area").val();
+		var price=$("#modify-room-price").val();
+		var descriptor=$("#modify-room-descriptor").val();
+		RoomManager.modifyRoom(modifyingRid , rname, number, location, area, price, descriptor, function(rid){
+			$.messager.popup("修改成功！");
+			loadRooms();
+		});
+	});
 });
 
 function loadRooms() {
-	
+	RoomManager.searchRoom(null, -1, null, -1, -1, -1, -1, getThisYearStart(), getThisYearEnd(), function(rooms) {
+		$("#room-list tbody").mengularClear();
+		for(var i in rooms) {
+			$("#room-list tbody").mengular(".room-list-template", {
+				rid: rooms[i].rid,
+				createDate: rooms[i].createDate.format(DATE_HOUR_MINUTE_SECOND_FORMAT),
+				rname: rooms[i].rname,
+				number: rooms[i].number
+			});
+			
+			//管理房间
+			$("#"+rooms[i].rid+" .room-list-manage").click(function() {
+				modifyingRid=$(this).parent().attr("id");
+				RoomManager.getRoom(modifyingRid, function(room){
+					fillValue({
+						"modify-room-rname": room.rname,
+						"modify-room-number": room.number,
+						"modify-room-location": room.location,
+						"modify-room-area": room.area,
+						"modify-room-price": room.price,
+						"modify-room-descriptor": room.descriptor
+					});
+					//加载照片
+					$("#room-photo-list").mengularClear();
+					PhotoManager.getPhotosByRid(modifyingRid, function(photos) {
+						for(var i in photos) {
+							$("#room-photo-list").mengular(".room-photo-template", {
+								pid: photos[i].pid,
+				    			src: "upload/"+modifyingRid+"/"+photos[i].filename
+				    		});						
+							//设定封面图片
+							if(room.cover!=null) {
+								if(room.cover.pid==photos[i].pid) {
+									$("#"+photos[i].pid+" .room-photo-cover")
+				    					.removeClass("button-action")
+				    					.addClass("button-primary")
+				    					.text("封面图片");
+								}
+							}
+							//绑定删除图片按钮点击事件
+			    			$("#"+photos[i].pid+" .room-photo-delete").click(function() {
+			    				var pid=$(this).parent().attr("id");
+			    				PhotoManager.deletePhoto(pid, function() {
+			    					$("#"+pid).remove();
+			    				});
+			    			});
+			    			//绑定设定图片封面按钮点击事件
+			    			$("#"+photos[i].pid+" .room-photo-cover").click(function() {
+			    				var pid=$(this).parent().attr("id");
+			    				PhotoManager.setAsRoomCover(pid, function() {
+			    					$(".room-photo-cover").removeClass("button-primary")
+				    					.removeClass("button-action")
+				    					.addClass("button-action")
+				    					.text("设为封面");		
+			    					$("#"+pid+" .room-photo-cover")	
+			    						.removeClass("button-action")
+				    					.addClass("button-primary")
+				    					.text("封面图片");
+			    				});
+			    			});
+						}
+					});
+				})
+				
+				//上传照片
+				$("#room-upload-photo").fileupload({
+			    	autoUpload:true,
+			    	url:"PhotoServlet?task=uploadRoomrPhoto&rid="+modifyingRid,
+			    	dataType:"json",
+			    	acceptFileTypes: /^image\/(gif|jpeg|png)$/,
+			    	done:function(e,data){
+			    		$("#room-photo-list").mengular(".room-photo-template", {
+			    			pid: data.result.pid,
+			    			src: "upload/"+modifyingRid+"/"+data.result.filename
+			    		});
+						//绑定删除图片按钮点击事件
+		    			$("#"+data.result.pid+" .room-photo-delete").click(function() {
+		    				var pid=$(this).parent().attr("id");
+		    				PhotoManager.deletePhoto(pid, function() {
+		    					$("#"+pid).remove();
+		    				});
+		    			});
+		    			//绑定设定图片封面按钮点击事件
+		    			$("#"+data.result.pid+" .room-photo-cover").click(function() {
+		    				var pid=$(this).parent().attr("id");
+		    				PhotoManager.setAsRoomCover(pid, function() {
+		    					$(".room-photo-cover").removeClass("button-primary")
+			    					.removeClass("button-action")
+			    					.addClass("button-action")
+			    					.text("设为封面");		
+		    					$("#"+pid+" .room-photo-cover")	
+		    						.removeClass("button-action")
+			    					.addClass("button-primary")
+			    					.text("封面图片");
+		    				});
+		    			});
+			    		setTimeout(function(){
+							$("#upload-room-photo-progress").hide(1500);
+						},2000);
+			    	},
+			    	progressall:function(e,data){
+						$("#upload-room-photo-progress").show();
+					    var progress=parseInt(data.loaded/data.total*100, 10);
+					    $("#upload-room-photo-progress .progress-bar").css("width",progress+"%");
+					    $("#upload-room-photo-progress .progress-bar").text(progress+"%");
+			    	}
+				});
+				$("#modify-room-modal").modal("show");
+			});
+			
+			//删除房间
+			 $("#"+rooms[i].rid+" .room-list-delete").click(function() {
+				var rid=$(this).parent().attr("id");
+				$.messager.confirm("提示","确定要删除房间："+$("#"+rid+" .room-list-rname").text()+"吗？", function() {
+					RoomManager.removeRoom(rid, function(success) {
+						if(success) 
+							$("#"+rid).remove();
+					});
+				});
+			});
+		}
+	});
 }

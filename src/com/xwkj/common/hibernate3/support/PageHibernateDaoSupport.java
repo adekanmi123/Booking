@@ -1,4 +1,4 @@
-package com.xwkj.common.util;
+package com.xwkj.common.hibernate3.support;
 import java.sql.SQLException;
 import java.util.List;
 

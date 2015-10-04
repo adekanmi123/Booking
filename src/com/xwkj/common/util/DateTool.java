@@ -1,4 +1,4 @@
-package com.xwkj.common.hibernate3.support;
+package com.xwkj.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

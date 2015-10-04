@@ -8,6 +8,8 @@
 	<bean id="roomDao" class="com.xwkj.booking.dao.impl.RoomDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
-	
+	<bean id="photoDao" class="com.xwkj.booking.dao.impl.PhotoDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+		
 </beans>
