@@ -18,10 +18,15 @@ $(document).ready(function($) {
 	RoomManager.searchRoom(null, -1, null, -1, -1, -1, -1, getThisYearStart(), getThisYearEnd(), function(rooms) {
 		$("#newest-room-list").mengularClear();
 		for(var i in rooms) {
+			var src="static/images/noImage.jpg";
+			if(rooms[i].cover!=null)
+				src="upload/"+rooms[i].rid+"/"+rooms[i].cover.filename;
 			$("#newest-room-list").mengular(".newest-room-template", {
-				src: "upload/"+rooms[i].rid+"/"+rooms[i].cover.filename,
+				src: src,
 				rname: rooms[i].rname,
-				location: rooms[i].location
+				location: rooms[i].location,
+				price: rooms[i].price,
+				number: rooms[i].number
 			});
 		}
 	});

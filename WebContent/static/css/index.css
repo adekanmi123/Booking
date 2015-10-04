@@ -17,3 +17,11 @@
 #title h2 {
 	color: #fff;
 }
+
+#newest-room-list {
+	margin-top: 40px;
+}
+
+.input-group i {
+	width: 25px;
+}
