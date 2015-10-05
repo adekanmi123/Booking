@@ -19,5 +19,6 @@
 		 	<key><column name="rid" not-null="true" /></key>
 		 	<one-to-many class="Photo"/>
 		</set>
+		<property name="sold" column="sold" type="integer" not-null="true"/>
 	</class>
 </hibernate-mapping>

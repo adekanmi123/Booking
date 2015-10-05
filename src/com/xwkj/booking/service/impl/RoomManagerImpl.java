@@ -27,6 +27,7 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		room.setPrice(price);
 		room.setDescriptor(descriptor);
 		room.setCreateDate(new Date());
+		room.setSold(0);
 		return roomDao.save(room);
 	}
 
@@ -45,6 +46,9 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 	@Override
 	public boolean removeRoom(String rid) {
 		Room room=roomDao.get(rid);
+		//如果房间已被售出，就不让被删除
+		if(room.getSold()>0)
+			return false;
 		//封面置空
 		room.setCover(null);
 		roomDao.update(room);

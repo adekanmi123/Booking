@@ -66,6 +66,7 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 			hql+=" and price<=?";
 			objects.add(maxPrice);
 		}
+		hql+=" order by createDate desc";
 		Object [] objs=new Object[objects.size()];
 		for(int i=0; i<objects.size(); i++)
 			objs[i]=objects.get(i);

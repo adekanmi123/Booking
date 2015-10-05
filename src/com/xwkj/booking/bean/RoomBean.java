@@ -14,6 +14,7 @@ public class RoomBean {
 	private String descriptor;
 	private Date createDate;
 	private PhotoBean cover;
+	private int sold;
 	
 	public String getRid() {
 		return rid;
@@ -69,6 +70,12 @@ public class RoomBean {
 	public void setCover(PhotoBean cover) {
 		this.cover = cover;
 	}	
+	public int getSold() {
+		return sold;
+	}
+	public void setSold(int sold) {
+		this.sold = sold;
+	}
 	
 	public RoomBean(Room room) {
 		super();
@@ -84,5 +91,7 @@ public class RoomBean {
 			this.cover=null;
 		else
 			this.cover=new PhotoBean(room.getCover());
+		this.sold=room.getSold();
 	}
+
 }

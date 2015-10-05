@@ -18,6 +18,7 @@ public class Room implements Serializable {
 	private Date createDate;
 	private Photo cover;
 	private Set<Photo> photos;
+	private Integer sold;
 	
 	public String getRid() {
 		return rid;
@@ -78,6 +79,12 @@ public class Room implements Serializable {
 	}
 	public void setCover(Photo cover) {
 		this.cover = cover;
+	}
+	public Integer getSold() {
+		return sold;
+	}
+	public void setSold(Integer sold) {
+		this.sold = sold;
 	}
 
 }

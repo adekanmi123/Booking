@@ -15,6 +15,19 @@ $(document).ready(function($) {
 		$(" ul.navig").slideToggle("slow" , function(){});
 	});
 	
+	$("#search-room-start, #search-room-end").datetimepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0,
+        showMeridian: 1,
+        language: 'zh-CN'
+    });
+	
 	RoomManager.searchRoom(null, -1, null, -1, -1, -1, -1, getThisYearStart(), getThisYearEnd(), function(rooms) {
 		$("#newest-room-list").mengularClear();
 		for(var i in rooms) {
@@ -26,7 +39,8 @@ $(document).ready(function($) {
 				rname: rooms[i].rname,
 				location: rooms[i].location,
 				price: rooms[i].price,
-				number: rooms[i].number
+				number: rooms[i].number,
+				sold: rooms[i].sold
 			});
 		}
 	});

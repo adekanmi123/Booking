@@ -85,7 +85,8 @@ function loadRooms() {
 				rid: rooms[i].rid,
 				createDate: rooms[i].createDate.format(DATE_HOUR_MINUTE_SECOND_FORMAT),
 				rname: rooms[i].rname,
-				number: rooms[i].number
+				number: rooms[i].number,
+				sold: rooms[i].sold
 			});
 			
 			//管理房间
@@ -195,6 +196,8 @@ function loadRooms() {
 					RoomManager.removeRoom(rid, function(success) {
 						if(success) 
 							$("#"+rid).remove();
+						else 
+							$.messager.popup("该房间已被售出，不允许删除！");
 					});
 				});
 			});
