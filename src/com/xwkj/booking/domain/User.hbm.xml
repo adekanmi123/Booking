@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xwkj.booking.domain">
+	<class name="User" table="user">
+		<id name="uid" column="uid" type="string">
+			<generator class="uuid"/>
+		</id>
+		<property name="telephone" column="telephone" type="string" not-null="true"/>
+		<property name="uname" column="uname" type="string" not-null="true"/>
+		<property name="password" column="password" type="string" not-null="true"/>
+		<property name="registerDate" column="registerDate" type="java.util.Date" not-null="true"/>	
+	</class>
+</hibernate-mapping>

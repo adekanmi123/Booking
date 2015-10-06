@@ -1,0 +1,15 @@
+#user-login-modal .input-group, #user-register-modal .input-group {
+	margin: 10px 0;
+}
+
+#user-register-security-code-img {
+    float: right;
+    position: absolute;
+    margin-left: -90px;
+    margin-top: 10px;
+    z-index: 10;
+}
+
+#nav-user, #nav-logout {
+	display: none;
+}

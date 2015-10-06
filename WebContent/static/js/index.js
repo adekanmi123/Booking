@@ -1,19 +1,16 @@
 $(document).ready(function($) {
-	$(".scroll").click(function(event){		
-		event.preventDefault();
-		$("html, body").animate({
-			scrollTop:$(this.hash).offset().top
-		},1000);
+	$("#head").load("head.html");
 
-		$().UItoTop({ 
-			easingType:"easeOutQuart"
-		});
-	});
-	
-	//script-for-menu
-	$("span.menu").click(function(){
-		$(" ul.navig").slideToggle("slow" , function(){});
-	});
+	// $(".scroll").click(function(event){		
+	// 	event.preventDefault();
+	// 	$("html, body").animate({
+	// 		scrollTop:$(this.hash).offset().top
+	// 	},1000);
+
+	// 	$().UItoTop({ 
+	// 		easingType:"easeOutQuart"
+	// 	});
+	// });
 	
 	$("#search-room-start, #search-room-end").datetimepicker({
         format: 'yyyy-mm-dd',
@@ -35,6 +32,7 @@ $(document).ready(function($) {
 			if(rooms[i].cover!=null)
 				src="upload/"+rooms[i].rid+"/"+rooms[i].cover.filename;
 			$("#newest-room-list").mengular(".newest-room-template", {
+				rid: rooms[i].rid,
 				src: src,
 				rname: rooms[i].rname,
 				location: rooms[i].location,

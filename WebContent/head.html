@@ -1,0 +1,92 @@
+<link href="static/css/head.css" rel="stylesheet">
+<script src="dwr/interface/UserManager.js"></script>
+<script src="static/js/head.js"></script>
+<div class="header">
+	<div class="container">
+		<div class="head">
+			<div id="title" class="logo">
+				<a href="index.html"><img src="static/images/logo.png" alt="九资河旅游订房"></a>
+			</div>
+			<div class="navigation">
+				 <span class="menu"></span> 
+				<ul class="navig">
+					<li><a href="index.html"  class="active hvr-bounce-to-bottom">主页</a></li>
+					<li><a href="about.html" class="hvr-bounce-to-bottom">预定房间</a></li>
+					<li><a href="contact.html" class="hvr-bounce-to-bottom">联系我们</a></li>
+					<li id="nav-login"><a class="hvr-bounce-to-bottom" data-toggle="modal" data-target="#user-login-modal">登录</a></li>
+					<li id="nav-register"><a class="hvr-bounce-to-bottom" data-toggle="modal" data-target="#user-register-modal">注册</a></li>
+					<li id="nav-user"><a class="hvr-bounce-to-bottom" data-toggle="modal" data-target="#"></a></li>
+					<li id="nav-logout"><a class="hvr-bounce-to-bottom">退出</a></li>
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+
+<div id="user-login-modal" class="modal fade">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+	            <h4 class="modal-title">用户登陆</h4>
+	        </div>
+	        <div class="modal-body">
+	            <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-phone fa-lg"></i></span>
+                    <input id="user-login-telephone" type="text" class="form-control input-lg" placeholder="手机号码" value="15545154994">
+                </div>
+	            <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-key fa-lg"></i></span>
+                    <input id="user-login-password" type="password" class="form-control input-lg" placeholder="密码" value="123">
+                </div>
+	        </div>
+	        <div class="modal-footer">
+	        	<button type="button" class="btn btn-danger pull-left">忘记密码</button>
+	            <button id="user-login-submit" type="button" class="btn btn-success">登录</button>
+	        </div>
+	    </div>
+	</div>
+</div>
+
+<div id="user-register-modal" class="modal fade">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	        <div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+	            <h4 class="modal-title">用户注册</h4>
+	        </div>
+	        <div class="modal-body">
+	            <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-phone fa-lg"></i></span>
+                    <input id="user-register-telephone" type="text" class="form-control input-lg" placeholder="手机号码" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-user fa-lg"></i></span>
+                    <input id="user-register-uname" type="text" class="form-control input-lg" placeholder="用户名" value="">
+                </div>
+	            <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-key fa-lg"></i></span>
+                    <input id="user-register-password" type="password" class="form-control input-lg" placeholder="密码" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-circle-o fa-lg"></i></span>
+                    <input id="user-register-repeat-password" type="password" class="form-control input-lg" placeholder="重复密码" value="">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-lock fa-lg"></i></span>
+                    <input id="user-register-security-code" type="text" class="form-control input-lg" placeholder="点击获取安全码">
+                    <img id="user-register-security-code-img">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon form-icon"><i class="fa fa-comment fa-lg"></i></span>
+                    <input id="user-register-verification-code" type="text" class="form-control input-lg" placeholder="短信验证码" value="">
+                    <span id="get-verification-code" class="input-group-addon input-group-addon-button">获取验证码</span>
+                </div>
+	        </div>
+	        <div class="modal-footer">
+	            <button id="user-register-submit" type="button" class="btn btn-info">提交注册信息</button>
+	        </div>
+	    </div>
+	</div>
+</div>

@@ -5,3 +5,33 @@
 .thumbnail img {
 	margin: 5px 0;
 }
+
+#booking-room .panel-heading h2 ,#room-comment .panel-heading h2{
+	font-size: 25px;
+	text-align: center;
+}
+
+#booking-room .panel-body h3, #booking-room .panel-body h4 {
+	text-align: center;
+}
+
+#booking-room .panel-body .input-group {
+	margin: 20px 0;
+}
+
+#room-comment .panel-body h3 {
+	text-align: center;
+}
+
+#room-comment-list .room-comment-list-template hr {
+	margin: 5px;
+}
+
+#room-data div {
+	margin: 5px 0;
+	color: #666;
+}
+
+#room-photo-list img {
+	width: 100%;
+}

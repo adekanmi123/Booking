@@ -7,7 +7,6 @@
         <title>九资河旅游订房</title>
         <link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
 		<link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="static/css/bootstrap-switch.min.css" rel="stylesheet">
         <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link href="static/css/style.css" rel="stylesheet"/>
 		<link href="static/css/font-awesome.min.css" rel="stylesheet">
@@ -20,6 +19,7 @@
         <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.bootstrap.min.js"></script>
 		<script src="static/js/bootstrap.min.js"></script>
         <script src="static/js/bootstrap-datetimepicker.min.js"></script>
         <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
@@ -31,25 +31,7 @@
 	</head>
 	<body>
 
-		<div class="header" id="home">
-			<div class="container">
-				<div class="head">
-					<div id="title" class="logo">
-						<a href="index.html"><img src="static/images/logo.png" alt="九资河旅游订房"></a>
-					</div>
-					<div class="navigation">
-						 <span class="menu"></span> 
-						<ul class="navig">
-							<li><a href="index.html"  class="active hvr-bounce-to-bottom">主页</a></li>
-							<li><a href="about.html" class="hvr-bounce-to-bottom">预定房间</a></li>
-							<li><a href="contact.html" class="hvr-bounce-to-bottom">联系我们</a></li>
-							<li><a href="admin.html" class="hvr-bounce-to-bottom">用户登录</a></li>
-						</ul>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>	
+		<div id="head"></div>	
 
 		<div id="search-banner" class="banner">
 			<div class="container">
@@ -105,9 +87,9 @@
 					<h3>最新客房</h3>
 				</div>
 				<div id="newest-room-list" class="row">
-					<div class="col-xs-12 col-sm-6 col-md-4 mengular-template newest-room-template">
+					<div id="${rid}$" class="col-xs-12 col-sm-6 col-md-4 mengular-template newest-room-template">
 						<div class="thumbnail">
-							<img src="${src}$" alt="${rname}$">
+							<a href="room.html?rid=${rid}$"><img src="${src}$" alt="${rname}$"></a>
 							<div class="caption">
 								<h4>
 									<strong>${rname}$</strong>

@@ -134,6 +134,15 @@ function isLeapYear(year) {
 }
 
 /**
+ * 得到两个日期之间的日期差
+ * @param start
+ * @param end
+ */
+function getDaysBetweenDates(start, end) {
+	return Math.floor((end.getTime()-start.getTime())/(24*3600*1000));
+}
+
+/**
  * 闪烁提醒
  * @param selector 选择器
  * @param time 闪烁时间，单位毫秒
@@ -208,4 +217,17 @@ function getThisYearStart() {
 function getThisYearEnd() {
 	var nowYear=new Date().format("yyyy");
 	return nowYear+"-12-31";
+}
+
+/**
+ * 只保留一个字符串中的前n个字符
+ * @param str
+ * @param n
+ * @returns
+ */
+function substr(str, n) {
+	if(str.length>n)
+		return str.substr(0, n)+"...";
+	else
+		return str;
 }

@@ -11,5 +11,7 @@
 	<bean id="photoDao" class="com.xwkj.booking.dao.impl.PhotoDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-		
+	<bean id="userDao" class="com.xwkj.booking.dao.impl.UserDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 </beans>

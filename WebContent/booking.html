@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>九资河旅游订房</title>
+        <link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
+		<link href="static/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+		<link href="static/css/style.css" rel="stylesheet"/>
+		<link href="static/css/font-awesome.min.css" rel="stylesheet">
+		<link href="static/css/mengular.css" rel="stylesheet">
+		<link href="static/css/index.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.bootstrap.min.js"></script>
+		<script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+        <script src="static/js/mengular-2.0.js"></script>
+        <script src="dwr/engine.js"></script>
+        <script src="dwr/interface/RoomManager.js"></script>
+        <script src="static/js/tools.js"></script>
+		<script src="static/js/index.js"></script>
+	</head>
+	<body>
+
+		<div class="header" id="home">
+			<div class="container">
+				<div class="head">
+					<div id="title" class="logo">
+						<a href="index.html"><img src="static/images/logo.png" alt="九资河旅游订房"></a>
+					</div>
+					<div class="navigation">
+						 <span class="menu"></span> 
+						<ul class="navig">
+							<li><a href="index.html"  class="active hvr-bounce-to-bottom">主页</a></li>
+							<li><a href="about.html" class="hvr-bounce-to-bottom">预定房间</a></li>
+							<li><a href="contact.html" class="hvr-bounce-to-bottom">联系我们</a></li>
+							<li><a href="admin.html" class="hvr-bounce-to-bottom">用户登录</a></li>
+						</ul>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>	
+
+		<div id="search-banner" class="banner">
+			<div class="container">
+				<div id="search-form" class="banner-top">
+					<h1>预订房间</h1>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="input-group has-success">
+	                            <span class="input-group-addon form-icon"><i class="fa fa-calendar fa-lg"></i></span>
+	                            <input id="search-room-start" type="text" class="form-control input-lg" placeholder="入住日期" readonly>
+	                        </div>
+						</div>
+						<div class="col-xs-12">
+							<div class="input-group has-success">
+	                            <span class="input-group-addon form-icon"><i class="fa fa-calendar-minus-o fa-lg"></i></span>
+	                            <input id="search-room-end" type="text" class="form-control input-lg" placeholder="退房日期" readonly>
+	                        </div>
+						</div>
+						<div class="col-xs-12">
+	                        <div class="input-group has-success">
+	                            <span class="input-group-addon"><i class="fa fa-users fa-lg"></i></span>
+	                            <select id="search-room-number" class="form-control input-lg">
+	                                <option value="">房间类型</option>
+	                                <option value="1">单人间</option>
+	                                <option value="2">双人间</option>
+	                                <option value="3">三人间</option>
+	                                <option value="4">四人间</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-12">
+	                        <div class="input-group has-success">
+	                            <span class="input-group-addon"><i class="fa fa-map-pin fa-lg"></i></span>
+	                            <select id="search-room-location" class="form-control input-lg">
+	                                <option value="">房间位置</option>
+	                                <option value="">张家村</option>
+	                                <option value="">李家沟</option>
+	                            </select>
+	                        </div>
+	                    </div>
+	                    <div class="col-xs-12">
+	                        <button class="btn btn-block btn-success btn-lg">立刻预定</button>
+	                    </div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="events" id="events">
+			<div class="container">
+				<div class="events-top heading">
+					<h3>最新客房</h3>
+				</div>
+				<div id="newest-room-list" class="row">
+					<div id="${rid}$" class="col-xs-12 col-sm-6 col-md-4 mengular-template newest-room-template">
+						<div class="thumbnail">
+							<a href="room.html?rid=${rid}$"><img src="${src}$" alt="${rname}$"></a>
+							<div class="caption">
+								<h4>
+									<strong>${rname}$</strong>
+									<small class="pull-right text-success">${number}$人房</small>
+								</h4>
+								<p class="text-muted">${location}$</p>	
+								<h4>
+									<span class="text-warning">￥${price}$</span>
+									<small class="pull-right text-info">已售：${sold}$</small>
+								</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="news" id="news">
+			<div class="container">
+				<div class="news-top heading">
+					<h3>信息中心</h3>
+				</div>
+				<div class="news-bottom">
+					<div class="news-one">
+					<div class="col-md-6 news-left">
+						<div class="n-left">
+							<img src="static/images/blog-1.png" alt="" />
+						</div>
+						<div class="n-right">
+							<h4>Sed Condimentum Enim Sem</h4>
+							<p class="admin">commodo malesuada.</p>
+							<p>Phasellus nec tellus tortor. Vivamus sagittis orci sit amet finibus dapibus. Suspendisse sit amet tempus nunc, id euismod nunc.Maecenas sit amet interdum massa, ut bibendum arcu.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="col-md-6 news-left">
+						<div class="n-left">
+							<img src="static/images/blog-2.png" alt="" />
+						</div>
+						<div class="n-right">
+							<h4>Sed Condimentum Enim Sem</h4>
+							<p class="admin">commodo malesuada.</p>
+							<p>Phasellus nec tellus tortor. Vivamus sagittis orci sit amet finibus dapibus. Suspendisse sit amet tempus nunc, id euismod nunc.Maecenas sit amet interdum massa, ut bibendum arcu.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="clearfix"></div>
+					</div>
+					<div class="news-one">
+					<div class="col-md-6 news-left">
+						<div class="n-left">
+							<img src="static/images/blog-3.png" alt="" />
+						</div>
+						<div class="n-right">
+							<h4>Sed Condimentum Enim Sem</h4>
+							<p class="admin">commodo malesuada.</p>
+							<p>Phasellus nec tellus tortor. Vivamus sagittis orci sit amet finibus dapibus. Suspendisse sit amet tempus nunc, id euismod nunc.Maecenas sit amet interdum massa, ut bibendum arcu.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="col-md-6 news-left">
+						<div class="n-left">
+							<img src="static/images/blog-4.png" alt="" />
+						</div>
+						<div class="n-right">
+							<h4>Sed Condimentum Enim Sem</h4>
+							<p class="admin">commodo malesuada.</p>
+							<p>Phasellus nec tellus tortor. Vivamus sagittis orci sit amet finibus dapibus. Suspendisse sit amet tempus nunc, id euismod nunc.Maecenas sit amet interdum massa, ut bibendum arcu.</p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="why" id="about">
+			<div class="container">
+				<div class="why-top heading">
+					<h3>选择我们的理由</h3>
+					<p>Lorem ipsum dolor sit amet</p>
+				</div>
+				<div class="why-bottom">
+					<div class="col-md-4 why-left">
+						<span class="w-one"></span>
+						<p>当您注册成为住哪网的会员后，我们会赠送10元的红包到您的住哪网个人帐户中，验证邮箱即可得5元红包并在成功入住酒店后对其进行真实点评即可获得相应的点评奖金，住的越多返的越多。当您的点评奖金累计达到200元时，即可登录您的会员中心填写您必要的账户信息申请提现，我们审核后会把奖金汇入您的账户。</p>
+					</div>
+					<div class="col-md-4 why-left">
+						<span class="w-two"></span>
+						<p>随着3G在国内掀开大幕，手机用户的不断地增加，大家的生活逐渐离不开了手机，很多会员说我们出门在外总不能带着电脑上网订酒店吧，打电话订酒店也不放心，没看到酒店心里不踏实。现在大家终于不用担心了，住哪网为了满足大家出门在外的需求，近期已经推出了住哪网手机版。</p>
+					</div>
+					<div class="col-md-4 why-left">
+						<span class="w-tre"></span>
+						<p>您通过住哪网预订酒店，并收到预订成功的短信，我们将保障您顺利入住酒店。若出现到店无房的情况，且没能协调安排您入住，我们将赔付您首晚房费。</p>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="map">
+			<iframe src="http://www.google.cn/maps/embed?pb=!1m18!1m12!1m3!1d13710.714298682034!2d115.39618999999999!3d30.7835995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x342dec8e75224825%3A0x8778c190a9179cf9!2z5rmW5YyX55yB6buE5YaI5biC572X55Sw5Y6_5Yek5bGx6ZWH!5e0!3m2!1szh-CN!2scn!4v1443967666355" width="600" height="450"></iframe>	
+		</div>
+
+		<div class="footer">
+			<div class="container">
+			<div class="touch-top heading">
+					<h3>联系我们</h3>
+				</div>
+				<div class="touch-bottom">
+					<p>热线电话：0713-5077888 | 邮箱：jzly8888@163.com | 湖北省罗田县凤山镇胜利街16号</p>
+				</div>
+				<div class="footer-top">
+					<p>主办：罗田县九资河人民政府 协办：中国电信罗田分公司 网站备案号：鄂ICP备1589564512号</p>
+					<p class="footer-class">
+						Copyright 2015-2015 九资游官方旅游平台版权所有 | 技术支持 
+						<a href="http://www.jmxw.net" target="_blank">荆门鑫网</a> | 
+						<a href="admin.html">管理员登陆</a>
+					</p>
+				</div>
+			</div>
+			<a href="#home" id="toTop" class="scroll" style="display: block;"> 
+				<span id="toTopHover" style="opacity: 1;"></span>
+			</a>
+		</div>
+	</body>
+</html>
