@@ -1,0 +1,21 @@
+
+#search-room {
+	margin-top: 30px;
+}
+
+#search-room  div .input-group,
+#search-room  div button {
+    margin: 5px 0;
+}
+
+#search-room  div .input-group select {
+    padding: 0 10px;
+}
+
+#room-list {
+	margin-top: 30px;
+}
+
+#no-search-result {
+	display: none;
+}

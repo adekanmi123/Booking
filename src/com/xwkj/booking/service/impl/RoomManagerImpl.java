@@ -73,14 +73,31 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 	}
 	
 	@Override
-	public List<RoomBean> searchRoom(String rname, int number, String location, double minArea, double maxArea,
-			double minPrice, double maxPrice, String start, String end) {
+	public List<RoomBean> getNewestRooms(int limit) {
+		List<RoomBean> rooms=new ArrayList<>();
+		for(Room room: roomDao.finidRoomLimit(limit))
+			rooms.add(new RoomBean(room));
+		return rooms;
+	}
+	
+	@Override
+	public List<RoomBean> searchRoomForAdmin(String start, String end, int number, String location, String rname) {
 		Date startDate=DateTool.transferDate(start+" 00:00:00", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
 		Date endDate=DateTool.transferDate(end+" 23:59:59", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
 		List<RoomBean> rooms=new ArrayList<>();
-		for(Room room: roomDao.searchRoom(rname, number, location, minArea, maxArea, minPrice, maxPrice, startDate, endDate))
+		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, -1.0, -1.0, startDate, endDate))
 			rooms.add(new RoomBean(room));
 		return rooms;
 	}
 
+	@SuppressWarnings("unused")
+	@Override
+	public List<RoomBean> searchRoomForUser(String checkin, String checkout, int number, String location, String rname, double minPrice, double maxPrice) {
+		Date checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
+		Date checkoutDate=DateTool.transferDate(checkout, DateTool.YEAR_MONTH_DATE_FORMAT);
+		List<RoomBean> rooms=new ArrayList<>();
+		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, minPrice, maxPrice, null, null)) 
+			rooms.add(new RoomBean(room));
+		return rooms;
+	}
 }

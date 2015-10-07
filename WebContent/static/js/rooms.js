@@ -78,7 +78,7 @@ $(document).ready(function() {
 });
 
 function loadRooms() {
-	RoomManager.searchRoom(null, -1, null, -1, -1, -1, -1, getThisYearStart(), getThisYearEnd(), function(rooms) {
+	RoomManager.searchRoomForAdmin(getThisYearStart(), getThisYearEnd(), -1, null, null , function(rooms) {
 		$("#room-list tbody").mengularClear();
 		for(var i in rooms) {
 			$("#room-list tbody").mengular(".room-list-template", {

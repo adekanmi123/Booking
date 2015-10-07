@@ -1,8 +1,14 @@
 package com.xwkj.booking.dao.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.xwkj.booking.dao.RoomDao;
 import com.xwkj.booking.domain.Room;
@@ -35,9 +41,15 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 	public List<Room> searchRoom(String rname, Integer number, String location, Double minArea, Double maxArea,
 			Double minPrice, Double maxPrice, Date start, Date end) {
 		List<Object> objects=new ArrayList<>();
-		String hql="from Room where createDate>=? and createDate<=?";
-		objects.add(start);
-		objects.add(end);
+		String hql="from Room where rid!=null ";
+		if(start!=null) {
+			hql+=" and createDate>=?";
+			objects.add(start);
+		}
+		if(end!=null) {
+			hql+=" and createDate<=?";
+			objects.add(end);
+		}
 		if(rname!=null) {
 			hql+=" and rname like ?";
 			objects.add("%"+rname+"%");
@@ -46,7 +58,7 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 			hql+=" and number=?";
 			objects.add(number);
 		}
-		if(rname!=null) {
+		if(location!=null) {
 			hql+=" and location like ?";
 			objects.add("%"+location+"%");
 		}
@@ -71,6 +83,22 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 		for(int i=0; i<objects.size(); i++)
 			objs[i]=objects.get(i);
 		return getHibernateTemplate().find(hql, objs);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Room> finidRoomLimit(int limit) {
+		String hql="from Room order by createDate desc";
+		List<Room> rooms=getHibernateTemplate().executeFind(new HibernateCallback<List<Room>>() {
+			@Override
+			public List<Room> doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query=session.createQuery(hql);
+				query.setFirstResult(0);
+				query.setMaxResults(limit);
+				return query.list();
+			}
+		});
+		return rooms;
 	}
 
 }

@@ -2,10 +2,8 @@ var rid=request("rid");
 var price;
 
 $(document).ready(function() {
-	
-	$("span.menu").click(function(){
-		$(" ul.navig").slideToggle("slow" , function(){});
-	});    
+	$("#head").load("head.html");
+	$("#foot").load("foot.html");   
 
 	$("#booking-room-start, #booking-room-end").datetimepicker({
         format: 'yyyy-mm-dd',
@@ -29,7 +27,7 @@ $(document).ready(function() {
 			if(days<=0) {
 				$("#booking-room-start, #booking-room-end").parent().addClass("has-error");
 				$("#booking-room-submit").attr("disabled","disabled");
-				$.messager.popup("退房日期必须大于入住日期！");
+				$.messager.popup("退房日期必须在入住日期之后！");
 			} else {
 				$("#booking-room-start, #booking-room-end").parent().removeClass("has-error");
 				$("#booking-room-submit").removeAttr("disabled");

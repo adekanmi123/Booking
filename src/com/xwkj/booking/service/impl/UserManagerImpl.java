@@ -37,6 +37,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	private String FailedReasopnVerificationCodeWrong;
 	private String FailedResionTelephoneWrong;
 	private String FailedReasionSystemError;
+	private String FailedReasionTelephoneNotExsit;
 
 	public int getVerificationTimeout() {
 		return verificationTimeout;
@@ -118,6 +119,14 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		FailedReasionSystemError = failedReasionSystemError;
 	}
 
+	public String getFailedReasionTelephoneNotExsit() {
+		return FailedReasionTelephoneNotExsit;
+	}
+
+	public void setFailedReasionTelephoneNotExsit(String failedReasionTelephoneNotExsit) {
+		FailedReasionTelephoneNotExsit = failedReasionTelephoneNotExsit;
+	}
+
 	@Override
 	public String addUser(String telephone, String uname, String password, String tid) {
 		User user=new User();
@@ -154,6 +163,11 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		}
 		return false;
 	}
+	
+	@Override 
+	public void logout(HttpSession session) {
+		session.removeAttribute(USER_FLAG);
+	}
 
 	@Override
 	public UserBean checkSession(HttpSession session) {
@@ -163,21 +177,12 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	}
 	
 	@Override
-	public boolean modifyPassword(String uid, String password) {
-		User user=userDao.get(uid);
-		if(user==null)
-			return false;
-		user.setPassword(password);
-		userDao.update(user);
-		return true;
-	}
-
-	@Override
-	public boolean modifyUname(String uid, String uname) {
+	public boolean modifyUser(String uid, String uname, String password) {
 		User user=userDao.get(uid);
 		if(user==null)
 			return false;
 		user.setUname(uname);
+		user.setPassword(password);
 		userDao.update(user);
 		return true;
 	}
@@ -232,7 +237,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 			data.put("reason", FailedReasonTimeout);
 			return data;
 		}
-		//验证码不正确返回报名失败
+		//验证码不正确返回失败
 		if(!verificationCode.equals(telephoneVerificationCode.getCode())) {
 			data.put("success", false);
 			data.put("reason", FailedReasopnVerificationCodeWrong);
@@ -257,6 +262,86 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		}
 		data.put("success", true);
 		data.put("uid", uid);
+		return data;
+	}
+
+	@Override
+	public Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session) throws UnsupportedEncodingException {
+		Map<String, Object> data=new HashMap<String, Object>();
+		if(userDao.findUserByTelephone(telephone)==null) {
+			data.put("hasTelephone", false);
+			return data;
+		}
+		data.put("hasTelephone", true);
+		boolean send=false;
+		String securityCode=(String)session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+		System.out.println("Security Code Check: server->"+securityCode+", user->"+code);
+		//安全码不对不能发短信，以免有人恶意发短信
+		if(securityCode==null||!securityCode.equalsIgnoreCase(code)) {
+			data.put("send", send);
+			data.put("reason", securityCodeWrongTip);
+			return data;
+		}
+		data.put("verificationTimeout", verificationTimeout);
+		String verificationCode=String.valueOf(MathTool.getRandom(999999));
+		String value="#code#="+verificationCode+"&#minutes#="+(verificationTimeout/60);
+		String url=SMSUrl+"?mobile="+telephone+"&tpl_id="+SMSTemplateID+"&tpl_value="+URLEncoder.encode(value, "UTF-8")+"&key="+SMSKey;
+		JSONObject result=JSONObject.fromObject(HttpRequestUtil.httpRequest(url));
+		if(Integer.parseInt(result.get("error_code").toString())==0) 
+			send=true;
+		data.put("reason", result.get("reason"));
+//		boolean send=true;
+//		String verificationCode="";
+		data.put("send", send);
+		TelephoneVerificationCode telephoneVerificationCode=new TelephoneVerificationCode(telephone, verificationCode, new Date());
+		if(send) 
+			session.setAttribute(MODIFY_VERIFICATION_CODE, telephoneVerificationCode);
+		return data;
+	}
+
+	@Override
+	public Map<String, Object> validateModifyVerificationCode(String telephone, String verificationCode, HttpSession session) {
+		Map<String, Object> data=new HashMap<String, Object>();
+		//session中没有验证码返回报名失败
+		if(session.getAttribute(MODIFY_VERIFICATION_CODE)==null) {
+			data.put("success", false);
+			data.put("reason", FailedReasonNoSMS);
+			return data;
+		}
+		TelephoneVerificationCode	telephoneVerificationCode=(TelephoneVerificationCode)session.getAttribute(MODIFY_VERIFICATION_CODE);
+		Date now=new Date();
+		//时间超过验证时长verificationTimeout返回报名失败
+		if((now.getTime()-telephoneVerificationCode.getTime().getTime())/1000>verificationTimeout) {
+			data.put("success", false);
+			data.put("reason", FailedReasonTimeout);
+			return data;
+		}
+		//验证码不正确返回失败
+		if(!verificationCode.equals(telephoneVerificationCode.getCode())) {
+			data.put("success", false);
+			data.put("reason", FailedReasopnVerificationCodeWrong);
+			return data;
+		}
+		//验证手机号码
+		if(!telephone.equals(telephoneVerificationCode.getTelephone())) {
+			data.put("success", false);
+			data.put("reason", FailedResionTelephoneWrong);
+			return data;
+		}
+		User user=userDao.findUserByTelephone(telephone);
+		if(user==null) {
+			data.put("success", false);
+			data.put("reason", FailedResionTelephoneWrong);
+			return data;
+		}
+		//通过验证
+		data.put("success", true);
+		data.put("uid", user.getUid());
+		data.put("uname", user.getUname());
+		if(session.getAttribute(UserManager.USER_FLAG)!=null) {
+			UserBean userBean=new UserBean(user);
+			session.setAttribute(USER_FLAG, userBean);
+		}
 		return data;
 	}
 

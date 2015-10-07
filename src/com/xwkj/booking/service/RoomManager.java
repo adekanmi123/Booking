@@ -45,18 +45,33 @@ public interface RoomManager {
 	RoomBean getRoom(String rid);
 	
 	/**
-	 * 查询房间
-	 * @param rname
-	 * @param number
-	 * @param location
-	 * @param minArea
-	 * @param maxArea
-	 * @param minPrice
-	 * @param maxPrice
-	 * @param start
-	 * @param end
+	 * @param limit
 	 * @return
 	 */
-	List<RoomBean> searchRoom(String rname, int number, String location, double minArea, double maxArea, double minPrice, double maxPrice, String start, String end);
+	List<RoomBean> getNewestRooms(int limit);
+	
+	/**
+	 * 管理员查询房间
+	 * @param start
+	 * @param end
+	 * @param number
+	 * @param location
+	 * @param rname
+	 * @return
+	 */
+	List<RoomBean> searchRoomForAdmin(String start, String end, int number, String location, String rname);
+	
+	/**
+	 * 用户查询房间
+	 * @param checkin
+	 * @param checkout
+	 * @param number
+	 * @param location
+	 * @param rname
+	 * @param minPrice
+	 * @param maxPrice
+	 * @return
+	 */
+	List<RoomBean> searchRoomForUser(String checkin, String checkout, int number, String location, String rname, double minPrice, double maxPrice);
 
 }

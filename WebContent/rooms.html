@@ -61,6 +61,58 @@
                     <h1 class="panel-title">房间列表</h1>
                     <i class="fa fa-plus fa-lg pull-right add-icon" data-toggle="modal" data-target="#add-room-modal" style="margin-top: -13px;"></i>
                 </div>
+                <div class="panel-body">
+                    <div id="search-honor-form" class="row">
+                        <div class="col-xs-12 col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-calendar fa-lg"></i></span>
+                                <input id="start-date" type="text" class="form-control" placeholder="起始日期">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-calendar-minus-o fa-lg"></i></span>
+                                <input id="end-date" type="text" class="form-control" placeholder="结束日期">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-newspaper-o fa-lg"></i></span>
+                                <input id="search-honor-name" type="text" class="form-control" placeholder="房间名称">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-users fa-lg"></i></span>
+                                <select id="search-type-name" class="form-control">
+                                    <option value="">房间类型</option>
+                                    <option value="1">单人间</option>
+                                    <option value="2">双人间</option>
+                                    <option value="3">三人间</option>
+                                    <option value="4">四人间</option>
+                                    <option value="5">五人间</option>
+                                    <option value="6">六人间</option>
+                                    <option value="7">七人间</option>
+                                    <option value="8">八人间</option>
+                                    <option value="9">九人间</option>
+                                    <option value="10">十人间</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-1">
+                            <button id="this-month" class="btn btn-block btn-success btn-search">本月</button>
+                        </div>
+                        <div class="col-xs-12 col-md-1">
+                            <button id="this-year" class="btn btn-block btn-info btn-search">今年</button>
+                        </div>
+                        <div class="col-xs-12 col-md-1">
+                            <button id="search-honor-submit" class="btn btn-block btn-warning btn-search">搜索</button>
+                        </div>
+                        <div class="col-xs-12 col-md-1">
+                            <button id="show-this-year" class="btn btn-block btn-danger btn-search">还原</button>
+                        </div>
+                    </div>
+                </div>
                 <table id="room-list" class="table">
                     <thead>
                         <tr>
@@ -100,10 +152,16 @@
                         <div class="input-group">
                             <span class="input-group-addon form-icon"><i class="fa fa-users fa-lg"></i></span>
                             <select id="add-room-number" class="form-control">
-                                <option value="1">单人间</option>
-                                <option value="2">标准间</option>
+								<option value="1">单人间</option>
+                                <option value="2">双人间</option>
                                 <option value="3">三人间</option>
                                 <option value="4">四人间</option>
+                                <option value="5">五人间</option>
+                                <option value="6">六人间</option>
+                                <option value="7">七人间</option>
+                                <option value="8">八人间</option>
+                                <option value="9">九人间</option>
+                                <option value="10">十人间</option>
                             </select>
                         </div>
                         <div class="input-group">
@@ -148,9 +206,15 @@
                             <span class="input-group-addon form-icon"><i class="fa fa-users fa-lg"></i></span>
                             <select id="modify-room-number" class="form-control">
                                 <option value="1">单人间</option>
-                                <option value="2">标准间</option>
+                                <option value="2">双人间</option>
                                 <option value="3">三人间</option>
                                 <option value="4">四人间</option>
+                                <option value="5">五人间</option>
+                                <option value="6">六人间</option>
+                                <option value="7">七人间</option>
+                                <option value="8">八人间</option>
+                                <option value="9">九人间</option>
+                                <option value="10">十人间</option>
                             </select>
                         </div>
                         <div class="input-group">

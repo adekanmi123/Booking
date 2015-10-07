@@ -27,4 +27,11 @@ public interface RoomDao {
 	 */
 	List<Room> searchRoom(String rname, Integer number, String location, Double minArea, Double maxArea,
 			Double minPrice, Double maxPrice, Date start, Date end);
+	
+	/**
+	 * 限制数量查找房间
+	 * @param limit
+	 * @return
+	 */
+	List<Room> finidRoomLimit(int limit);
 }

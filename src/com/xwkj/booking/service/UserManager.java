@@ -10,6 +10,7 @@ import com.xwkj.booking.bean.UserBean;
 public interface UserManager {
 	
 	public static final String VERIFICATION_CODE="40288bfe5032fea60150331da9de0005";
+	public static final String MODIFY_VERIFICATION_CODE="32fea60150331da60150332168090008";
 	public static final String USER_FLAG="8aa501824fb5fb84hdfb607fe100000";
 	
 	/**
@@ -46,6 +47,12 @@ public interface UserManager {
 	boolean login(String uname, String password, HttpSession session);
 	
 	/**
+	 * 处理用户登出
+	 * @param session
+	 */
+	void logout(HttpSession session);
+	
+	/**
 	 * 检查用户session
 	 * @param session
 	 * @return
@@ -53,19 +60,12 @@ public interface UserManager {
 	UserBean checkSession(HttpSession session);
 
 	/**
-	 * 修改密码
-	 * @param uid
-	 * @param password
-	 */
-	boolean modifyPassword(String uid, String password);
-	
-	/**
-	 * 修改用户名
+	 * 修改用户名和密码
 	 * @param uid
 	 * @param uname
-	 * @return
+	 * @param password
 	 */
-	boolean modifyUname(String uid, String uname);
+	boolean modifyUser(String uid, String uname, String password);
 
 	/**
 	 * 获取短信验证码
@@ -88,4 +88,21 @@ public interface UserManager {
 	 * @return
 	 */
 	Map<String, Object> register(String telephone, String uname, String password, String verificationCode, HttpSession session);
+	
+	/**
+	 * 获取修改用户信息时的短信验证码
+	 * @param code
+	 * @param session
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session) throws UnsupportedEncodingException;
+	
+	/**
+	 * 验证修改用户信息的短信验证码
+	 * @param code
+	 * @param session
+	 * @return
+	 */
+	Map<String, Object> validateModifyVerificationCode(String telephone, String verificationCode, HttpSession session);
 }

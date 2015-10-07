@@ -1,5 +1,16 @@
+.input-group i {
+	width: 25px;
+}
+
 #search-banner {
 	min-height: 500px;
+}
+
+#search-form {
+	background: rgba(228, 232, 246, 0.56);
+	padding: 15px;
+	margin-top: 40px;
+	border-radius: 10px;
 }
 
 #search-form h1 {
@@ -19,9 +30,13 @@
 }
 
 #newest-room-list {
-	margin-top: 40px;
+	margin-top: 30px;
 }
 
-.input-group i {
-	width: 25px;
+#user-comment div {
+	margin: 5px 0;
+}
+
+#user-comment div hr {
+	border-top: 1px solid #C7C7D2;
 }

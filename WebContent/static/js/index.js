@@ -1,18 +1,8 @@
 $(document).ready(function($) {
 	$("#head").load("head.html");
-
-	// $(".scroll").click(function(event){		
-	// 	event.preventDefault();
-	// 	$("html, body").animate({
-	// 		scrollTop:$(this.hash).offset().top
-	// 	},1000);
-
-	// 	$().UItoTop({ 
-	// 		easingType:"easeOutQuart"
-	// 	});
-	// });
+	$("#foot").load("foot.html");
 	
-	$("#search-room-start, #search-room-end").datetimepicker({
+	$("#search-room-checkin, #search-room-checkout").datetimepicker({
         format: 'yyyy-mm-dd',
         weekStart: 1,
         todayBtn:  1,
@@ -24,8 +14,28 @@ $(document).ready(function($) {
         showMeridian: 1,
         language: 'zh-CN'
     });
+
+    //搜索房间
+    $("#search-room-submit").click(function() {
+    	var checkin=$("#search-room-checkin").val();
+    	var checkout=$("#search-room-checkout").val();
+    	var number=$("#search-room-number").val();
+    	var _location=$("#search-room-location").val();
+		if(checkin!=""&&checkin!=null&&checkout!=""&&checkout!=null) {
+			var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
+			if(days<=0) {
+				$("#search-room-checkin, #search-room-checkout").parent().addClass("has-error");
+				$.messager.popup("退房日期必须在入住日期之后！");
+			} else {
+				$("#search-room-checkin, #search-room-checkout").parent().removeClass("has-error");
+				location.href="search.html?checkin="+checkin+"&checkout="+checkout+"&number="+number+"&location="+encodeURIComponent(_location);
+			}
+		} else {
+			$.messager.popup("请选定一个入住时间和退房时间！");
+		}
+    });
 	
-	RoomManager.searchRoom(null, -1, null, -1, -1, -1, -1, getThisYearStart(), getThisYearEnd(), function(rooms) {
+	RoomManager.getNewestRooms(12, function(rooms) {
 		$("#newest-room-list").mengularClear();
 		for(var i in rooms) {
 			var src="static/images/noImage.jpg";

@@ -12,6 +12,7 @@
 		<link href="static/css/style.css" rel="stylesheet"/>
 		<link href="static/css/font-awesome.min.css" rel="stylesheet">
 		<link href="static/css/mengular.css" rel="stylesheet">
+		<link href="static/css/contact.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -26,75 +27,35 @@
         <script src="dwr/engine.js"></script>
         <script src="dwr/interface/RoomManager.js"></script>
         <script src="static/js/tools.js"></script>
-        <script>
-        $(document).ready(function() {
-			$("span.menu").click(function(){
-				$(" ul.navig").slideToggle("slow" , function(){
-				});
-			});      	
-        });
-		</script>
+        <script src="static/js/contact.js"></script>
 	</head>
 	<body>
-		<div class="header" id="home">
-			<div class="container">
-				<div class="head">
-					<div id="title" class="logo">
-						<a href="index.html"><img src="static/images/logo.png" alt="九资河旅游订房"></a>
-					</div>
-					<div class="navigation">
-						 <span class="menu"></span> 
-						<ul class="navig">
-							<li><a href="index.html"  class="active hvr-bounce-to-bottom">主页</a></li>
-							<li><a href="about.html" class="hvr-bounce-to-bottom">预定房间</a></li>
-							<li><a href="contact.html" class="hvr-bounce-to-bottom">联系我们</a></li>
-							<li><a href="admin.html" class="hvr-bounce-to-bottom">用户登录</a></li>
-						</ul>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>	
-
-		<div class="contact">
+		<div id="head"></div>	
+		<div class="events">
 			<div class="container">
 				<div class="contact-top heading">
 					<h3>联系我们</h3>
 				</div>
-				<div class="contact-bottom">
-					<input type="text" placeholder="您的姓名"/>
-					<input type="text" placeholder="您的邮箱"/>
-					<input type="text" placeholder="您的电话"/>
-
-					<div class="submit-btn">
-						<form>
-							<input type="submit" value="提交">
-						</form>
+				<div id="contact-form" class="row">
+					<div class="col-xs-12 col-md-4">
+		                <input id="" type="text" class="form-control input-lg" placeholder="您的姓名">
+					</div>
+					<div class="col-xs-12 col-md-4">
+		                <input id="" type="text" class="form-control input-lg" placeholder="您的邮箱">
+					</div>
+					<div class="col-xs-12 col-md-4">
+	                    <input id="" type="text" class="form-control input-lg" placeholder="您的电话">
+					</div>
+					<div class="col-xs-12">
+	                    <textarea id=""  class="form-control input-lg" placeholder="您的留言" rows="14"></textarea>
+					</div>
+					<div class="col-xs-12">
+	                    <button class="btn btn-block btn-lg btn-success">提交</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="footer">
-			<div class="container">
-			<div class="touch-top heading">
-					<h3>联系我们</h3>
-				</div>
-				<div class="touch-bottom">
-					<p>热线电话：0713-5077888 | 邮箱：jzly8888@163.com | 湖北省罗田县凤山镇胜利街16号</p>
-				</div>
-				<div class="footer-top">
-					<p>主办：罗田县九资河人民政府 协办：中国电信罗田分公司 网站备案号：鄂ICP备1589564512号</p>
-					<p class="footer-class">
-						Copyright 2015-2015 九资游官方旅游平台版权所有 | 技术支持 
-						<a href="http://www.jmxw.net" target="_blank">荆门鑫网</a> | 
-						<a href="admin.html">管理员登陆</a>
-					</p>
-				</div>
-			</div>
-			<a href="#home" id="toTop" class="scroll" style="display: block;"> 
-				<span id="toTopHover" style="opacity: 1;"></span>
-			</a>
-		</div>
+		<div id="foot"></div>
 	</body>
 </html>

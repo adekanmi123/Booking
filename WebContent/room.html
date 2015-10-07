@@ -31,25 +31,7 @@
         <script src="static/js/room.js"></script>
 	</head>
 	<body>
-		<div class="header" id="home">
-			<div class="container">
-				<div class="head">
-					<div id="title" class="logo">
-						<a href="index.html"><img src="static/images/logo.png" alt="九资河旅游订房"></a>
-					</div>
-					<div class="navigation">
-						 <span class="menu"></span> 
-						<ul class="navig">
-							<li><a href="index.html"  class="active hvr-bounce-to-bottom">主页</a></li>
-							<li><a href="about.html" class="hvr-bounce-to-bottom">预定房间</a></li>
-							<li><a href="contact.html" class="hvr-bounce-to-bottom">联系我们</a></li>
-							<li><a href="admin.html" class="hvr-bounce-to-bottom">用户登录</a></li>
-						</ul>
-					</div>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-		</div>	
+		<div id="head"></div>
 
 		<div class="events">
 			<div class="container">
@@ -80,7 +62,19 @@
 									<div id="room-descriptor" class="col-xs-12 col-sm-8 col-md-10"></div>
 								</div>
 							</div>
-							<a href="javascript:window.history.go(-1)" class="btn btn-block btn-info">返回上一页</a>
+							<a href="javascript:window.history.go(-1)" class="btn btn-block btn-lg btn-info">返回上一页</a>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-4">
+						<div id="information-tips" class="panel panel-default">
+							<div class="panel-heading">
+								<h2 class="panel-title">保障</h2>
+							</div>
+							<div class="panel-body">
+		                        <p class="text-muted">1、成功预订即保障有房。</p>
+		                        <p class="text-muted">1、您成功入住后，商家才收到定金。</p>
+		                        <p class="text-muted">1、房间已经过实地验证，请放心预订。</p>
+							</div>
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-4">
@@ -103,6 +97,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="col-xs-12 col-md-4">
 						<div id="room-comment" class="panel panel-default">
 							<div class="panel-heading">
@@ -134,26 +129,6 @@
 			</div>
 		</div>
 
-		<div class="footer">
-			<div class="container">
-			<div class="touch-top heading">
-					<h3>联系我们</h3>
-				</div>
-				<div class="touch-bottom">
-					<p>热线电话：0713-5077888 | 邮箱：jzly8888@163.com | 湖北省罗田县凤山镇胜利街16号</p>
-				</div>
-				<div class="footer-top">
-					<p>主办：罗田县九资河人民政府 协办：中国电信罗田分公司 网站备案号：鄂ICP备1589564512号</p>
-					<p class="footer-class">
-						Copyright 2015-2015 九资游官方旅游平台版权所有 | 技术支持 
-						<a href="http://www.jmxw.net" target="_blank">荆门鑫网</a> | 
-						<a href="admin.html">管理员登陆</a>
-					</p>
-				</div>
-			</div>
-			<a href="#home" id="toTop" class="scroll" style="display: block;"> 
-				<span id="toTopHover" style="opacity: 1;"></span>
-			</a>
-		</div>
+		<div id="foot"></div>
 	</body>
 </html>

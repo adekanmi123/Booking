@@ -16,12 +16,7 @@ var DATE_HOUR_MINUTE_SECOND_FORMAT="yyyy-MM-dd hh:mm:ss";
  */
 function checkSession(doAfterCheck) {
 	UserManager.checkSession(function(user) {
-		if(user==null) {
-			location.href="sessionError.html";
-			return null;
-		} else {
-			doAfterCheck(user);
-		}
+		doAfterCheck(user);
 	});
 }
 
