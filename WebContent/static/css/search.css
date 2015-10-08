@@ -16,6 +16,15 @@
 	margin-top: 30px;
 }
 
-#no-search-result {
+#no-search-result,
+#search-room-loading {
 	display: none;
+}
+
+#search-room-loading img {
+	height: 230px;
+}
+
+#search-room-loading h1 {
+	text-align: center;
 }

@@ -19,6 +19,8 @@ public class Room implements Serializable {
 	private Photo cover;
 	private Set<Photo> photos;
 	private Integer sold;
+	private Integer available;
+	private boolean enable;
 	
 	public String getRid() {
 		return rid;
@@ -85,6 +87,18 @@ public class Room implements Serializable {
 	}
 	public void setSold(Integer sold) {
 		this.sold = sold;
+	}
+	public Integer getAvailable() {
+		return available;
+	}
+	public void setAvailable(Integer available) {
+		this.available = available;
+	}
+	public boolean isEnable() {
+		return enable;
+	}
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 }

@@ -20,5 +20,7 @@
 		 	<one-to-many class="Photo"/>
 		</set>
 		<property name="sold" column="sold" type="integer" not-null="true"/>
+		<property name="available" column="available" type="integer" not-null="true"/>
+		<property name="enable" column="enable" type="boolean" not-null="true"/>
 	</class>
 </hibernate-mapping>

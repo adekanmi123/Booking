@@ -39,7 +39,7 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Room> searchRoom(String rname, Integer number, String location, Double minArea, Double maxArea,
-			Double minPrice, Double maxPrice, Date start, Date end) {
+			Double minPrice, Double maxPrice, Date start, Date end, boolean all, boolean enable) {
 		List<Object> objects=new ArrayList<>();
 		String hql="from Room where rid!=null ";
 		if(start!=null) {
@@ -78,6 +78,10 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 			hql+=" and price<=?";
 			objects.add(maxPrice);
 		}
+		if(all==false) {
+			hql+=" and enable=?";
+			objects.add(enable);
+		}
 		hql+=" order by createDate desc";
 		Object [] objs=new Object[objects.size()];
 		for(int i=0; i<objects.size(); i++)
@@ -88,7 +92,7 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Room> finidRoomLimit(int limit) {
-		String hql="from Room order by createDate desc";
+		String hql="from Room where enable=true order by createDate desc";
 		List<Room> rooms=getHibernateTemplate().executeFind(new HibernateCallback<List<Room>>() {
 			@Override
 			public List<Room> doInHibernate(Session session) throws HibernateException, SQLException {

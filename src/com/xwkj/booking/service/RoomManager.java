@@ -16,7 +16,7 @@ public interface RoomManager {
 	 * @param descriptor
 	 * @return
 	 */
-	String addRoom(String rname, int number, String location, double area, double price, String descriptor);
+	String addRoom(String rname, int number, String location, double area, double price, int available, String descriptor);
 	
 	/**
 	 * 修改房间
@@ -28,7 +28,7 @@ public interface RoomManager {
 	 * @param price
 	 * @param descriptor
 	 */
-	void modifyRoom(String rid, String rname, int number, String location, double area, double price, String descriptor);
+	void modifyRoom(String rid, String rname, int number, String location, double area, double price, int available, String descriptor);
 	
 	/**
 	 * 删除房间
@@ -73,5 +73,12 @@ public interface RoomManager {
 	 * @return
 	 */
 	List<RoomBean> searchRoomForUser(String checkin, String checkout, int number, String location, String rname, double minPrice, double maxPrice);
+	
+	/**
+	 * 更改房间可用状态
+	 * @param rid
+	 * @param enable
+	 */
+	void enableRoom(String rid, boolean enable);
 
 }

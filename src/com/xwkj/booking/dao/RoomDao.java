@@ -17,16 +17,17 @@ public interface RoomDao {
 	 * @param rname
 	 * @param number
 	 * @param location
-	 * @param minArea
-	 * @param maxArea
-	 * @param minPrice
-	 * @param maxPrice
-	 * @param start
+	 * @param minArea 最小面积
+	 * @param maxArea 最大面积
+	 * @param minPrice 最低价格
+	 * @param maxPrice 最高价格
+	 * @param start 
 	 * @param end
+	 * @param enable
 	 * @return
 	 */
 	List<Room> searchRoom(String rname, Integer number, String location, Double minArea, Double maxArea,
-			Double minPrice, Double maxPrice, Date start, Date end);
+			Double minPrice, Double maxPrice, Date start, Date end, boolean all, boolean enable);
 	
 	/**
 	 * 限制数量查找房间

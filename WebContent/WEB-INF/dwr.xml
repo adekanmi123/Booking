@@ -16,9 +16,13 @@
 		<create creator="spring" javascript="UserManager"> 
 			<param name="beanName" value="userManager"/>
 		</create>
+		<create creator="spring" javascript="BookingManager"> 
+			<param name="beanName" value="bookingManager"/>
+		</create>
 		<!-- 定义使用Bean转换器处理如下Java类 -->
 		<convert converter="bean" match="com.xwkj.booking.bean.RoomBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.PhotoBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.UserBean"/>
+		<convert converter="bean" match="com.xwkj.booking.bean.BookingBean"/>
 	</allow>
 </dwr>

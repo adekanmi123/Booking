@@ -15,6 +15,8 @@ public class RoomBean {
 	private Date createDate;
 	private PhotoBean cover;
 	private int sold;
+	private int available;
+	private boolean enable;
 	
 	public String getRid() {
 		return rid;
@@ -76,7 +78,18 @@ public class RoomBean {
 	public void setSold(int sold) {
 		this.sold = sold;
 	}
-	
+	public int getAvailable() {
+		return available;
+	}
+	public void setAvailable(int available) {
+		this.available = available;
+	}
+	public boolean isEnable() {
+		return enable;
+	}
+	public void setEnable(boolean enable) {
+		this.enable = enable;
+	}
 	public RoomBean(Room room) {
 		super();
 		this.rid = room.getRid();
@@ -92,6 +105,8 @@ public class RoomBean {
 		else
 			this.cover=new PhotoBean(room.getCover());
 		this.sold=room.getSold();
+		this.available=room.getAvailable();
+		this.enable=room.isEnable();
 	}
 
 }

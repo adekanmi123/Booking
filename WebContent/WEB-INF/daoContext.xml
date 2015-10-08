@@ -14,4 +14,10 @@
 	<bean id="userDao" class="com.xwkj.booking.dao.impl.UserDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
+	<bean id="bookingDao" class="com.xwkj.booking.dao.impl.BookingDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean id="historyDao" class="com.xwkj.booking.dao.impl.HistoryDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 </beans>

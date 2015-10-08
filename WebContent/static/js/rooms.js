@@ -16,6 +16,7 @@ $(document).ready(function() {
 		var location=$("#add-room-location").val();
 		var area=$("#add-room-area").val();
 		var price=$("#add-room-price").val();
+		var available=$("#add-room-available").val();
 		var descriptor=$("#add-room-descriptor").val();
 		var validate=true;
 		if(rname==""||rname==null) {
@@ -42,6 +43,12 @@ $(document).ready(function() {
 		} else {
 			$("#add-room-price").parent().removeClass("has-error");
 		}
+		if(available==""||available==null||!isInteger(available)) {
+			validate=false;
+			$("#add-room-available").parent().addClass("has-error");
+		} else {
+			$("#add-room-available").parent().removeClass("has-error");
+		}
 		if(descriptor==""||descriptor==null) {
 			validate=false;
 			$("#add-room-descriptor").parent().addClass("has-error");
@@ -49,7 +56,7 @@ $(document).ready(function() {
 			$("#add-room-descriptor").parent().removeClass("has-error");
 		}
 		if(validate) {
-			RoomManager.addRoom(rname, number, location, area, price, descriptor, function(rid){
+			RoomManager.addRoom(rname, number, location, area, price, available, descriptor, function(rid){
 				$("#add-room-modal").modal("hide");
 				loadRooms();
 			});
@@ -60,6 +67,7 @@ $(document).ready(function() {
 	$("#add-room-modal").on("hide.bs.modal", function (e) {
 		$("#add-room-form .input-group input").val("");
 		$("#add-room-form .input-group textarea").val("");
+		$("#add-room-form .input-group").removeClass("has-error");
 	});
 
 	//修改房间
@@ -69,11 +77,58 @@ $(document).ready(function() {
 		var location=$("#modify-room-location").val();
 		var area=$("#modify-room-area").val();
 		var price=$("#modify-room-price").val();
+		var available=$("#modify-room-available").val();
 		var descriptor=$("#modify-room-descriptor").val();
-		RoomManager.modifyRoom(modifyingRid , rname, number, location, area, price, descriptor, function(rid){
-			$.messager.popup("修改成功！");
-			loadRooms();
-		});
+		var validate=true;
+		if(rname==""||rname==null) {
+			validate=false;
+			$("#modify-room-rname").parent().addClass("has-error");
+		} else {
+			$("#modify-room-rname").parent().removeClass("has-error");
+		}
+		if(location==""||location==null) {
+			validate=false;
+			$("#modify-room-location").parent().addClass("has-error");
+		} else {
+			$("#modify-room-location").parent().removeClass("has-error");
+		}
+		if(area==""||area==null||!isNum(area)) {
+			validate=false;
+			$("#modify-room-area").parent().addClass("has-error");
+		} else {
+			$("#modify-room-area").parent().removeClass("has-error");
+		}
+		if(price==""||price==null||!isNum(price)) {
+			validate=false;
+			$("#modify-room-price").parent().addClass("has-error");
+		} else {
+			$("#modify-room-price").parent().removeClass("has-error");
+		}
+		if(available==""||available==null||!isInteger(available)) {
+			validate=false;
+			$("#modify-room-available").parent().addClass("has-error");
+		} else {
+			$("#modify-room-available").parent().removeClass("has-error");
+		}
+		if(descriptor==""||descriptor==null) {
+			validate=false;
+			$("#modify-room-descriptor").parent().addClass("has-error");
+		} else {
+			$("#modify-room-descriptor").parent().removeClass("has-error");
+		}
+		if(validate) {
+			RoomManager.modifyRoom(modifyingRid , rname, number, location, area, price, available, descriptor, function(rid){
+				$.messager.popup("修改成功！");
+				loadRooms();
+			});
+		}
+	});
+	
+	//清除修改房间表单
+	$("#modify-room-modal").on("hide.bs.modal", function (e) {
+		$("#modify-room-form .input-group input").val("");
+		$("#modify-room-form .input-group textarea").val("");
+		$("#modify-room-form .input-group").removeClass("has-error");
 	});
 });
 
@@ -86,7 +141,16 @@ function loadRooms() {
 				createDate: rooms[i].createDate.format(DATE_HOUR_MINUTE_SECOND_FORMAT),
 				rname: rooms[i].rname,
 				number: rooms[i].number,
-				sold: rooms[i].sold
+				sold: rooms[i].sold,
+				available: rooms[i].available
+			});
+
+			//房间可用状态
+			$("#"+rooms[i].rid+" .room-list-enable input").bootstrapSwitch({
+				state: rooms[i].enable
+			}).on('switchChange.bootstrapSwitch', function(event, state) {
+				var rid=$(this).parent().parent().parent().parent().attr("id");
+				RoomManager.enableRoom(rid, state);
 			});
 			
 			//管理房间
@@ -99,6 +163,7 @@ function loadRooms() {
 						"modify-room-location": room.location,
 						"modify-room-area": room.area,
 						"modify-room-price": room.price,
+						"modify-room-available": room.available,
 						"modify-room-descriptor": room.descriptor
 					});
 					//加载照片

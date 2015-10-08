@@ -50,8 +50,14 @@ $(document).ready(function() {
 				$.messager.popup("退房日期必须在入住日期之后！");
 			} else {
 				$("#search-room-checkin, #search-room-checkout").parent().removeClass("has-error");
+				$("#room-list").mengularClear();
+				$("#no-search-result").hide();
+				$("#search-room-loading").show();
 				RoomManager.searchRoomForUser(_checkin, _checkout, _number, _location, null, -1, -1, function(rooms) {
-					loadRooms(rooms);
+					setTimeout(function() {
+						loadRooms(rooms);
+						$("#search-room-loading").hide();				
+					}, 500);
 				});
 			}
 		} else {

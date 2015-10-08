@@ -18,7 +18,7 @@ import com.xwkj.common.util.FileTool;
 public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 
 	@Override
-	public String addRoom(String rname, int number, String location, double area, double price, String descriptor) {
+	public String addRoom(String rname, int number, String location, double area, double price, int available, String descriptor) {
 		Room room=new Room();
 		room.setRname(rname);
 		room.setNumber(number);
@@ -28,17 +28,20 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		room.setDescriptor(descriptor);
 		room.setCreateDate(new Date());
 		room.setSold(0);
+		room.setAvailable(available);
+		room.setEnable(true);
 		return roomDao.save(room);
 	}
 
 	@Override
-	public void modifyRoom(String rid, String rname, int number, String location, double area, double price, String descriptor) {
+	public void modifyRoom(String rid, String rname, int number, String location, double area, double price, int available, String descriptor) {
 		Room room=roomDao.get(rid);
 		room.setRname(rname);
 		room.setNumber(number);
 		room.setLocation(location);
 		room.setArea(area);
 		room.setPrice(price);
+		room.setAvailable(available);
 		room.setDescriptor(descriptor);
 		roomDao.update(room);
 	}
@@ -85,7 +88,7 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		Date startDate=DateTool.transferDate(start+" 00:00:00", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
 		Date endDate=DateTool.transferDate(end+" 23:59:59", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
 		List<RoomBean> rooms=new ArrayList<>();
-		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, -1.0, -1.0, startDate, endDate))
+		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, -1.0, -1.0, startDate, endDate, true, true))
 			rooms.add(new RoomBean(room));
 		return rooms;
 	}
@@ -96,8 +99,15 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		Date checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
 		Date checkoutDate=DateTool.transferDate(checkout, DateTool.YEAR_MONTH_DATE_FORMAT);
 		List<RoomBean> rooms=new ArrayList<>();
-		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, minPrice, maxPrice, null, null)) 
+		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, minPrice, maxPrice, null, null, false, true)) 
 			rooms.add(new RoomBean(room));
 		return rooms;
+	}
+
+	@Override
+	public void enableRoom(String rid, boolean enable) {
+		Room room=roomDao.get(rid);
+		room.setEnable(enable);
+		roomDao.update(room);
 	}
 }
