@@ -118,7 +118,7 @@ public class DateTool
 	 * @param d2
 	 * @return
 	 */
-	public static boolean isNextPDay(Date d1,Date d2)
+	public static boolean isNextDay(Date d1,Date d2)
 	{
 		return isSameDay(nextDay(d1), d2);
 	}
@@ -356,6 +356,19 @@ public class DateTool
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)+1);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 得到上一天的日期
+	 * @param date 指定日期
+	 * @return
+	 */
+	public static Date previousDay(Date date)
+	{
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)-1);
 		return calendar.getTime();
 	}
 	

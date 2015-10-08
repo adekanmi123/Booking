@@ -93,14 +93,14 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		return rooms;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public List<RoomBean> searchRoomForUser(String checkin, String checkout, int number, String location, String rname, double minPrice, double maxPrice) {
 		Date checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
 		Date checkoutDate=DateTool.transferDate(checkout, DateTool.YEAR_MONTH_DATE_FORMAT);
 		List<RoomBean> rooms=new ArrayList<>();
 		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, minPrice, maxPrice, null, null, false, true)) 
-			rooms.add(new RoomBean(room));
+			if(isRoomAvaliable(checkinDate, checkoutDate, room))
+				rooms.add(new RoomBean(room));
 		return rooms;
 	}
 
@@ -109,5 +109,19 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 		Room room=roomDao.get(rid);
 		room.setEnable(enable);
 		roomDao.update(room);
+	}
+	
+	/**
+	 * //检查该房间在该时间段是否已经满房间
+	 * @param checkin 入住时间
+	 * @param checkout 退房时间
+	 * @param room 房间
+	 * @return
+	 */
+	private boolean isRoomAvaliable(Date checkin, Date checkout, Room room) {
+		for(Date date=checkin; DateTool.daysBetween(date, checkout)>0; date=DateTool.nextDay(date)) 
+			if(historyDao.getReservedCount(date, room)==room.getAvailable())
+				return false;
+		return true;
 	}
 }

@@ -1,7 +1,16 @@
 package com.xwkj.booking.dao.impl;
 
+import java.sql.SQLException;
+import java.util.Date;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
 import com.xwkj.booking.dao.HistoryDao;
 import com.xwkj.booking.domain.History;
+import com.xwkj.booking.domain.Room;
 import com.xwkj.common.hibernate3.support.PageHibernateDaoSupport;
 
 public class HistoryDaoHibernate extends PageHibernateDaoSupport implements HistoryDao {
@@ -24,6 +33,21 @@ public class HistoryDaoHibernate extends PageHibernateDaoSupport implements Hist
 	@Override
 	public void delete(History history) {
 		getHibernateTemplate().delete(history);
+	}
+
+	@Override
+	public int getReservedCount(Date date, Room room) {
+		String hql="select count(*) from History where date=? and room=?";
+		int count=getHibernateTemplate().execute(new HibernateCallback<Long>() {
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query=session.createQuery(hql);
+				query.setParameter(0, date);
+				query.setParameter(1, room);
+				return (long)query.uniqueResult();
+			}
+		}).intValue();
+		return count;
 	}
 
 }

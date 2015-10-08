@@ -27,6 +27,7 @@
         <script src="dwr/engine.js"></script>
         <script src="dwr/interface/RoomManager.js"></script>
         <script src="dwr/interface/PhotoManager.js"></script>
+        <script src="dwr/interface/BookingManager.js"></script>
         <script src="static/js/tools.js"></script>
         <script src="static/js/room.js"></script>
 	</head>
@@ -86,14 +87,15 @@
 								<h3 class="text-danger">￥<span id="room-price"></span>每晚</h3>
 								<div class="input-group">
 		                            <span class="input-group-addon form-icon"><i class="fa fa-calendar fa-lg"></i></span>
-		                            <input id="booking-room-start" type="text" class="form-control input-lg" placeholder="入住日期" readonly>
+		                            <input id="booking-room-checkin" type="text" class="form-control input-lg" placeholder="入住日期" readonly>
 		                        </div>
 		                        <div class="input-group">
 		                            <span class="input-group-addon form-icon"><i class="fa fa-calendar-minus-o fa-lg"></i></span>
-		                            <input id="booking-room-end" type="text" class="form-control input-lg" placeholder="退房日期" readonly>
+		                            <input id="booking-room-checkout" type="text" class="form-control input-lg" placeholder="退房日期" readonly>
 		                        </div>
 		                        <h4 class="text-muted">共<strong id="booking-room-days" class="text-success">0</strong>晚，合计￥<strong id="booking-room-money" class="text-success">0</strong>元。</h4>
 		                        <button id="booking-room-submit" class="btn btn-lg btn-danger btn-block" disabled>立即预定</button>
+		                        <a href="search.html" class="btn btn-lg btn-warning btn-block">搜索房间</a>
 							</div>
 						</div>
 					</div>

@@ -83,6 +83,8 @@ function loadRooms(rooms) {
 		$("#room-list").mengular(".room-template", {
 			rid: rooms[i].rid,
 			src: src,
+			checkin: _checkin,
+			checkout: _checkout,
 			rname: rooms[i].rname,
 			location: rooms[i].location,
 			price: rooms[i].price,
