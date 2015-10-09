@@ -1,6 +1,7 @@
 package com.xwkj.booking.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -12,17 +13,7 @@ public interface UserManager {
 	public static final String VERIFICATION_CODE="40288bfe5032fea60150331da9de0005";
 	public static final String MODIFY_VERIFICATION_CODE="32fea60150331da60150332168090008";
 	public static final String USER_FLAG="8aa501824fb5fb84hdfb607fe100000";
-	
-	/**
-	 * 新增用户
-	 * @param telephone
-	 * @param uname
-	 * @param password
-	 * @param tid
-	 * @return
-	 */
-	String addUser(String telephone, String uname, String password, String tid);
-	
+
 	/**
 	 * 删除用户
 	 * @param uid
@@ -105,4 +96,21 @@ public interface UserManager {
 	 * @return
 	 */
 	Map<String, Object> validateModifyVerificationCode(String telephone, String verificationCode, HttpSession session);
+	
+	/**
+	 * 得到用户数量
+	 * @param telephone 电话号码
+	 * @param uname 用户名
+	 * @return
+	 */
+	int getUsersCount(String telephone, String uname);
+	
+	/**
+	 * 查询用户
+	 * @param telephone 电话号码
+	 * @param uname 用户名
+	 * @param page 页码
+	 * @return
+	 */
+	List<UserBean> searchUsers(String telephone, String uname, int page, int pageSize);
 }

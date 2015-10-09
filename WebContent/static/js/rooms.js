@@ -7,7 +7,9 @@ $(document).ready(function() {
 			cancel: { text: "取消", classed: 'btn-default' }
 		};
 	
-	loadRooms();
+	checkAdminSession(function() {
+		loadRooms();
+	})
 	
 	//添加房间
 	$("#add-room-submit").click(function() {

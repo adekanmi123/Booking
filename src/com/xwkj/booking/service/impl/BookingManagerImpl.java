@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.xwkj.booking.bean.BookingBean;
 import com.xwkj.booking.bean.UserBean;
 import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.domain.History;
@@ -17,12 +18,14 @@ import com.xwkj.booking.service.BookingManager;
 import com.xwkj.booking.service.UserManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
+import com.xwkj.common.util.MathTool;
 
 public class BookingManagerImpl extends ManagerTemplate implements BookingManager {
 	
 	private String ReserveFailedDateError;
 	private String ReserveFailedNotLogin;
 	private String ReserveFailedRoomUnavailable;
+	private String ReserveFailedRoomNotEnable;
 
 	public void setReserveFailedDateError(String reserveFailedDateError) {
 		ReserveFailedDateError = reserveFailedDateError;
@@ -36,10 +39,20 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		ReserveFailedRoomUnavailable = reserveFailedRoomUnavailable;
 	}
 
+	public void setReserveFailedRoomNotEnable(String reserveFailedRoomNotEnable) {
+		ReserveFailedRoomNotEnable = reserveFailedRoomNotEnable;
+	}
 
 	@Override
 	public Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session) {
 		Map<String, Object> data=new HashMap<>();
+		Room room=roomDao.get(rid);
+		//检查房间是否可用
+		if(!room.isEnable()) {
+			data.put("success", false);
+			data.put("reason", ReserveFailedRoomNotEnable);
+			return data;
+		}
 		Date checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
 		Date checkoutDate=DateTool.transferDate(checkout, DateTool.YEAR_MONTH_DATE_FORMAT);
 		int days=DateTool.daysBetween(checkinDate, checkoutDate);
@@ -49,11 +62,10 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 			return data;
 		}
 		if(session.getAttribute(UserManager.USER_FLAG)==null) {
-			data.put("reason", false);
+			data.put("success", false);
 			data.put("reason", ReserveFailedNotLogin);
 			return data;
 		}
-		Room room=roomDao.get(rid);
 		List<Date> unavailableDates=new ArrayList<>();
 		//检查空房情况
 		for(Date date=checkinDate; DateTool.daysBetween(date, checkoutDate)>0; date=DateTool.nextDay(date)) {
@@ -69,8 +81,8 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		data.put("success", true);
 		String uid=((UserBean)session.getAttribute(UserManager.USER_FLAG)).getUid();
 		User user=userDao.get(uid);
-		
 		Booking booking=new Booking();
+		booking.setBno(DateTool.formatDate(new Date(), "yyyyMMddHHmmss")+MathTool.getRandomStr(6));
 		booking.setCheckin(checkinDate);
 		booking.setCheckout(checkoutDate);
 		booking.setDays(days);
@@ -94,6 +106,35 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		room.setSold(room.getSold()+1);
 		roomDao.update(room);
 		return data;
+	}
+
+	@Override
+	public List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno) {
+		List<BookingBean> bookings=new ArrayList<>();
+		Date startDate=null;
+		if(start!=null&&!start.equals(""))
+			startDate=DateTool.transferDate(start+" 00:00:00", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
+		Date endDate=null;
+		if(end!=null&&!end.equals(""))
+			endDate=DateTool.transferDate(end+" 23:59:59", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
+		Date checkinDate=null;
+		if(checkin!=null&&!checkin.equals(""))
+			checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
+		for(Booking booking: bookingDao.findForAdmin(startDate, endDate, checkinDate, bno)) 
+			bookings.add(new BookingBean(booking));
+		return bookings;
+	}
+
+	public void fillBno() {
+		Date start=DateTool.transferDate("2015-10-01", DateTool.YEAR_MONTH_DATE_FORMAT);
+		Date end=DateTool.transferDate("2015-10-30", DateTool.YEAR_MONTH_DATE_FORMAT);
+		for(Booking booking: bookingDao.findForAdmin(start, end, null, null)) {
+			if(booking.getBno().equals("")) {
+				booking.setBno(DateTool.formatDate(booking.getCreateDate(), "yyyyMMddHHmmss")+MathTool.getRandomStr(6));
+				System.out.println(booking.getBno()+",  "+DateTool.formatDate(booking.getCreateDate(), DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT));
+				bookingDao.update(booking);
+			}
+		}
 	}
 
 

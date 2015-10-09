@@ -7,6 +7,7 @@
 		<id name="bid" column="bid" type="string">
 			<generator class="uuid"/>
 		</id>
+		<property name="bno" column="bno" type="string" not-null="true"  unique="true"/>
 		<property name="checkin" column="checkin" type="date" not-null="true"/>
 		<property name="checkout" column="checkout" type="date" not-null="true"/>
 		<property name="days" column="days" type="integer" not-null="true"/>

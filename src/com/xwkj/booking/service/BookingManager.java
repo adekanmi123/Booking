@@ -1,8 +1,11 @@
 package com.xwkj.booking.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+
+import com.xwkj.booking.bean.BookingBean;
 
 public interface BookingManager {
 
@@ -15,5 +18,15 @@ public interface BookingManager {
 	 * @return
 	 */
 	Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session);
+	
+	/**
+	 * 管理员查询订单
+	 * @param start
+	 * @param end
+	 * @param checkin
+	 * @param bno
+	 * @return
+	 */
+	List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno);
 	
 }

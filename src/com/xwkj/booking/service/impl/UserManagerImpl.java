@@ -2,8 +2,10 @@ package com.xwkj.booking.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,9 +15,11 @@ import com.xwkj.booking.bean.UserBean;
 import com.xwkj.booking.domain.User;
 import com.xwkj.booking.service.UserManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
+import com.xwkj.common.util.DateTool;
 import com.xwkj.common.util.HttpRequestUtil;
 import com.xwkj.common.util.MathTool;
 import com.xwkj.common.util.RandomValidateCode;
+import com.xwkj.common.util.RandomValue;
 
 import net.sf.json.JSONObject;
 
@@ -38,102 +42,49 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	private String FailedResionTelephoneWrong;
 	private String FailedReasionSystemError;
 	private String FailedReasionTelephoneNotExsit;
-
-	public int getVerificationTimeout() {
-		return verificationTimeout;
-	}
-
+	
 	public void setVerificationTimeout(int verificationTimeout) {
 		this.verificationTimeout = verificationTimeout;
-	}
-
-	public String getSMSUrl() {
-		return SMSUrl;
 	}
 
 	public void setSMSUrl(String sMSUrl) {
 		SMSUrl = sMSUrl;
 	}
 
-	public String getSMSKey() {
-		return SMSKey;
-	}
-
 	public void setSMSKey(String sMSKey) {
 		SMSKey = sMSKey;
-	}
-
-	public int getSMSTemplateID() {
-		return SMSTemplateID;
 	}
 
 	public void setSMSTemplateID(int sMSTemplateID) {
 		SMSTemplateID = sMSTemplateID;
 	}
 
-	public String getSecurityCodeWrongTip() {
-		return securityCodeWrongTip;
-	}
-
 	public void setSecurityCodeWrongTip(String securityCodeWrongTip) {
 		this.securityCodeWrongTip = securityCodeWrongTip;
-	}
-
-	public String getFailedReasonNoSMS() {
-		return FailedReasonNoSMS;
 	}
 
 	public void setFailedReasonNoSMS(String failedReasonNoSMS) {
 		FailedReasonNoSMS = failedReasonNoSMS;
 	}
 
-	public String getFailedReasonTimeout() {
-		return FailedReasonTimeout;
-	}
-
 	public void setFailedReasonTimeout(String failedReasonTimeout) {
 		FailedReasonTimeout = failedReasonTimeout;
-	}
-
-	public String getFailedReasopnVerificationCodeWrong() {
-		return FailedReasopnVerificationCodeWrong;
 	}
 
 	public void setFailedReasopnVerificationCodeWrong(String failedReasopnVerificationCodeWrong) {
 		FailedReasopnVerificationCodeWrong = failedReasopnVerificationCodeWrong;
 	}
 
-	public String getFailedResionTelephoneWrong() {
-		return FailedResionTelephoneWrong;
-	}
-
 	public void setFailedResionTelephoneWrong(String failedResionTelephoneWrong) {
 		FailedResionTelephoneWrong = failedResionTelephoneWrong;
-	}
-
-	public String getFailedReasionSystemError() {
-		return FailedReasionSystemError;
 	}
 
 	public void setFailedReasionSystemError(String failedReasionSystemError) {
 		FailedReasionSystemError = failedReasionSystemError;
 	}
 
-	public String getFailedReasionTelephoneNotExsit() {
-		return FailedReasionTelephoneNotExsit;
-	}
-
 	public void setFailedReasionTelephoneNotExsit(String failedReasionTelephoneNotExsit) {
 		FailedReasionTelephoneNotExsit = failedReasionTelephoneNotExsit;
-	}
-
-	@Override
-	public String addUser(String telephone, String uname, String password, String tid) {
-		User user=new User();
-		user.setTelephone(telephone);
-		user.setUname(uname);
-		user.setPassword(password);
-		return userDao.save(user);
 	}
 
 	@Override
@@ -204,7 +155,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 			return data;
 		}
 		data.put("verificationTimeout", verificationTimeout);
-		String verificationCode=String.valueOf(MathTool.getRandom(999999));
+		String verificationCode=MathTool.getRandomStr(6);
 		String value="#code#="+verificationCode+"&#minutes#="+(verificationTimeout/60);
 		String url=SMSUrl+"?mobile="+telephone+"&tpl_id="+SMSTemplateID+"&tpl_value="+URLEncoder.encode(value, "UTF-8")+"&key="+SMSKey;
 		JSONObject result=JSONObject.fromObject(HttpRequestUtil.httpRequest(url));
@@ -283,7 +234,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 			return data;
 		}
 		data.put("verificationTimeout", verificationTimeout);
-		String verificationCode=String.valueOf(MathTool.getRandom(999999));
+		String verificationCode=MathTool.getRandomStr(6);
 		String value="#code#="+verificationCode+"&#minutes#="+(verificationTimeout/60);
 		String url=SMSUrl+"?mobile="+telephone+"&tpl_id="+SMSTemplateID+"&tpl_value="+URLEncoder.encode(value, "UTF-8")+"&key="+SMSKey;
 		JSONObject result=JSONObject.fromObject(HttpRequestUtil.httpRequest(url));
@@ -325,7 +276,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		//验证手机号码
 		if(!telephone.equals(telephoneVerificationCode.getTelephone())) {
 			data.put("success", false);
-			data.put("reason", FailedResionTelephoneWrong);
+			data.put("reason", FailedReasionTelephoneNotExsit);
 			return data;
 		}
 		User user=userDao.findUserByTelephone(telephone);
@@ -345,4 +296,32 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		return data;
 	}
 
+	@Override
+	public int getUsersCount(String telephone, String uname) {
+		return userDao.getUsersCount(telephone, uname);
+	}
+
+	@Override
+	public List<UserBean> searchUsers(String telephone, String uname, int page, int pageSize) {
+		List<UserBean> users=new ArrayList<>();
+		int offset=(page-1)*pageSize;
+		for(User user: userDao.findUsersByPage(telephone, uname, offset, pageSize))
+			users.add(new UserBean(user));
+		return users;
+	}
+
+	public List<Map<String, String>> romdomCreateUser(int n) {
+		List<Map<String, String>> data=new ArrayList<>();
+		for(int i=0;i<n;i++) {
+			Map<String, String> person=RandomValue.getPersonInfo();
+			data.add(person);
+			User user=new User();
+			user.setUname(person.get("name"));
+			user.setTelephone(person.get("tel"));
+			user.setPassword(person.get("email"));
+			user.setRegisterDate(DateTool.randomDate("2015-09-01", "2015-10-10"));
+			userDao.save(user);
+		}
+		return data;
+	}
 }

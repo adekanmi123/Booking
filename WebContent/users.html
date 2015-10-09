@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>用户管理</title>
+        <link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
+        <link href="static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="static/css/bootstrap-switch.min.css" rel="stylesheet">
+        <link href="static/css/font-awesome.min.css" rel="stylesheet">
+        <link href="static/css/mengular.css" rel="stylesheet">
+        <link href="static/css/users.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script src="static/js/jquery.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/jquery.bootstrap.min.js"></script>
+        <script src="static/js/bootstrap-switch.min.js"></script>
+        <script src="static/js/mengular-2.0.js"></script>
+        <script src="dwr/engine.js"></script>
+        <script src="dwr/interface/UserManager.js"></script>
+        <script src="dwr/interface/AdminManager.js"></script>
+        <script src="static/js/tools.js"></script>
+        <script src="static/js/users.js"></script>
+    </head>
+    <body>
+        <div id="main-container" class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed glyphicon glyphicon-th-list" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
+                        <a class="navbar-brand" href="javascript:history.go(0)">订房系统管理</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul id="list-nav" class="nav navbar-nav logined-btn">
+                            <li><a href="rooms.html">房间管理</a></li>
+                            <li class="active"><a href="users.html">用户管理</a></li>
+                            <li><a href="bookings.html">订单管理</a></li>
+                            <li><a href="comments.html">点评管理</a></li>
+                        </ul>
+                        <ul id="list-nav" class="nav navbar-nav navbar-right">
+                            <li><a href="LogoutServlet?task=adminLogout">退出</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="users-panel" class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">用户列表</h1>
+                </div>
+                <div class="panel-body">
+                    <div id="search-users-form" class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-phone fa-lg"></i></span>
+                                <input id="search-user-telephone" type="text" class="form-control" placeholder="电话号码">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon form-icon"><i class="fa fa-user fa-lg"></i></span>
+                                <input id="search-user-uname" type="text" class="form-control" placeholder="用户名">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <button id="search-user-submit" class="btn btn-block btn-success">搜索</button>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <button id="search-user-reset" class="btn btn-block btn-primary">还原</button>
+                        </div>
+                    </div>
+                </div>
+                <table id="user-list" class="table">
+                    <thead>
+                        <tr>
+                            <th>注册时间</th>
+                            <th>手机号码</th>
+                            <th>用户名</th>
+                            <th>管理</th>
+                            <th>删除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="${uid}$" class="mengular-template user-list-template">
+                            <td>${registerDate}$</td>
+                            <td>${telephone}$</td>
+                            <td>${uname}$</td>
+                            <td class="user-list-manage"><i class="fa fa-gear fa-lg text-success"></i></td>
+                            <td class="user-list-delete"><i class="fa fa-trash-o fa-lg text-danger"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9">
+                            <nav id="user-page-nav" >
+                                <ul class="pagination "></ul>
+                            </nav>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">每页显示</span>
+                                <select id="page-size" class="form-control"></select>
+                                <span class="input-group-addon">条，共<span id="users-count"></span>条</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

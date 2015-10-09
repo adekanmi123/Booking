@@ -9,6 +9,7 @@ public class Booking implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String bid;
+	private String bno;
 	private Date checkin;
 	private Date checkout;
 	private Integer days;
@@ -113,6 +114,12 @@ public class Booking implements Serializable {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getBno() {
+		return bno;
+	}
+	public void setBno(String bno) {
+		this.bno = bno;
 	}
 	
 }

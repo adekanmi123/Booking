@@ -32,6 +32,12 @@ $(document).ready(function() {
 		checkin=$("#booking-room-checkin").val();
 		checkout=$("#booking-room-checkout").val();
 		if(checkin!=""&&checkin!=null&&checkout!=""&&checkout!=null) {
+			if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
+				$("#booking-room-checkin").parent().addClass("has-error");
+				$("#booking-room-submit").attr("disabled","disabled");
+				$.messager.popup("入住日期必须在今日或今日以后！");
+				return;
+			}
 			var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
 			if(days<=0) {
 				$("#booking-room-checkin, #booking-room-checkout").parent().addClass("has-error");
@@ -50,7 +56,7 @@ $(document).ready(function() {
 	});
 	
 	RoomManager.getRoom(rid, function(room) {
-		if(room==null) {
+		if(room==null||room.enable==false) {
 			location.href="urlError.html";
 			return;
 		}

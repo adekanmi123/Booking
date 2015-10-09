@@ -7,7 +7,7 @@
 		<id name="uid" column="uid" type="string">
 			<generator class="uuid"/>
 		</id>
-		<property name="telephone" column="telephone" type="string" not-null="true"/>
+		<property name="telephone" column="telephone" type="string" not-null="true" unique="true"/>
 		<property name="uname" column="uname" type="string" not-null="true"/>
 		<property name="password" column="password" type="string" not-null="true"/>
 		<property name="registerDate" column="registerDate" type="java.util.Date" not-null="true"/>	

@@ -7,6 +7,7 @@ import com.xwkj.booking.domain.Booking;
 public class BookingBean {
 	
 	private String bid;
+	private String bno;
 	private Date checkin;
 	private Date checkout;
 	private int days;
@@ -26,6 +27,12 @@ public class BookingBean {
 	}
 	public void setBid(String bid) {
 		this.bid = bid;
+	}
+	public String getBno() {
+		return bno;
+	}
+	public void setBno(String bno) {
+		this.bno = bno;
 	}
 	public Date getCheckin() {
 		return checkin;
@@ -109,6 +116,7 @@ public class BookingBean {
 	public BookingBean(Booking booking) {
 		super();
 		this.bid = booking.getBid();
+		this.bno = booking.getBno();
 		this.checkin = booking.getCheckin();
 		this.checkout = booking.getCheckout();
 		this.days = booking.getDays();
@@ -117,7 +125,8 @@ public class BookingBean {
 		this.payed = booking.isPayed();
 		this.payDate = booking.getPayDate();
 		this.stayed = booking.isStayed();
-		this.stars = booking.getStars();
+		if(booking.getStars()!=null)
+			this.stars = booking.getStars();
 		this.comment = booking.getComment();
 		this.commentDate = booking.getCommentDate();
 		this.room = new RoomBean(booking.getRoom());
