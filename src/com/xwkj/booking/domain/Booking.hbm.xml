@@ -16,9 +16,6 @@
 		<property name="payed" column="payed" type="boolean" not-null="true"/>
 		<property name="payDate" column="payDate" type="java.util.Date"/>	
 		<property name="stayed" column="stayed" type="boolean" not-null="true"/>
-		<property name="stars" column="stars" type="integer"/>
-		<property name="comment" column="comment" type="text"/>
-		<property name="commentDate" column="commentDate" type="java.util.Date"/>	
 		<many-to-one name="room" column="rid" class="Room"  lazy="false"/>
 		<set name="histories" cascade="delete" inverse="true">
 		 	<key><column name="bid" not-null="true" /></key>

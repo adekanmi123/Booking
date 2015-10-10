@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xwkj.booking.domain">
+	<class name="Message" table="message">
+		<id name="mid" column="mid" type="string">
+			<generator class="uuid"/>
+		</id>
+		<property name="name" column="name" type="string" not-null="true"/>
+		<property name="email" column="email" type="string" not-null="true"/>
+		<property name="telephone" column="telephone" type="string" not-null="true"/>
+		<property name="content" column="content" type="text" not-null="true"/>
+		<property name="date" column="date" type="java.util.Date" not-null="true"/>	
+		<property name="looked" column="looked" type="boolean" not-null="true"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xwkj.booking.domain">
+	<class name="Comment" table="comment">
+		<id name="cid" column="cid" type="string">
+			<generator class="uuid"/>
+		</id>
+		<property name="stars" column="stars" type="integer"/>
+		<property name="content" column="content" type="text"/>
+		<property name="commentDate" column="commentDate" type="java.util.Date"/>	
+		<property name="enable" column="enable" type="boolean" not-null="true"/>
+		<many-to-one name="booking" column="bid" class="Booking" not-null="true" lazy="false"/>
+	</class>
+</hibernate-mapping>

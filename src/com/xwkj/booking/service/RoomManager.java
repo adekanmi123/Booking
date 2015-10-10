@@ -45,21 +45,34 @@ public interface RoomManager {
 	RoomBean getRoom(String rid);
 	
 	/**
+	 * 获取最新的limit个房间
 	 * @param limit
 	 * @return
 	 */
 	List<RoomBean> getNewestRooms(int limit);
 	
+	
 	/**
-	 * 管理员查询房间
-	 * @param start
-	 * @param end
-	 * @param number
+	 * 管理员获取房间个数
 	 * @param location
 	 * @param rname
+	 * @param number
+	 * @param enable
 	 * @return
 	 */
-	List<RoomBean> searchRoomForAdmin(String start, String end, int number, String location, String rname);
+	int getRoomCountForAdmin(String location, String rname, int number, int enable);
+	
+	/**
+	 * 管理员查询房间
+	 * @param location 房间位置
+	 * @param rname 房间名称
+	 * @param number 房间类型
+	 * @param enable 房间是否可用 可用1 不可用0 任意-1
+	 * @param page 页码
+	 * @param pageSize 页面长度
+	 * @return
+	 */
+	List<RoomBean> searchRoomForAdmin(String location, String rname, int number, int enable, int page, int pageSize);
 	
 	/**
 	 * 用户查询房间

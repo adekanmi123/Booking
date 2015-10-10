@@ -89,6 +89,68 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 		return getHibernateTemplate().find(hql, objs);
 	}
 
+	@SuppressWarnings({ "unchecked", "null" })
+	@Override
+	public List<Room> searchByPage(String location, String rname, Integer number, boolean showAll, boolean enable, int offset, int pageSize) {
+		List<Object> objects=new ArrayList<>();
+		String hql="from Room where rid!=null ";
+		if(location!=null||!location.equals("")) {
+			hql+=" and location like ?";
+			objects.add("%"+location+"%");
+		}
+		if(rname!=null&&!rname.equals("")) {
+			hql+=" and rname like ?";
+			objects.add("%"+rname+"%");
+		}
+		if(number>0) {
+			hql+=" and number=?";
+			objects.add(number);
+		}
+		if(!showAll) {
+			hql+=" and enable=?";
+			objects.add(enable);
+		}
+		hql+=" order by createDate desc";
+		Object [] objs=new Object[objects.size()];
+		for(int i=0; i<objects.size(); i++)
+			objs[i]=objects.get(i);
+		return findByPage(hql, objs, offset, pageSize);
+	}
+	
+
+	@SuppressWarnings("null")
+	@Override
+	public int getRoomCount(String location, String rname, Integer number, boolean showAll, boolean enable) {
+		List<Object> objects=new ArrayList<>();
+		String hql="select count(*) from Room where rid!=null ";
+		if(location!=null||!location.equals("")) {
+			hql+=" and location like ?";
+			objects.add("%"+location+"%");
+		}
+		if(rname!=null&&!rname.equals("")) {
+			hql+=" and rname like ?";
+			objects.add("%"+rname+"%");
+		}
+		if(number>0) {
+			hql+=" and number=?";
+			objects.add(number);
+		}
+		if(!showAll) {
+			hql+=" and enable=?";
+			objects.add(enable);
+		}
+		final String _hql=hql;
+		return getHibernateTemplate().execute(new HibernateCallback<Long>() {
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query=session.createQuery(_hql);
+				for(int i=0; i< objects.size(); i++)
+					query.setParameter(i, objects.get(i));
+				return (long)query.uniqueResult();
+			}
+		}).intValue();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Room> finidRoomLimit(int limit) {

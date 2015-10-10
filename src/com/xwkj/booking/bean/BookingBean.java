@@ -16,9 +16,6 @@ public class BookingBean {
 	private boolean payed;
 	private Date payDate;
 	private boolean stayed;
-	private int stars;
-	private String comment;
-	private Date commentDate;
 	private RoomBean room;
 	private UserBean user;
 	
@@ -82,24 +79,6 @@ public class BookingBean {
 	public void setStayed(boolean stayed) {
 		this.stayed = stayed;
 	}
-	public int getStars() {
-		return stars;
-	}
-	public void setStars(int stars) {
-		this.stars = stars;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	public Date getCommentDate() {
-		return commentDate;
-	}
-	public void setCommentDate(Date commentDate) {
-		this.commentDate = commentDate;
-	}
 	public RoomBean getRoom() {
 		return room;
 	}
@@ -125,10 +104,6 @@ public class BookingBean {
 		this.payed = booking.isPayed();
 		this.payDate = booking.getPayDate();
 		this.stayed = booking.isStayed();
-		if(booking.getStars()!=null)
-			this.stars = booking.getStars();
-		this.comment = booking.getComment();
-		this.commentDate = booking.getCommentDate();
 		this.room = new RoomBean(booking.getRoom());
 		this.user = new UserBean(booking.getUser());
 	}

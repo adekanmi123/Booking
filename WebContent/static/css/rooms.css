@@ -7,7 +7,7 @@
 }
 
 .form-icon i {
-	width: 25px;
+	width: 20px;
 }
 
 #upload-room-photo-progress {
@@ -28,4 +28,8 @@
     position: absolute;
     margin-left: 40px;
     margin-top: 5px;
+}
+
+#rooms-page-nav .pagination {
+	margin: 0
 }

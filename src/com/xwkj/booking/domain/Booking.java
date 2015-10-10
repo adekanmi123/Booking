@@ -18,9 +18,6 @@ public class Booking implements Serializable {
 	private boolean payed;
 	private Date payDate;
 	private boolean stayed;
-	private Integer stars;
-	private String comment;
-	private Date commentDate;
 	private Room room;
 	private Set<History> histories;
 	private User user;
@@ -78,24 +75,6 @@ public class Booking implements Serializable {
 	}
 	public void setStayed(boolean stayed) {
 		this.stayed = stayed;
-	}
-	public Integer getStars() {
-		return stars;
-	}
-	public void setStars(Integer stars) {
-		this.stars = stars;
-	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	public Date getCommentDate() {
-		return commentDate;
-	}
-	public void setCommentDate(Date commentDate) {
-		this.commentDate = commentDate;
 	}
 	public Room getRoom() {
 		return room;

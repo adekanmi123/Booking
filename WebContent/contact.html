@@ -7,11 +7,8 @@
         <title>九资河旅游订房</title>
 		<link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
 		<link href="static/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="static/css/bootstrap-switch.min.css" rel="stylesheet">
-        <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 		<link href="static/css/style.css" rel="stylesheet"/>
 		<link href="static/css/font-awesome.min.css" rel="stylesheet">
-		<link href="static/css/mengular.css" rel="stylesheet">
 		<link href="static/css/contact.css" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,12 +17,10 @@
         <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.bootstrap.min.js"></script>
 		<script src="static/js/bootstrap.min.js"></script>
-        <script src="static/js/bootstrap-datetimepicker.min.js"></script>
-        <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
-        <script src="static/js/mengular-2.0.js"></script>
         <script src="dwr/engine.js"></script>
-        <script src="dwr/interface/RoomManager.js"></script>
+        <script src="dwr/interface/MessageManager.js"></script>
         <script src="static/js/tools.js"></script>
         <script src="static/js/contact.js"></script>
 	</head>
@@ -34,28 +29,36 @@
 		<div class="events">
 			<div class="container">
 				<div class="contact-top heading">
-					<h3>联系我们</h3>
+					<h3>给我们留言</h3>
 				</div>
 				<div id="contact-form" class="row">
 					<div class="col-xs-12 col-md-4">
-		                <input id="" type="text" class="form-control input-lg" placeholder="您的姓名">
+						<div class="input-group">
+							<span class="input-group-addon form-icon"><i class="fa fa-user fa-lg"></i></span>
+			                <input id="message-name" type="text" class="form-control input-lg" placeholder="您的姓名">
+			            </div>
 					</div>
 					<div class="col-xs-12 col-md-4">
-		                <input id="" type="text" class="form-control input-lg" placeholder="您的邮箱">
+						<div class="input-group">
+							<span class="input-group-addon form-icon"><i class="fa fa-envelope-o fa-lg"></i></span>
+			                <input id="message-email" type="text" class="form-control input-lg" placeholder="您的邮箱">
+			            </div>
 					</div>
 					<div class="col-xs-12 col-md-4">
-	                    <input id="" type="text" class="form-control input-lg" placeholder="您的电话">
+						<div class="input-group">
+							<span class="input-group-addon form-icon"><i class="fa fa-phone fa-lg"></i></span>
+		                    <input id="message-telephone" type="text" class="form-control input-lg" placeholder="您的电话">
+	                    </div>
 					</div>
 					<div class="col-xs-12">
-	                    <textarea id=""  class="form-control input-lg" placeholder="您的留言" rows="14"></textarea>
+	                    <textarea id="message-content"  class="form-control input-lg" placeholder="您的留言" rows="14"></textarea>
 					</div>
 					<div class="col-xs-12">
-	                    <button class="btn btn-block btn-lg btn-success">提交</button>
+	                    <button id="message-submit" class="btn btn-block btn-lg btn-success">提交</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div id="foot"></div>
 	</body>
 </html>

@@ -20,4 +20,10 @@
 	<bean id="historyDao" class="com.xwkj.booking.dao.impl.HistoryDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
+	<bean id="commentDao" class="com.xwkj.booking.dao.impl.CommentDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+	<bean id="messageDao" class="com.xwkj.booking.dao.impl.MessageDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 </beans>

@@ -84,11 +84,25 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 	}
 	
 	@Override
-	public List<RoomBean> searchRoomForAdmin(String start, String end, int number, String location, String rname) {
-		Date startDate=DateTool.transferDate(start+" 00:00:00", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
-		Date endDate=DateTool.transferDate(end+" 23:59:59", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
+	public int getRoomCountForAdmin(String location, String rname, int number, int enable) {
+		boolean _enable=false, showAll=false;
+		if(enable==-1)
+			showAll=true;
+		else
+			_enable= (enable==1)? true: false;
+		return roomDao.getRoomCount(location, rname, number, showAll, _enable);
+	}
+	
+	@Override
+	public List<RoomBean> searchRoomForAdmin(String location, String rname, int number, int enable, int page, int pageSize) {
 		List<RoomBean> rooms=new ArrayList<>();
-		for(Room room: roomDao.searchRoom(rname, number, location, -1.0, -1.0, -1.0, -1.0, startDate, endDate, true, true))
+		int offset=(page-1)*pageSize;
+		boolean _enable=false, showAll=false;
+		if(enable==-1)
+			showAll=true;
+		else
+			_enable= (enable==1)? true: false;
+		for(Room room: roomDao.searchByPage(location, rname, number, showAll, _enable, offset, pageSize))
 			rooms.add(new RoomBean(room));
 		return rooms;
 	}
@@ -124,4 +138,5 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 				return false;
 		return true;
 	}
+
 }

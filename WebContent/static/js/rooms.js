@@ -1,5 +1,10 @@
 //正在修改的房间id
 var modifyingRid;
+//单页长度
+var pageSize=15;
+
+var SHOW_ALL_ENABLE=-1;
+var SHOW_ALL_NUMBER=-1
 
 $(document).ready(function() {
 	$.messager.model = {
@@ -8,8 +13,43 @@ $(document).ready(function() {
 		};
 	
 	checkAdminSession(function() {
-		loadRooms();
+		searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);
 	})
+
+	//加载每页显示条数的下拉菜单
+	for(var i=0;i<=100;i++) {
+		var option=$("<option>").val(i).text(i);
+		if(pageSize==i)
+			option.attr("selected","selected");
+		$("#page-size").append(option);
+	}
+	//更改每页显示的条数
+	$("#page-size").change(function() {
+		pageSize=$(this).val();
+		var location=$("#search-room-location").val();
+    	var rname=$("#search-room-rname").val();
+    	var number=$("#search-room-number").val();
+    	var enable=$("#search-room-enable").val();
+    	searchRooms(location, rname, number, enable, 1);
+	});
+
+    //搜索房间
+    $("#search-room-submit").click(function() {
+    	var location=$("#search-room-location").val();
+    	var rname=$("#search-room-rname").val();
+    	var number=$("#search-room-number").val();
+    	var enable=$("#search-room-enable").val();
+    	searchRooms(location, rname, number, enable, 1);
+    });
+
+    //重置搜索
+    $("#search-room-reset").click(function() {
+    	$("#search-room-location").val("");
+    	$("#search-room-rname").val("");
+    	$("#search-room-number").val(SHOW_ALL_NUMBER);
+    	$("#search-room-enable").val(SHOW_ALL_ENABLE);
+    	searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);
+    });
 	
 	//添加房间
 	$("#add-room-submit").click(function() {
@@ -134,8 +174,26 @@ $(document).ready(function() {
 	});
 });
 
-function loadRooms() {
-	RoomManager.searchRoomForAdmin(getThisYearStart(), getThisYearEnd(), -1, null, null , function(rooms) {
+function searchRooms(location, rname, number, enable, page) {
+	//加载页码
+	RoomManager.getRoomCountForAdmin(location, rname, number, enable, function(count) {
+		$("#rooms-count").text(count);
+		$("#rooms-page-nav ul").empty();
+		for(var i=1; i<Math.ceil(count/pageSize+1);i++) {
+			var li='<li><a href="javascript:void(0)">'+i+'</a></li>';
+			if(page==i)
+				li='<li class="active"><a href="javascript:void(0)">'+i+'</a></li>';
+			$("#rooms-page-nav ul").append(li);
+		}
+		$("#rooms-page-nav ul li").each(function(index) {
+			$(this).click(function() {
+				searchRooms(location, rname, number, enable, index+1);
+			});
+		});
+	});
+
+	//加载房间
+	RoomManager.searchRoomForAdmin(location, rname, number, enable, page, pageSize, function(rooms) {
 		$("#room-list tbody").mengularClear();
 		for(var i in rooms) {
 			$("#room-list tbody").mengular(".room-list-template", {
