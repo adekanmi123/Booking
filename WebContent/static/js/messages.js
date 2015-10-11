@@ -60,11 +60,26 @@ $(document).ready(function() {
     //邮件回复
     $("#reply-message-email").click(function() {
     	var reply=$("#show-message-reply").val();
+    	$(this).text("正在发送邮件..").attr("disabled", "disabled");
     	MessageManager.replyByEmail(replyingMid, reply, function(success) {
+    		$("#reply-message-email").text("邮件回复留言者").removeAttr("disabled");
     		if(success)
     			$.messager.popup("邮件回复成功！");
     		else
     			$.messager.popup("邮件回复失败！");
+    	});
+    });
+
+    //短信回复
+    $("#reply-message-sms").click(function() {
+    	var reply=$("#show-message-reply").val();
+    	$(this).text("正在发送短信..").attr("disabled", "disabled");
+    	MessageManager.replyBySMS(replyingMid, reply, function(success) {
+    		$("#reply-message-sms").text("短信回复留言者").removeAttr("disabled");
+    		if(success)
+    			$.messager.popup("短信回复成功！");
+    		else
+    			$.messager.popup("短信回复失败！这可能是短信过长或者短信中关键词被运营商屏蔽，请修改后再试！");
     	});
     });
 });

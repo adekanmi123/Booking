@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.directwebremoting.WebContextFactory;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.xwkj.booking.bean.MessageBean;
 import com.xwkj.booking.domain.Message;
 import com.xwkj.booking.service.MessageManager;
@@ -12,12 +15,18 @@ import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
 import com.xwkj.common.util.MailService;
 import com.xwkj.common.util.RandomValue;
+import com.xwkj.common.util.SMSService;
+
+import net.sf.json.JSONObject;
 
 public class MessageManagerImpl extends ManagerTemplate implements MessageManager {
 	
 	private String SMTPServer;
 	private String username;
 	private String password;
+	
+	private int SMSTemplateID;
+	
 	private String replyMessageSubject;
 	private String replyMessageHead;
 	private String replyMessageFoot;
@@ -32,6 +41,10 @@ public class MessageManagerImpl extends ManagerTemplate implements MessageManage
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setSMSTemplateID(int sMSTemplateID) {
+		this.SMSTemplateID = sMSTemplateID;
 	}
 
 	public void setReplyMessageSubject(String replyMessageSubject) {
@@ -138,6 +151,19 @@ public class MessageManagerImpl extends ManagerTemplate implements MessageManage
 		service.setSubject(replyMessageSubject);
 		service.setContent(replyMessageHead+"\n"+reply+"\n"+replyMessageFoot);
 		return service.send();
+	}
+
+	@Override
+	public boolean replyBySMS(String mid, String reply) {
+		Message message=messageDao.get(mid);
+		SMSService sms=(SMSService)WebApplicationContextUtils.getWebApplicationContext(WebContextFactory.get().getServletContext()).getBean("SMSService");
+		String value="#code#="+reply;
+		JSONObject result=sms.send(message.getTelephone(), SMSTemplateID, value);
+		if(Integer.parseInt(result.get("error_code").toString())==0) 
+			return true;
+		else
+			System.out.println(result.get("reason"));
+		return false;
 	}
 
 }

@@ -29,4 +29,13 @@ public interface BookingManager {
 	 */
 	List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno);
 	
+	/**
+	 * 用户获取自己的订单
+	 * @param uid 用户id
+	 * @param orderby 排序关键字
+	 * @param desc 排序顺序
+	 * @return
+	 */
+	List<BookingBean> getBookingsByUid(String uid, String orderby, boolean desc);
+	
 }

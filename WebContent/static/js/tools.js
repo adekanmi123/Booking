@@ -10,6 +10,11 @@ var DATE_HOUR_MINUTE_FORMAT="yyyy-MM-dd hh:mm";
 //“年-月-日 时:分:秒”格式
 var DATE_HOUR_MINUTE_SECOND_FORMAT="yyyy-MM-dd hh:mm:ss";
 
+//“年-月-日”格式 中文
+var YEAR_MONTH_DATE_FORMAT_CN="yyyy年MM月dd日";
+//“年-月-日 时:分:秒”格式 中文
+var DATE_HOUR_MINUTE_FORMAT_CN="yyyy年MM月dd日 hh点mm分";
+
 /**
  * 检查session，并返回userBean
  *  @param doAfterCheck 验证成功回调函数

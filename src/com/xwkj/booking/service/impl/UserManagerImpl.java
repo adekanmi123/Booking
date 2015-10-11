@@ -1,7 +1,5 @@
 package com.xwkj.booking.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,16 +8,19 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.directwebremoting.WebContextFactory;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.xwkj.booking.bean.TelephoneVerificationCode;
 import com.xwkj.booking.bean.UserBean;
 import com.xwkj.booking.domain.User;
 import com.xwkj.booking.service.UserManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
-import com.xwkj.common.util.HttpRequestUtil;
 import com.xwkj.common.util.MathTool;
 import com.xwkj.common.util.RandomValidateCode;
 import com.xwkj.common.util.RandomValue;
+import com.xwkj.common.util.SMSService;
 
 import net.sf.json.JSONObject;
 
@@ -27,10 +28,6 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	
 	//验证时长
 	private int verificationTimeout;
-	//短信api发送地址
-	private String SMSUrl;
-	//短信API密钥
-	private String SMSKey;
 	//短信模板ID
 	private int SMSTemplateID;
 	//安全码错误提示
@@ -45,14 +42,6 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	
 	public void setVerificationTimeout(int verificationTimeout) {
 		this.verificationTimeout = verificationTimeout;
-	}
-
-	public void setSMSUrl(String sMSUrl) {
-		SMSUrl = sMSUrl;
-	}
-
-	public void setSMSKey(String sMSKey) {
-		SMSKey = sMSKey;
 	}
 
 	public void setSMSTemplateID(int sMSTemplateID) {
@@ -139,7 +128,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	}
 
 	@Override
-	public Map<String, Object> getVerificationCode(String telephone, String code, HttpSession session) throws UnsupportedEncodingException {
+	public Map<String, Object> getVerificationCode(String telephone, String code, HttpSession session) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		if(userDao.findUserByTelephone(telephone)!=null) {
 			data.put("hasTelephone", true);
@@ -147,7 +136,6 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		}
 		boolean send=false;
 		String securityCode=(String)session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
-		System.out.println("Security Code Check: server->"+securityCode+", user->"+code);
 		//安全码不对不能发短信，以免有人恶意发短信
 		if(securityCode==null||!securityCode.equalsIgnoreCase(code)) {
 			data.put("send", send);
@@ -157,8 +145,8 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		data.put("verificationTimeout", verificationTimeout);
 		String verificationCode=MathTool.getRandomStr(6);
 		String value="#code#="+verificationCode+"&#minutes#="+(verificationTimeout/60);
-		String url=SMSUrl+"?mobile="+telephone+"&tpl_id="+SMSTemplateID+"&tpl_value="+URLEncoder.encode(value, "UTF-8")+"&key="+SMSKey;
-		JSONObject result=JSONObject.fromObject(HttpRequestUtil.httpRequest(url));
+		SMSService sms=(SMSService)WebApplicationContextUtils.getWebApplicationContext(WebContextFactory.get().getServletContext()).getBean("SMSService");
+		JSONObject result=sms.send(telephone, SMSTemplateID, value);
 		if(Integer.parseInt(result.get("error_code").toString())==0) 
 			send=true;
 		data.put("reason", result.get("reason"));
@@ -217,7 +205,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	}
 
 	@Override
-	public Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session) throws UnsupportedEncodingException {
+	public Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session) {
 		Map<String, Object> data=new HashMap<String, Object>();
 		if(userDao.findUserByTelephone(telephone)==null) {
 			data.put("hasTelephone", false);
@@ -226,7 +214,6 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		data.put("hasTelephone", true);
 		boolean send=false;
 		String securityCode=(String)session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
-		System.out.println("Security Code Check: server->"+securityCode+", user->"+code);
 		//安全码不对不能发短信，以免有人恶意发短信
 		if(securityCode==null||!securityCode.equalsIgnoreCase(code)) {
 			data.put("send", send);
@@ -236,8 +223,8 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		data.put("verificationTimeout", verificationTimeout);
 		String verificationCode=MathTool.getRandomStr(6);
 		String value="#code#="+verificationCode+"&#minutes#="+(verificationTimeout/60);
-		String url=SMSUrl+"?mobile="+telephone+"&tpl_id="+SMSTemplateID+"&tpl_value="+URLEncoder.encode(value, "UTF-8")+"&key="+SMSKey;
-		JSONObject result=JSONObject.fromObject(HttpRequestUtil.httpRequest(url));
+		SMSService sms=(SMSService)WebApplicationContextUtils.getWebApplicationContext(WebContextFactory.get().getServletContext()).getBean("SMSService");
+		JSONObject result=sms.send(telephone, SMSTemplateID, value);
 		if(Integer.parseInt(result.get("error_code").toString())==0) 
 			send=true;
 		data.put("reason", result.get("reason"));

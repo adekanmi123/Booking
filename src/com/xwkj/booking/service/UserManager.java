@@ -1,6 +1,5 @@
 package com.xwkj.booking.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -66,8 +65,7 @@ public interface UserManager {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	Map<String, Object> getVerificationCode(String telephone, String code, HttpSession session)
-			throws UnsupportedEncodingException;
+	Map<String, Object> getVerificationCode(String telephone, String code, HttpSession session);
 	
 	/**
 	 * 用户注册
@@ -87,7 +85,7 @@ public interface UserManager {
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session) throws UnsupportedEncodingException;
+	Map<String, Object> getModifyVerificationCode(String telephone, String code, HttpSession session);
 	
 	/**
 	 * 验证修改用户信息的短信验证码

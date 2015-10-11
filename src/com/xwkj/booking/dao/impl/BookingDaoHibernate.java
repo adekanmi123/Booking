@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.xwkj.booking.dao.BookingDao;
 import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.domain.User;
 import com.xwkj.common.hibernate3.support.PageHibernateDaoSupport;
 
 public class BookingDaoHibernate extends PageHibernateDaoSupport implements BookingDao {
@@ -56,6 +57,18 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 		for(int i=0; i<objects.size(); i++)
 			objs[i]=objects.get(i);
 		return getHibernateTemplate().find(hql, objs);
+	}
+
+	@SuppressWarnings({ "unchecked", "null" })
+	@Override
+	public List<Booking> findByUser(User user, String orderby, boolean desc) {
+		String hql="from Booking where user=?";
+		if(orderby!=null||!orderby.equals("")) {
+			hql+=" order by "+orderby;
+			if(desc)
+				hql+=" desc";
+		}
+		return getHibernateTemplate().find(hql, user);
 	}
 
 }

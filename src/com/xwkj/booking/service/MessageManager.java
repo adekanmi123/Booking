@@ -62,4 +62,12 @@ public interface MessageManager {
 	 * @return
 	 */
 	boolean replyByEmail(String mid, String reply);
+	
+	/**
+	 * 短信回复
+	 * @param mid
+	 * @param reply
+	 * @return
+	 */
+	boolean replyBySMS(String mid, String reply);
 }

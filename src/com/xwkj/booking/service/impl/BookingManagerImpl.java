@@ -125,17 +125,13 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		return bookings;
 	}
 
-	public void fillBno() {
-		Date start=DateTool.transferDate("2015-10-01", DateTool.YEAR_MONTH_DATE_FORMAT);
-		Date end=DateTool.transferDate("2015-10-30", DateTool.YEAR_MONTH_DATE_FORMAT);
-		for(Booking booking: bookingDao.findForAdmin(start, end, null, null)) {
-			if(booking.getBno().equals("")) {
-				booking.setBno(DateTool.formatDate(booking.getCreateDate(), "yyyyMMddHHmmss")+MathTool.getRandomStr(6));
-				System.out.println(booking.getBno()+",  "+DateTool.formatDate(booking.getCreateDate(), DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT));
-				bookingDao.update(booking);
-			}
-		}
+	@Override
+	public List<BookingBean> getBookingsByUid(String uid, String orderby, boolean desc) {
+		List<BookingBean> bookings=new ArrayList<>();
+		User user=userDao.get(uid);
+		for(Booking booking: bookingDao.findByUser(user, orderby, desc))
+			bookings.add(new BookingBean(booking));
+		return bookings;
 	}
-
 
 }
