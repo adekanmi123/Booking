@@ -1,0 +1,12 @@
+.form-icon i {
+	width: 10px;
+}
+
+#search-message-form input,
+#search-message-form select {
+	font-size: 12px;
+}
+
+#show-message-modal .row div {
+	margin: 5px 0;
+}

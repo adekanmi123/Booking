@@ -1,6 +1,5 @@
 package com.xwkj.booking.service;
 
-import java.util.Date;
 import java.util.List;
 
 import com.xwkj.booking.bean.MessageBean;
@@ -33,7 +32,7 @@ public interface MessageManager {
 	 * @param looked
 	 * @return
 	 */
-	int getMessagesCount(Date start, Date end, String name, String email, String telephone, int looked);
+	int getMessagesCount(String start, String end, String name, String email, String telephone, int looked);
 	
 	/**
 	 * 分页搜索留言
@@ -47,5 +46,20 @@ public interface MessageManager {
 	 * @param pageSize
 	 * @return
 	 */
-	List<MessageBean> searchMessages(Date start, Date end, String name, String email, String telephone, int looked, int page, int pageSize);
+	List<MessageBean> searchMessages(String start, String end, String name, String email, String telephone, int looked, int page, int pageSize);
+	
+	/**
+	 * 标记已读和未读
+	 * @param mid
+	 * @param looked
+	 */
+	void looked(String mid, boolean looked);
+	
+	/**
+	 * 邮件回复
+	 * @param mid
+	 * @param reply
+	 * @return
+	 */
+	boolean replyByEmail(String mid, String reply);
 }

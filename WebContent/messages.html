@@ -8,6 +8,7 @@
         <link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
         <link href="static/css/bootstrap.min.css" rel="stylesheet">
         <link href="static/css/bootstrap-switch.min.css" rel="stylesheet">
+        <link href="static/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
         <link href="static/css/font-awesome.min.css" rel="stylesheet">
         <link href="static/css/mengular.css" rel="stylesheet">
         <link href="static/css/messages.css" rel="stylesheet">
@@ -21,9 +22,11 @@
         <script src="static/js/bootstrap.min.js"></script>
         <script src="static/js/jquery.bootstrap.min.js"></script>
         <script src="static/js/bootstrap-switch.min.js"></script>
+        <script src="static/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="static/js/mengular-2.0.js"></script>
         <script src="dwr/engine.js"></script>
-        <script src="dwr/interface/UserManager.js"></script>
+        <script src="dwr/interface/MessageManager.js"></script>
         <script src="dwr/interface/AdminManager.js"></script>
         <script src="static/js/tools.js"></script>
         <script src="static/js/messages.js"></script>
@@ -50,7 +53,132 @@
                     </div>
                 </div>
             </nav>
-
+            <div id="messages-panel" class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">用户列表</h1>
+                </div>
+                <div class="panel-body">
+                    <div id="search-message-form" class="row">
+                        <div class="col-xs-12 col-md-10">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-calendar"></i></span>
+                                        <input id="search-message-start" type="text" class="form-control" placeholder="起始时间" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-calendar-minus-o"></i></span>
+                                        <input id="search-message-end" type="text" class="form-control" placeholder="结束时间" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-user"></i></span>
+                                        <input id="search-message-name" type="text" class="form-control" placeholder="留言者姓名">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-envelope-o"></i></span>
+                                        <input id="search-message-email" type="text" class="form-control" placeholder="邮箱">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-phone"></i></span>
+                                        <input id="search-message-telephone" type="text" class="form-control" placeholder="电话号码">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon form-icon"><i class="fa fa-check-square-o"></i></span>
+                                        <select id="search-message-looked" class="form-control">
+                                            <option value="-1">显示所有</option>
+                                            <option value="1">已阅读</option>
+                                            <option value="0">未阅读</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-1">
+                            <button id="search-message-submit" class="btn btn-block btn-success">搜索</button>
+                        </div>
+                        <div class="col-xs-6 col-md-1">
+                            <button id="search-message-reset" class="btn btn-block btn-warning">还原</button>
+                        </div>
+                    </div>
+                </div>
+                <table id="message-list" class="table">
+                    <thead>
+                        <tr>
+                            <th>留言时间</th>
+                            <th>留言者姓名</th>
+                            <th>邮箱</th>
+                            <th>手机号码</th>
+                            <th>标记</th>
+                            <th>查看</th>
+                            <th>删除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="${mid}$" class="mengular-template message-list-template">
+                            <td>${date}$</td>
+                            <td>${name}$</td>
+                            <td>${email}$</td>
+                            <td>${telephone}$</td>
+                            <td class="message-list-looked"><input type="checkbox" data-size="mini" data-on-text="已读" data-off-text="未读"></td>
+                            <td class="message-list-show"><i class="fa fa-file-text-o text-success"></i></td>
+                            <td class="message-list-delete"><i class="fa fa-trash-o text-danger"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9">
+                            <nav id="page-nav" >
+                                <ul class="pagination" style="margin:0"></ul>
+                            </nav>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">每页显示</span>
+                                <select id="page-size" class="form-control"></select>
+                                <span class="input-group-addon">条，共<span id="page-count"></span>条</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="show-message-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="glyphicon glyphicon-remove pull-right" data-dismiss="modal"></span>
+                        <h4 class="modal-title">查看留言内容</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">留言者姓名</div>
+                            <div class="col-xs-12 col-md-8"><span id="show-message-name"></span></div>
+                            <div class="col-xs-12 col-md-4">电子邮箱</div>
+                            <div class="col-xs-12 col-md-8"><span id="show-message-email"></span></div>
+                            <div class="col-xs-12 col-md-4">电话号码</div>
+                            <div class="col-xs-12 col-md-8"><span id="show-message-telephone"></span></div>
+                            <div class="col-xs-12"><pre id="show-message-content"></pre></div>
+                        </div>
+                        <textarea id="show-message-reply" class="form-control" placeholder="在此输入回复留言者的内容，选择短信和邮件方式回复。" rows="6"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                        <button id="reply-message-sms" type="button" class="btn btn-success">短信回复留言者</button>
+                        <button id="reply-message-email" type="button" class="btn btn-info">邮件回复留言者</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
