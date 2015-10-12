@@ -9,6 +9,7 @@ import java.util.Map;
 import com.xwkj.booking.bean.CommentBean;
 import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.domain.Comment;
+import com.xwkj.booking.domain.Room;
 import com.xwkj.booking.service.CommentManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
@@ -100,6 +101,24 @@ public class CommentManagerImpl extends ManagerTemplate implements CommentManage
 	public List<CommentBean> getNewestComments(int limit) {
 		List<CommentBean> comments=new ArrayList<>();
 		for(Comment comment: commentDao.findEnableCommentLimit(limit))
+			comments.add(new CommentBean(comment));
+		return comments;
+	}
+	
+	@Override
+	public CommentBean getCommentByBid(String bid) {
+		Booking booking=bookingDao.get(bid);
+		Comment comment=commentDao.findByBooking(booking);
+		if(comment!=null)
+			return new CommentBean(comment);
+		return null;
+	}
+
+	@Override
+	public List<CommentBean> getCommentsByRid(String rid) {
+		Room room=roomDao.get(rid);
+		List<CommentBean> comments=new ArrayList<>();
+		for(Comment comment: commentDao.findByRoom(room))
 			comments.add(new CommentBean(comment));
 		return comments;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.domain.Comment;
+import com.xwkj.booking.domain.Room;
 
 public interface CommentDao {
 	
@@ -50,4 +51,11 @@ public interface CommentDao {
 	 * @return
 	 */
 	List<Comment> findEnableCommentLimit(int limit);
+	
+	/**
+	 * 查找房间评论
+	 * @param room
+	 * @return
+	 */
+	List<Comment> findByRoom(Room room);
 }

@@ -122,4 +122,11 @@ public class CommentDaoHibernate extends PageHibernateDaoSupport implements Comm
 		});
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> findByRoom(Room room) {
+		String hql="from Comment where enable=true and booking.room=? order by commentDate desc";
+		return getHibernateTemplate().find(hql, room);
+	}
+
 }

@@ -28,6 +28,7 @@
         <script src="dwr/interface/RoomManager.js"></script>
         <script src="dwr/interface/PhotoManager.js"></script>
         <script src="dwr/interface/BookingManager.js"></script>
+        <script src="dwr/interface/CommentManager.js"></script>
         <script src="static/js/tools.js"></script>
         <script src="static/js/room.js"></script>
 	</head>
@@ -106,23 +107,23 @@
 								<h2 class="panel-title">房间评论</h2>
 							</div>
 							<div id="room-comment-list" class="list-group">    
-			                    <div class="list-group-item room-comment-list-template">
-			                    	<p class="text-primary">
-			                    		<span>15545154994</span>
-			                    		<span class="pull-right">2015-09-08 23:23:56</span>
+			                    <div id="${cid}$" class="list-group-item mengular-template room-comment-list-template">
+			                    	<p>
+			                    		<span class="text-primary">${uname}$</span>
+			                    		<span class="text-success pull-right">${commentDate}$</span>
 			                    	</p>
 			                    	<hr>
-			                        <small class="text-muted">一家人安排的周末小度假，酒店还是要开车去的，一路百度地图导航直接到的酒店，关键路口的路标还是比较醒目的。酒店是会议度假型酒店，感觉装修不是很时尚，但房间干净宽敞，尤其是服务人员服务态度很好，由于办的是套票，各种消费项目，服务员耐心讲解，提醒注意事项，赞一个。</small>
-									<p class="text-danger text-right">
-				                        <i class="fa fa-star"></i>
-				                        <i class="fa fa-star"></i>
-				                        <i class="fa fa-star-o"></i>
-				                        <i class="fa fa-star-o"></i>
-				                        <i class="fa fa-star-o"></i>
+			                        <small class="text-muted">${content}$</small>
+									<p class="text-danger text-right room-comment-stars">
+				                        <i class="fa"></i>
+				                        <i class="fa"></i>
+				                        <i class="fa"></i>
+				                        <i class="fa"></i>
+				                        <i class="fa"></i>
 									</p>
 			                    </div>
 			                </div>
-			                <div class="panel-body">
+			                <div id="no-room-comment" class="panel-body">
 								<h3 class="text-warning">暂无房间评论！</h3>
 							</div>
 						</div>

@@ -63,4 +63,18 @@ public interface CommentManager {
 	 * @return
 	 */
 	List<CommentBean> getNewestComments(int limit);
+
+	/**
+	 * 根据订单id获取评论
+	 * @param bid
+	 * @return
+	 */
+	CommentBean getCommentByBid(String bid);
+	
+	/**
+	 * 通过房间id获取评论
+	 * @param rid
+	 * @return
+	 */
+	List<CommentBean> getCommentsByRid(String rid);
 }

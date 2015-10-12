@@ -55,6 +55,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	//加载房间信息
 	RoomManager.getRoom(rid, function(room) {
 		if(room==null||room.enable==false) {
 			location.href="urlError.html";
@@ -107,7 +108,32 @@ $(document).ready(function() {
 				});
 			}
 		});
+
+		//加载房间评论
+		CommentManager.getCommentsByRid(rid, function(comments) {
+			$("#room-comment-list").mengularClear();
+			if(comments.length>0)
+				$("#no-room-comment").hide();
+			for(var i in comments) {
+				$("#room-comment-list").mengular(".room-comment-list-template", {
+					cid: comments[i].cid,
+					uname: comments[i].booking.user.uname,
+					commentDate: comments[i].commentDate.format(DATE_HOUR_MINUTE_FORMAT_CN),
+					content: comments[i].content
+				});
+
+				//加载评分星级
+				$("#"+comments[i].cid+" .room-comment-stars i").each(function(index) {
+					if(index+1<=comments[i].stars)
+						$(this).addClass("fa-star");
+					else
+						$(this).addClass("fa-star-o");
+				});
+			}
+		});
+
 	});
+	
 
 	//预定房间
 	$("#booking-room-submit").click(function() {
