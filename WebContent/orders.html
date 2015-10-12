@@ -27,6 +27,7 @@
 		<script src="dwr/engine.js"></script>
 		<script src="dwr/interface/UserManager.js"></script>
 		<script src="dwr/interface/BookingManager.js"></script>
+		<script src="dwr/interface/CommentManager.js"></script>
 		<script src="static/js/tools.js"></script>
 		<script src="static/js/orders.js"></script>
 	</head>
@@ -77,7 +78,7 @@
 									<p>入住日期：${checkin}$，退房日期 ${checkout}$，共${days}$晚，￥${amount}$元</p>
 									<button class="btn btn-warning">支付订单</button>
 									<button class="btn btn-danger">取消订单</button>
-									<button class="btn btn-success">撰写评论</button>
+									<button class="btn btn-success order-list-write-comment">撰写评论</button>
 								</div>
 							</div>
 						</div>
@@ -100,5 +101,35 @@
 			</div>
 		</div>
 		<div id="foot"></div>
+		<div id="write-comment-modal" class="modal fade">
+			<div class="modal-dialog">
+			    <div class="modal-content">
+			        <div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			            <h4 class="modal-title text-success">订单号：<span id="write-comment-bno"></span>的评论</h4>
+			        </div>
+			        <div class="modal-body">
+			        	<p class="text-muted">
+			        		您于<span id="write-comment-checkin"></span>
+			        		至<span id="write-comment-checkout"></span>，
+			        		在<span id="write-comment-rname"></span>
+			        		入住<span id="write-comment-days"></span>晚，感谢您撰写评论。
+			        	</p>
+			        	<h1 id="write-comment-stars" class="text-danger text-center">
+	                        <i class="fa fa-star"></i>
+	                        <i class="fa fa-star"></i>
+	                        <i class="fa fa-star"></i>
+	                        <i class="fa fa-star"></i>
+	                        <i class="fa fa-star"></i>
+						</h1>
+                        <textarea id="write-comment-content" class="form-control" placeholder="评论内容" rows="5"></textarea>
+			        </div>
+			        <div class="modal-footer">
+			        	<button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+			            <button id="write-comment-submit" type="button" class="btn btn-success">提交评论</button>
+			        </div>
+			    </div>
+			</div>
+		</div>
 	</body>
 </html>

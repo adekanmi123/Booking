@@ -19,6 +19,7 @@
 
 #order-sort {
 	margin-top: 20px;
+	display: none;
 }
 
 #order-sort button {

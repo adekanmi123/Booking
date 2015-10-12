@@ -6,18 +6,18 @@ import com.xwkj.booking.domain.Comment;
 
 public class CommentBean {
 	
-	private int cid;
+	private String cid;
 	private Integer stars;
 	private String content;
 	private Date commentDate;
 	private Boolean enable;
 	private BookingBean booking;
 	
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 

@@ -38,4 +38,11 @@ public interface BookingManager {
 	 */
 	List<BookingBean> getBookingsByUid(String uid, String orderby, boolean desc);
 	
+	/**
+	 * 获取订单
+	 * @param bid
+	 * @return
+	 */
+	BookingBean getBooking(String bid);
+	
 }

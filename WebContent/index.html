@@ -26,6 +26,7 @@
         <script src="static/js/mengular-2.0.js"></script>
         <script src="dwr/engine.js"></script>
         <script src="dwr/interface/RoomManager.js"></script>
+        <script src="dwr/interface/CommentManager.js"></script>
         <script src="static/js/tools.js"></script>
 		<script src="static/js/index.js"></script>
 	</head>
@@ -116,73 +117,28 @@
 					<h3>用户评价</h3>
 				</div>
 				<div id="user-comment" class="news-bottom">
-					<div class="col-md-12">
+					<div id="${cid}$" class="col-md-12 mengular-template user-comment-template">
 						<hr>
 						<div class="n-left">
-							<img src="upload/4028e0835041391801504148fec0000e/05230a86-f637-4222-823c-a7667a89550b.jpg" alt="超豪华特大号床间或双床间" class="img-circle"/>
+							<a href="room.html?rid=${rid}$"><img src="${src}$" alt="${rname}$" class="img-circle"/></a>
 						</div>
 						<div class="n-right">
 							<h4>
-								<span class="text-success">15545154994</span>
-								<span class="pull-right text-muted">2015-10-06 15:30:23</span>
+								<span class="text-success">${uname}$</span>
+								<span class="pull-right text-muted">${commentDate}$</span>
 							</h4>
-							<h5 class="text-warning">入住于超豪华特大号床间或双床间</h5>
-							<p>一家人安排的周末小度假，酒店还是要开车去的，一路百度地图导航直接到的酒店，关键路口的路标还是比较醒目的。酒店是会议度假型酒店，感觉装修不是很时尚，但房间干净宽敞，尤其是服务人员服务态度很好，由于办的是套票，各种消费项目，服务员耐心讲解，提醒注意事项，赞一个。</p>
-							<p class="text-danger text-right">
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-							</p>
+							<h5 class="text-warning">入住于${rname}$</h5>
+							<p>${content}$</p>
+							<h5 class="text-danger text-right comment-star">
+		                        <i class="fa"></i>
+		                        <i class="fa"></i>
+		                        <i class="fa"></i>
+		                        <i class="fa"></i>
+		                        <i class="fa"></i>
+							</h5>
 						</div>
 						<div class="clearfix"></div>
 					</div>
-					<div class="col-md-12">
-						<hr>
-						<div class="n-left">
-							<img src="upload/4028e083504139180150414233400003/e690c1a9-ecaa-4908-bf6d-a1e2f4dec63b.jpg" alt="超豪华特大号床间或双床间" class="img-circle"/>
-						</div>
-						<div class="n-right">
-							<h4>
-								<span class="text-success">15545154994</span>
-								<span class="pull-right text-muted">2015-10-06 15:30:23</span>
-							</h4>
-							<h5 class="text-warning">入住于超豪华特大号床间或双床间</h5>
-							<p>一家人安排的周末小度假，酒店还是要开车去的，一路百度地图导航直接到的酒店，关键路口的路标还是比较醒目的。酒店是会议度假型酒店，感觉装修不是很时尚，但房间干净宽敞，尤其是服务人员服务态度很好，由于办的是套票，各种消费项目，服务员耐心讲解，提醒注意事项，赞一个。</p>
-							<p class="text-danger text-right">
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-							</p>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div class="col-md-12">
-						<hr>
-						<div class="n-left">
-							<img src="upload/40288bfe5032fea60150332168090008/0c2f63ef-903a-41f1-b28f-5fd7b3c37208.jpg" alt="超豪华特大号床间或双床间" class="img-circle"/>
-						</div>
-						<div class="n-right">
-							<h4>
-								<span class="text-success">15545154994</span>
-								<span class="pull-right text-muted">2015-10-06 15:30:23</span>
-							</h4>
-							<h5 class="text-warning">入住于超豪华特大号床间或双床间</h5>
-							<p>一家人安排的周末小度假，酒店还是要开车去的，一路百度地图导航直接到的酒店，关键路口的路标还是比较醒目的。酒店是会议度假型酒店，感觉装修不是很时尚，但房间干净宽敞，尤其是服务人员服务态度很好，由于办的是套票，各种消费项目，服务员耐心讲解，提醒注意事项，赞一个。</p>
-							<p class="text-danger text-right">
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-		                        <i class="fa fa-star-o"></i>
-							</p>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-
 				</div>
 			</div>
 		</div>

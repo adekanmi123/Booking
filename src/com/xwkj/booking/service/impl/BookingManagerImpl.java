@@ -134,4 +134,12 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		return bookings;
 	}
 
+	@Override
+	public BookingBean getBooking(String bid) {
+		Booking booking=bookingDao.get(bid);
+		if(booking!=null)
+			return new BookingBean(booking);
+		return null;
+	}
+
 }
