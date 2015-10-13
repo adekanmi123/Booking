@@ -18,6 +18,9 @@ public class DateTool
 	//“年-月-日 时:分:秒”格式
 	public static final String DATE_HOUR_MINUTE_SECOND_FORMAT="yyyy-MM-dd HH:mm:ss";
 	
+	//“年-月-日”格式 中文
+	public static final String YEAR_MONTH_DATE_FORMAT_CN="yyyy年MM月dd日";
+	
 	//一年中每个月的天数
 	public static int [] MonthDay={31,28,31,30,31,30,31,31,30,31,30,31};
 	

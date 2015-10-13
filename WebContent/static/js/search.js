@@ -27,17 +27,40 @@ $(document).ready(function() {
     		loadRooms(rooms);
     	});
     } else {
-    	fillValue({
-    		"search-room-checkin": _checkin,
-    		"search-room-checkout": _checkout,
-    		"search-room-number": _number,
-    		"search-room-location": _location,
-    	});
-    	RoomManager.searchRoomForUser(_checkin, _checkout, _number, _location, null, -1, -1, function(rooms) {
-			loadRooms(rooms);
-		});
+    	//如果入住日期早于今日，搜索最新的18个房间
+    	if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(_checkin))<0) {
+    		$.messager.popup("入住日期必须在今日或今日以后！");
+    		fillValue({
+        		"search-room-checkout": _checkout,
+        		"search-room-number": _number,
+        		"search-room-location": _location,
+        	});
+    		RoomManager.getNewestRooms(18, function(rooms) {
+        		loadRooms(rooms);
+        	});
+    	} else {
+    		fillValue({
+        		"search-room-checkin": _checkin,
+        		"search-room-checkout": _checkout,
+        		"search-room-number": _number,
+        		"search-room-location": _location,
+        	});
+        	RoomManager.searchRoomForUser(_checkin, _checkout, _number, _location, null, -1, -1, function(rooms) {
+    			loadRooms(rooms);
+    		});
+    	}
     }
-
+    
+    //入住日期变更时判断其是否在今日之后
+    $("#search-room-checkin").change(function() {
+    	var checkin=$(this).val();
+    	if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
+    		$.messager.popup("入住日期必须在今日或今日以后！");
+			$(this).val("");
+    	}
+	});
+    
+    //提交房间搜索
     $("#search-room-submit").click(function() {
 		_checkin=$("#search-room-checkin").val();
 		_checkout=$("#search-room-checkout").val();

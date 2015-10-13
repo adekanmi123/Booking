@@ -45,4 +45,11 @@ public interface BookingManager {
 	 */
 	BookingBean getBooking(String bid);
 	
+	/**
+	 * 通过订单号获取订单
+	 * @param bno
+	 * @return
+	 */
+	BookingBean getBookingByBno(String bno);
+	
 }

@@ -71,4 +71,13 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 		return getHibernateTemplate().find(hql, user);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Booking findByBno(String bno) {
+		List<Booking> bookings=getHibernateTemplate().find("from Booking where bno=?", bno);
+		if(bookings.size()>0)
+			return bookings.get(0);
+		return null;
+	}
+
 }

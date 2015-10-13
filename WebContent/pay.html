@@ -36,9 +36,30 @@
 		<div class="events">
 			<div class="container">
 				<div class="events-top heading">
-					<h3 id="room-rname">您已成功预订该房间，请支付您的订单</h3>
+					<h3 id="pay-rname"><span id="pay-rname"></span>的订单</h3>
 				</div>
-
+				<div id="not-pay" class="jumbotron">
+					<h1>您还未支付订单</h1>
+					<p>请在当日内完成订单支付，该订单的房间将为您保留到次日凌晨。</p>
+					<p>订单号：<span id="pay-bno"></span> </p>
+					<p><span id="pay-rname-b"></span>，<span id="pay-number"></span>人房</p>
+					<p><span id="pay-location"></span></p>
+					<p>预订时间：<span id="pay-createDate"></span></p>
+					<p>入住日期：<span id="pay-checkin"></span>，退房日期 <span id="pay-checkout"></span>，共<span id="pay-days"></span>晚，合计￥<span id="pay-amount"></span>元</p>
+					<p>
+						<img id="alipay-logo" src="static/images/alipay.png">
+						<a id="alipay-submit" class="btn btn-danger btn-lg">支付订单</a>
+					</p>
+				</div>
+				<div id="has-payed" class="jumbotron">
+					<h1>订单支付成功</h1>
+					<p>您已于<span id="pay-date"></span>支付订单，请于指定日期入住，如需要更改订单信息，请联系工作人员！</p>
+					<p>订单号：<span id="pay-bno"></span> </p>
+					<p><span id="pay-rname-b"></span>，<span id="pay-number"></span>人房</p>
+					<p><span id="pay-location"></span></p>
+					<p>预订时间：<span id="pay-createDate"></span></p>
+					<p>入住日期：<span id="pay-checkin"></span>，退房日期 <span id="pay-checkout"></span>，共<span id="pay-days"></span>晚，合计￥<span id="pay-amount"></span>元</p>
+				</div>
 			</div>
 		</div>
 		<div id="foot"></div>

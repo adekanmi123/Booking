@@ -14,6 +14,15 @@ $(document).ready(function($) {
         showMeridian: 1,
         language: 'zh-CN'
     });
+	
+	//入住日期变更时判断其是否在今日之后
+	$("#search-room-checkin").change(function() {
+		var checkin=$(this).val();
+    	if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
+    		$.messager.popup("入住日期必须在今日或今日以后！");
+			$(this).val("");
+    	}
+	});
 
     //搜索房间
     $("#search-room-submit").click(function() {

@@ -36,6 +36,7 @@ $(document).ready(function() {
 				$("#booking-room-checkin").parent().addClass("has-error");
 				$("#booking-room-submit").attr("disabled","disabled");
 				$.messager.popup("入住日期必须在今日或今日以后！");
+				$("#booking-room-checkin").val("");
 				return;
 			}
 			var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
@@ -66,21 +67,28 @@ $(document).ready(function() {
 
 		//如果传入入住时间和退房时间，就填充其表单并计算价格
 		if(checkin!=""&&checkout!="") {
-		    var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
-		    if(days<=0) {
-		    	$.messager.popup("退房日期必须在入住日期之后！");
-		    } else {
-		    	$("#booking-room-submit").removeAttr("disabled");
-		    	fillValue({
-			    	"booking-room-checkin": checkin,
+			if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
+				$.messager.popup("入住日期必须在今日或今日以后！");
+				fillValue({
 			    	"booking-room-checkout": checkout
 			    });
-			   	amount=days*_room.price;
-			    fillText({
-					"booking-room-days": days,
-					"booking-room-money": amount
-				})
-		    }
+			} else {
+				var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
+			    if(days<=0) {
+			    	$.messager.popup("退房日期必须在入住日期之后！");
+			    } else {
+			    	$("#booking-room-submit").removeAttr("disabled");
+			    	fillValue({
+				    	"booking-room-checkin": checkin,
+				    	"booking-room-checkout": checkout
+				    });
+				   	amount=days*_room.price;
+				    fillText({
+						"booking-room-days": days,
+						"booking-room-money": amount
+					});
+			    }
+			}
 		}
 
 		//加载房间信息
@@ -164,7 +172,7 @@ $(document).ready(function() {
 								$.messager.popup(data.reason);
 							}
 						} else {
-							location.href="pay.html?bid="+data.bid;
+							location.href="pay.html?bno="+data.bno;
 						}
 					});
 				});	

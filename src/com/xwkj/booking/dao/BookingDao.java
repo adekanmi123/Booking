@@ -31,4 +31,11 @@ public interface BookingDao {
 	 */
 	List<Booking> findByUser(User user, String orderby, boolean desc);
 	
+	/**
+	 * 通过订单号查询订单
+	 * @param bno
+	 * @return
+	 */
+	Booking findByBno(String bno);
+	
 }

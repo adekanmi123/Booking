@@ -8,6 +8,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.directwebremoting.WebContextFactory;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.xwkj.booking.bean.BookingBean;
 import com.xwkj.booking.bean.UserBean;
 import com.xwkj.booking.domain.Booking;
@@ -19,6 +22,9 @@ import com.xwkj.booking.service.UserManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
 import com.xwkj.common.util.MathTool;
+import com.xwkj.common.util.SMSService;
+
+import net.sf.json.JSONObject;
 
 public class BookingManagerImpl extends ManagerTemplate implements BookingManager {
 	
@@ -26,6 +32,9 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 	private String ReserveFailedNotLogin;
 	private String ReserveFailedRoomUnavailable;
 	private String ReserveFailedRoomNotEnable;
+	
+	//订房成功发送短信模板id
+	private int BookingSuccessSMSTemplateID;
 
 	public void setReserveFailedDateError(String reserveFailedDateError) {
 		ReserveFailedDateError = reserveFailedDateError;
@@ -43,6 +52,10 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		ReserveFailedRoomNotEnable = reserveFailedRoomNotEnable;
 	}
 
+	public void setBookingSuccessSMSTemplateID(int bookingSuccessSMSTemplateID) {
+		BookingSuccessSMSTemplateID = bookingSuccessSMSTemplateID;
+	}
+	
 	@Override
 	public Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session) {
 		Map<String, Object> data=new HashMap<>();
@@ -94,6 +107,7 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		booking.setUser(user);
 		String bid=bookingDao.save(booking);
 		data.put("bid", bid);
+		data.put("bno", booking.getBno());
 		//创建history
 		for(Date date=checkinDate; DateTool.daysBetween(date, checkoutDate)>0; date=DateTool.nextDay(date)) {
 			History history=new History();
@@ -105,6 +119,17 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		//房间的销售数量加1
 		room.setSold(room.getSold()+1);
 		roomDao.update(room);
+		//发送通知短信
+		SMSService sms=(SMSService)WebApplicationContextUtils.getWebApplicationContext(WebContextFactory.get().getServletContext()).getBean("SMSService");
+		String value="#name#="+user.getUname()+"&#rname#="+booking.getRoom().getRname()+"&#bno#="+booking.getBno()
+			+"&#location#="+booking.getRoom().getLocation()+"&#checkin#="+DateTool.formatDate(booking.getCheckin(), DateTool.YEAR_MONTH_DATE_FORMAT_CN);
+		JSONObject result=sms.send(user.getTelephone(), BookingSuccessSMSTemplateID, value);
+		if(Integer.parseInt(result.get("error_code").toString())==0) {
+			data.put("sms", true);
+		} else {
+			data.put("sms", false);
+			System.out.println(result.get("reason"));
+		}
 		return data;
 	}
 
@@ -137,6 +162,14 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 	@Override
 	public BookingBean getBooking(String bid) {
 		Booking booking=bookingDao.get(bid);
+		if(booking!=null)
+			return new BookingBean(booking);
+		return null;
+	}
+
+	@Override
+	public BookingBean getBookingByBno(String bno) {
+		Booking booking=bookingDao.findByBno(bno);
 		if(booking!=null)
 			return new BookingBean(booking);
 		return null;

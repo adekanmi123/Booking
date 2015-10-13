@@ -100,7 +100,7 @@ $(document).ready(function() {
 		if(validate) {
 			RoomManager.addRoom(rname, number, location, area, price, available, descriptor, function(rid){
 				$("#add-room-modal").modal("hide");
-				loadRooms();
+				searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);
 			});
 		}
 	});
@@ -161,7 +161,11 @@ $(document).ready(function() {
 		if(validate) {
 			RoomManager.modifyRoom(modifyingRid , rname, number, location, area, price, available, descriptor, function(rid){
 				$.messager.popup("修改成功！");
-				loadRooms();
+				var location=$("#search-room-location").val();
+		    	var rname=$("#search-room-rname").val();
+		    	var number=$("#search-room-number").val();
+		    	var enable=$("#search-room-enable").val();
+		    	searchRooms(location, rname, number, enable, 1);
 			});
 		}
 	});
