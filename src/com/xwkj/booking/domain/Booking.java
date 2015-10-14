@@ -15,8 +15,6 @@ public class Booking implements Serializable {
 	private Integer days;
 	private Double amount;
 	private Date createDate;
-	private boolean payed;
-	private Date payDate;
 	private boolean stayed;
 	private Room room;
 	private Set<History> histories;
@@ -57,18 +55,6 @@ public class Booking implements Serializable {
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-	public boolean isPayed() {
-		return payed;
-	}
-	public void setPayed(boolean payed) {
-		this.payed = payed;
-	}
-	public Date getPayDate() {
-		return payDate;
-	}
-	public void setPayDate(Date payDate) {
-		this.payDate = payDate;
 	}
 	public boolean isStayed() {
 		return stayed;

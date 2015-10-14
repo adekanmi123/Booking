@@ -25,6 +25,9 @@
 		<create creator="spring" javascript="MessageManager"> 
 			<param name="beanName" value="messageManager"/>
 		</create>
+		<create creator="spring" javascript="PayManager"> 
+			<param name="beanName" value="payManager"/>
+		</create>
 		<!-- 定义使用Bean转换器处理如下Java类 -->
 		<convert converter="bean" match="com.xwkj.booking.bean.RoomBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.PhotoBean"/>
@@ -32,5 +35,6 @@
 		<convert converter="bean" match="com.xwkj.booking.bean.BookingBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.CommentBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.MessageBean"/>
+		<convert converter="bean" match="com.xwkj.booking.bean.PayBean"/>
 	</allow>
 </dwr>

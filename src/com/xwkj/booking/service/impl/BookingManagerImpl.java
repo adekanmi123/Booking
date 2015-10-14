@@ -101,7 +101,6 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		booking.setDays(days);
 		booking.setAmount(days*room.getPrice());
 		booking.setCreateDate(new Date());
-		booking.setPayed(false);
 		booking.setStayed(false);
 		booking.setRoom(room);
 		booking.setUser(user);

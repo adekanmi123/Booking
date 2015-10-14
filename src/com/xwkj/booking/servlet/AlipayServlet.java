@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alipay.service.AlipayConfig;
 import com.alipay.service.AlipaySubmit;
 import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.service.PayManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
 
@@ -49,7 +51,9 @@ public class AlipayServlet extends HttpServlet {
 
 	private void pay(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String bno=request.getParameter("bno");
-		ManagerTemplate manager=(ManagerTemplate)WebApplicationContextUtils.getWebApplicationContext(getServletContext()).getBean("managerTemplate");
+		WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ManagerTemplate manager=(ManagerTemplate)context.getBean("managerTemplate");
+		PayManager pay=(PayManager)context.getBean("payManager");
 		Booking booking=manager.getBookingDao().findByBno(bno);
 		//支付类型
 		String payment_type = "1";
@@ -93,10 +97,14 @@ public class AlipayServlet extends HttpServlet {
 		sParaTemp.put("anti_phishing_key", anti_phishing_key);
 		sParaTemp.put("exter_invoke_ip", exter_invoke_ip);
 		//建立请求
-		String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
+		Map<String, Object> data= AlipaySubmit.buildRequest(sParaTemp,"get","确认");
+		System.out.println(data.get("sbHtml"));
+		//把签名写入数据库
+		pay.writeSign(bno, data.get("sign").toString());
+		//跳转页面
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html");  
-		response.getWriter().print(sHtmlText);
+		response.getWriter().print(data.get("sbHtml"));
 	}
 
 	/**

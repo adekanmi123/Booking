@@ -1,7 +1,6 @@
 package com.xwkj.booking.servlet;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
@@ -12,29 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.xwkj.booking.domain.Booking;
-import com.xwkj.booking.service.util.ManagerTemplate;
+import com.alipay.service.AlipaySubmit;
+import com.xwkj.booking.service.PayManager;
 
-/**
- * Servlet implementation class AlipayPayedServlet
- */
 @WebServlet("/AlipayPayedServlet")
 public class AlipayPayedServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public AlipayPayedServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		System.out.println("getRequestURL: "+request.getRequestURL());
@@ -67,21 +57,20 @@ public class AlipayPayedServlet extends HttpServlet {
 		    String value = request.getHeader(name);
 		    System.out.println(name+"="+value);
 		}
+		System.out.println("------------------------------------------");
+		System.out.println();
 		
-		//支付完成更新booking
+		//支付完成更新支付信息
 		String bno=request.getParameter("out_trade_no");
-		ManagerTemplate manager=(ManagerTemplate)WebApplicationContextUtils.getWebApplicationContext(getServletContext()).getBean("managerTemplate");
-		Booking booking=manager.getBookingDao().findByBno(bno);
-		booking.setPayed(true);
-		booking.setPayDate(new Date());
-		manager.getBookingDao().update(booking);
+		String notify_id=request.getParameter("notify_id");
+		if(AlipaySubmit.notifyVertify(notify_id)) {
+			WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			PayManager pay=(PayManager)context.getBean("payManager");
+			pay.updatePayedState(bno);
+		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

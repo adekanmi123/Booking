@@ -13,8 +13,6 @@ public class BookingBean {
 	private int days;
 	private double amount;
 	private Date createDate;
-	private boolean payed;
-	private Date payDate;
 	private boolean stayed;
 	private RoomBean room;
 	private UserBean user;
@@ -61,18 +59,6 @@ public class BookingBean {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public boolean isPayed() {
-		return payed;
-	}
-	public void setPayed(boolean payed) {
-		this.payed = payed;
-	}
-	public Date getPayDate() {
-		return payDate;
-	}
-	public void setPayDate(Date payDate) {
-		this.payDate = payDate;
-	}
 	public boolean isStayed() {
 		return stayed;
 	}
@@ -101,8 +87,6 @@ public class BookingBean {
 		this.days = booking.getDays();
 		this.amount = booking.getAmount();
 		this.createDate = booking.getCreateDate();
-		this.payed = booking.isPayed();
-		this.payDate = booking.getPayDate();
 		this.stayed = booking.isStayed();
 		this.room = new RoomBean(booking.getRoom());
 		this.user = new UserBean(booking.getUser());

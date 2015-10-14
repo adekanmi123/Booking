@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.xwkj.booking.domain">
+	<class name="Pay" table="pay">
+		<id name="pid" column="pid" type="string">
+			<generator class="uuid"/>
+		</id>
+		<property name="payed" column="payed" type="boolean" not-null="true"/>
+		<property name="payDate" column="payDate" type="java.util.Date"/>	
+		<property name="sign" column="sign" type="string"/>
+		<many-to-one name="booking" column="bid" class="Booking"  lazy="false" unique="true"/>
+	</class>
+</hibernate-mapping>

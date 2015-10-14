@@ -26,4 +26,7 @@
 	<bean id="messageDao" class="com.xwkj.booking.dao.impl.MessageDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
+	<bean id="payDao" class="com.xwkj.booking.dao.impl.PayDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 </beans>

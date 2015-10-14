@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+
+import com.xwkj.common.util.HttpRequestUtil;
 
 /* *
  *类名：AlipaySubmit
@@ -70,7 +73,7 @@ public class AlipaySubmit {
      * @param strButtonName 确认按钮显示文字
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
+    public static Map<String, Object> buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
         List<String> keys = new ArrayList<String>(sPara.keySet());
@@ -91,7 +94,11 @@ public class AlipaySubmit {
         //submit按钮控件请不要含有name属性
         sbHtml.append("<input type=\"submit\" value=\"" + strButtonName + "\" style=\"display:none;\"></form>");
         sbHtml.append("<script>document.forms['alipaysubmit'].submit();</script>");
-        return sbHtml.toString();
+        
+        Map<String, Object> data=new HashMap<>();
+        data.put("sbHtml", sbHtml.toString());
+        data.put("sign", sPara.get("sign"));
+        return data;
     }
     
     /**
@@ -102,7 +109,7 @@ public class AlipaySubmit {
      * @param strParaFileName 文件上传的参数名
      * @return 提交表单HTML文本
      */
-    public static String buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName) {
+    public Map<String, Object> buildRequest(Map<String, String> sParaTemp, String strMethod, String strButtonName, String strParaFileName) {
         //待请求参数数组
         Map<String, String> sPara = buildRequestPara(sParaTemp);
         List<String> keys = new ArrayList<String>(sPara.keySet());
@@ -125,7 +132,10 @@ public class AlipaySubmit {
         //submit按钮控件请不要含有name属性
         sbHtml.append("<input type=\"submit\" value=\"" + strButtonName + "\" style=\"display:none;\"></form>");
 
-        return sbHtml.toString();
+        Map<String, Object> data=new HashMap<>();
+        data.put("sbHtml", sbHtml.toString());
+        data.put("sign", sPara.get("sign"));
+        return data;
     }
     
     /**
@@ -210,4 +220,17 @@ public class AlipaySubmit {
 
         return result.toString();
     }
+	
+	/**
+	 * 验证异步请求是否是支付宝发出的
+	 * @param notify_id
+	 * @return
+	 */
+	public static boolean notifyVertify(String notify_id) {
+		String url=ALIPAY_GATEWAY_NEW+"service=notify_verify&partner="+AlipayConfig.partner+"&notify_id="+notify_id;
+		String result=HttpRequestUtil.httpRequest(url);
+		if(result.equals("true"))
+			return true;
+		return false;
+	}
 }
