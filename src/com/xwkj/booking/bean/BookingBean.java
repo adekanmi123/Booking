@@ -13,6 +13,8 @@ public class BookingBean {
 	private int days;
 	private double amount;
 	private Date createDate;
+	private boolean pay;
+	private boolean timeout;
 	private boolean stayed;
 	private RoomBean room;
 	private UserBean user;
@@ -59,6 +61,18 @@ public class BookingBean {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	public boolean isPay() {
+		return pay;
+	}
+	public void setPay(boolean pay) {
+		this.pay = pay;
+	}
+	public boolean isTimeout() {
+		return timeout;
+	}
+	public void setTimeout(boolean timeout) {
+		this.timeout = timeout;
+	}
 	public boolean isStayed() {
 		return stayed;
 	}
@@ -86,8 +100,10 @@ public class BookingBean {
 		this.checkout = booking.getCheckout();
 		this.days = booking.getDays();
 		this.amount = booking.getAmount();
+		this.pay = booking.getPay();
+		this.timeout = booking.getTimeout();
 		this.createDate = booking.getCreateDate();
-		this.stayed = booking.isStayed();
+		this.stayed = booking.getStayed();
 		this.room = new RoomBean(booking.getRoom());
 		this.user = new UserBean(booking.getUser());
 	}

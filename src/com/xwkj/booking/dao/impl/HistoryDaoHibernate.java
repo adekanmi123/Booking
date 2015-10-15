@@ -2,6 +2,7 @@ package com.xwkj.booking.dao.impl;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.xwkj.booking.dao.HistoryDao;
+import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.domain.History;
 import com.xwkj.booking.domain.Room;
 import com.xwkj.common.hibernate3.support.PageHibernateDaoSupport;
@@ -48,6 +50,13 @@ public class HistoryDaoHibernate extends PageHibernateDaoSupport implements Hist
 			}
 		}).intValue();
 		return count;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<History> findByBooking(Booking booking) {
+		String hql="from History where booking=?";
+		return getHibernateTemplate().find(hql, booking);
 	}
 
 }

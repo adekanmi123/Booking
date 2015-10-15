@@ -24,3 +24,6 @@
 	display: none;
 }
 
+.logo a img {
+	max-height: 65px;
+}

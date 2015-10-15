@@ -20,6 +20,8 @@ public class DateTool
 	
 	//“年-月-日”格式 中文
 	public static final String YEAR_MONTH_DATE_FORMAT_CN="yyyy年MM月dd日";
+	//“年-月-日 时:分”格式 中文
+	public static final String DATE_HOUR_MINUTE_FORMAT_CN="yyyy年MM月dd日HH时mm分";
 	
 	//一年中每个月的天数
 	public static int [] MonthDay={31,28,31,30,31,30,31,31,30,31,30,31};
@@ -29,8 +31,7 @@ public class DateTool
 	 * @param deadline 截止日期
 	 * @return 分钟数
 	 */
-	public static int getTimeInMinute(String deadline)
-	{
+	public static int getTimeInMinute(String deadline) {
 		String [] datebuff=deadline.split(" ")[0].split("-");
 		String [] timebuff=deadline.split(" ")[1].split(":");
 		int year=Integer.parseInt(datebuff[0]);
@@ -50,15 +51,11 @@ public class DateTool
 	 * @param format 转换格式
 	 * @return Date对象
 	 */
-	public static Date transferDate(String time,String format)
-	{
-		try 
-		{
+	public static Date transferDate(String time,String format) {
+		try {
 			SimpleDateFormat df=new SimpleDateFormat(format);
 			return df.parse(time);
-		}
-		catch (ParseException e) 
-		{
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -70,10 +67,44 @@ public class DateTool
 	 * @param format 转换格式
 	 * @return 时间字符串
 	 */
-	public static String formatDate(Date date,String format)
-	{
+	public static String formatDate(Date date,String format) {
 		SimpleDateFormat df=new SimpleDateFormat(format);
 		return df.format(date);
+	}
+	
+	/**  
+    * 计算两个日期之间相差的分钟
+    * @param start 较小的时间 
+    * @param end  较大的时间 
+    * @return 相差天数 
+    */    
+	public static int minutesBetween(Date start,Date end) 
+	{
+		SimpleDateFormat sdf=new SimpleDateFormat(DATE_HOUR_MINUTE_FORMAT);
+		try {
+			start=sdf.parse(sdf.format(start));  
+			end=sdf.parse(sdf.format(end));  
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	    Calendar cal = Calendar.getInstance();    
+	    cal.setTime(start);    
+	    long time1 = cal.getTimeInMillis();                 
+	    cal.setTime(end);    
+	    long time2 = cal.getTimeInMillis();         
+	    long between_minutes=(time2-time1)/(1000*60);  
+	    return Integer.parseInt(String.valueOf(between_minutes));  
+	}
+	
+	/**
+	 * 计算两个日期之间相差的天数  
+    * @param start 较小的时间 
+    * @param end  较大的时间 
+    * @return 相差天数 
+	 */
+	public static int daysBetween(String start,String end) {
+		return daysBetween(transferDate(start, YEAR_MONTH_DATE_FORMAT), transferDate(end, YEAR_MONTH_DATE_FORMAT));
 	}
 	
 	/**  
@@ -85,13 +116,10 @@ public class DateTool
 	public static int daysBetween(Date start,Date end) 
 	{
 		SimpleDateFormat sdf=new SimpleDateFormat(YEAR_MONTH_DATE_FORMAT);
-		try
-		{
+		try {
 			start=sdf.parse(sdf.format(start));  
 			end=sdf.parse(sdf.format(end));  
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
@@ -105,24 +133,12 @@ public class DateTool
 	}
 	
 	/**
-	 * 计算两个日期之间相差的天数  
-    * @param start 较小的时间 
-    * @param end  较大的时间 
-    * @return 相差天数 
-	 */
-	public static int daysBetween(String start,String end)
-	{
-		return daysBetween(transferDate(start, YEAR_MONTH_DATE_FORMAT), transferDate(end, YEAR_MONTH_DATE_FORMAT));
-	}
-	
-	/**
 	 * d1的下一天是d2吗
 	 * @param d1
 	 * @param d2
 	 * @return
 	 */
-	public static boolean isNextDay(Date d1,Date d2)
-	{
+	public static boolean isNextDay(Date d1,Date d2) {
 		return isSameDay(nextDay(d1), d2);
 	}
      
@@ -132,8 +148,7 @@ public class DateTool
 	 * @param d2
 	 * @return
 	 */
-	public static boolean isSameDay(Date d1,Date d2)
-	{
+	public static boolean isSameDay(Date d1,Date d2) {
 		 SimpleDateFormat sf = new SimpleDateFormat(YEAR_MONTH_DATE_FORMAT);  
 		 if(sf.format(d1).equals(sf.format(d2)))
 			 return true;
@@ -146,8 +161,7 @@ public class DateTool
 	 * @param d2
 	 * @return
 	 */
-	public static boolean isSameMonth(Date d1,Date d2)
-	{
+	public static boolean isSameMonth(Date d1,Date d2) {
 		 SimpleDateFormat sf = new SimpleDateFormat(YEAR_MONTH_FORMAT);  
 		 if(sf.format(d1).equals(sf.format(d2)))
 			 return true;
@@ -160,8 +174,7 @@ public class DateTool
 	 * @param d2
 	 * @return
 	 */
-	public static boolean isSameYear(Date d1,Date d2)
-	{
+	public static boolean isSameYear(Date d1,Date d2) {
 		 SimpleDateFormat sf = new SimpleDateFormat(YEAR_FORMAT);  
 		 if(sf.format(d1).equals(sf.format(d2)))
 			 return true;
@@ -173,8 +186,7 @@ public class DateTool
 	 * @param year
 	 * @return
 	 */
-	public static boolean isLeapYear(int year)
-	{
+	public static boolean isLeapYear(int year) {
 		if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
 			return true;
 		return false;
@@ -186,8 +198,7 @@ public class DateTool
 	 * @param month
 	 * @return
 	 */
-	public static Date getEnd(int year, int month) 
-	{
+	public static Date getEnd(int year, int month) {
 		int day=MonthDay[month-1];
 		if(isLeapYear(year)&&month==2)
 			day++;
@@ -202,8 +213,7 @@ public class DateTool
 	 * @param day
 	 * @return
 	 */
-	public static Date getEnd(int year, int month,int day) 
-	{
+	public static Date getEnd(int year, int month,int day) {
 		String time=year+"-"+month+"-"+day+" 23:59:59";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
 	}
@@ -216,8 +226,7 @@ public class DateTool
 	 * @param week
 	 * @return
 	 */
-	public static Date getEnd(int year, int month,int day,int week) 
-	{
+	public static Date getEnd(int year, int month,int day,int week) {
 		int endDay=(day+7-week);
 		String time=year+"-"+month+"-"+endDay+" 23:59:59";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
@@ -228,8 +237,7 @@ public class DateTool
 	 * @param year
 	 * @return
 	 */
-	public static Date getEnd(int year) 
-	{
+	public static Date getEnd(int year) {
 		String time=year+"-12-31 23:59:59";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
 	}
@@ -241,8 +249,7 @@ public class DateTool
 	 * @param day
 	 * @return
 	 */
-	public static Date getStart(int year, int month,int day) 
-	{
+	public static Date getStart(int year, int month,int day) {
 		String time=year+"-"+month+"-"+day+" 00:00:00";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
 	}
@@ -255,14 +262,11 @@ public class DateTool
 	 * @param week
 	 * @return
 	 */
-	public static Date getStart(int year, int month,int day,int week) 
-	{
+	public static Date getStart(int year, int month,int day,int week) {
 		int startDay=day-week+1;
-		if(startDay<1)
-		{
+		if(startDay<1) {
 			month--;
-			if(month<1)
-			{
+			if(month<1) {
 				month+=12;
 				year--;
 			}
@@ -276,8 +280,7 @@ public class DateTool
 	 * 得到本周开始时间
 	 * @return
 	 */
-	public static Date thisWeekStart()
-	{
+	public static Date thisWeekStart() {
 		Calendar calendar=Calendar.getInstance();
 		int year=calendar.get(Calendar.YEAR);
 		int month=calendar.get(Calendar.MONTH)+1;
@@ -290,8 +293,7 @@ public class DateTool
 	 * 得到本周结束时间
 	 * @return
 	 */
-	public static Date thisWeekEnd()
-	{
+	public static Date thisWeekEnd() {
 		Calendar calendar=Calendar.getInstance();
 		int year=calendar.get(Calendar.YEAR);
 		int month=calendar.get(Calendar.MONTH)+1;
@@ -306,8 +308,7 @@ public class DateTool
 	 * @param month
 	 * @return
 	 */
-	public static Date getStart(int year, int month) 
-	{
+	public static Date getStart(int year, int month) {
 		String time=year+"-"+month+"-01 00:00:00";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
 	}
@@ -318,8 +319,7 @@ public class DateTool
 	 * @param month
 	 * @return
 	 */
-	public static Date getStart(int year) 
-	{
+	public static Date getStart(int year) {
 		String time=year+"-01-01 00:00:00";
 		return transferDate(time,DATE_HOUR_MINUTE_FORMAT);
 	}
@@ -329,8 +329,7 @@ public class DateTool
 	 * @param year
 	 * @return
 	 */
-	public static int [] getMonthDay(int year)
-	{
+	public static int [] getMonthDay(int year) {
 		int [] monthDay=MonthDay;
 		if(isLeapYear(year))
 			monthDay[1]++;
@@ -342,8 +341,7 @@ public class DateTool
 	 * @param date
 	 * @return
 	 */
-	public static String getDateStr(int date)
-	{
+	public static String getDateStr(int date) {
 		if(date<10)
 			return "0"+date;
 		return date+"";
@@ -354,8 +352,7 @@ public class DateTool
 	 * @param date 指定日期
 	 * @return
 	 */
-	public static Date nextDay(Date date)
-	{
+	public static Date nextDay(Date date) {
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)+1);
@@ -367,8 +364,7 @@ public class DateTool
 	 * @param date 指定日期
 	 * @return
 	 */
-	public static Date previousDay(Date date)
-	{
+	public static Date previousDay(Date date) {
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)-1);
@@ -381,11 +377,23 @@ public class DateTool
 	 * @param days 指定天数
 	 * @return
 	 */
-	public static Date nextDay(Date date,int days)
-	{
+	public static Date nextDay(Date date,int days) {
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE)+days);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 得到指定分钟数后的日期
+	 * @param date
+	 * @param minutes
+	 * @return
+	 */
+	public static Date nextMinute(Date date, int minutes) {
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE)+minutes);
 		return calendar.getTime();
 	}
 	
@@ -421,4 +429,10 @@ public class DateTool
         }  
         return rtn;  
     }  
+    
+    public static void main(String[] args) {
+		Date date1=transferDate("2015-10-15 18:09:09", DATE_HOUR_MINUTE_SECOND_FORMAT);
+		Date date2=new Date();
+		System.out.println(minutesBetween(date1, date2));
+	}
 }

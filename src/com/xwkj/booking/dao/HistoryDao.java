@@ -1,7 +1,9 @@
 package com.xwkj.booking.dao;
 
 import java.util.Date;
+import java.util.List;
 
+import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.domain.History;
 import com.xwkj.booking.domain.Room;
 
@@ -19,4 +21,11 @@ public interface HistoryDao {
 	 * @return
 	 */
 	int getReservedCount(Date date, Room room);
+	
+	/**
+	 * 查找一个订单对应的订房记录
+	 * @param booking
+	 * @return
+	 */
+	List<History> findByBooking(Booking booking);
 }

@@ -4,6 +4,8 @@ import com.xwkj.booking.bean.PayBean;
 
 public interface PayManager {
 	
+	int getPayedSMSTemplateID();
+	
 	/**
 	 * 通过订单获取支付信息
 	 * 如果没有支付信息就创建一个新的支付信息

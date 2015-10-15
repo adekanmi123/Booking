@@ -14,7 +14,9 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.xwkj.booking.bean.BookingBean;
 import com.xwkj.booking.bean.UserBean;
 import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.domain.Comment;
 import com.xwkj.booking.domain.History;
+import com.xwkj.booking.domain.Pay;
 import com.xwkj.booking.domain.Room;
 import com.xwkj.booking.domain.User;
 import com.xwkj.booking.service.BookingManager;
@@ -32,6 +34,9 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 	private String ReserveFailedNotLogin;
 	private String ReserveFailedRoomUnavailable;
 	private String ReserveFailedRoomNotEnable;
+	
+	//支付超时时长
+	private int payTimeOut;
 	
 	//订房成功发送短信模板id
 	private int BookingSuccessSMSTemplateID;
@@ -56,6 +61,14 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		BookingSuccessSMSTemplateID = bookingSuccessSMSTemplateID;
 	}
 	
+	public void setPayTimeOut(int payTimeOut) {
+		this.payTimeOut = payTimeOut;
+	}
+	
+	public int getPayTimeOut() {
+		return payTimeOut;
+	}
+
 	@Override
 	public Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session) {
 		Map<String, Object> data=new HashMap<>();
@@ -100,6 +113,8 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		booking.setCheckout(checkoutDate);
 		booking.setDays(days);
 		booking.setAmount(days*room.getPrice());
+		booking.setPay(false);
+		booking.setTimeout(false);
 		booking.setCreateDate(new Date());
 		booking.setStayed(false);
 		booking.setRoom(room);
@@ -115,13 +130,11 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 			history.setRoom(room);
 			historyDao.save(history);
 		}
-		//房间的销售数量加1
-		room.setSold(room.getSold()+1);
-		roomDao.update(room);
 		//发送通知短信
 		SMSService sms=(SMSService)WebApplicationContextUtils.getWebApplicationContext(WebContextFactory.get().getServletContext()).getBean("SMSService");
 		String value="#name#="+user.getUname()+"&#rname#="+booking.getRoom().getRname()+"&#bno#="+booking.getBno()
-			+"&#location#="+booking.getRoom().getLocation()+"&#checkin#="+DateTool.formatDate(booking.getCheckin(), DateTool.YEAR_MONTH_DATE_FORMAT_CN);
+			+"&#location#="+booking.getRoom().getLocation()+"&#checkin#="+DateTool.formatDate(booking.getCheckin(), DateTool.YEAR_MONTH_DATE_FORMAT_CN)
+			+"&#hour#="+(payTimeOut/60);
 		JSONObject result=sms.send(user.getTelephone(), BookingSuccessSMSTemplateID, value);
 		if(Integer.parseInt(result.get("error_code").toString())==0) {
 			data.put("sms", true);
@@ -172,6 +185,27 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		if(booking!=null)
 			return new BookingBean(booking);
 		return null;
+	}
+
+	@Override
+	public boolean deleteBooking(String bid) {
+		Booking booking=bookingDao.get(bid);
+		if(booking.getPay())
+			return false;
+		//删除它占有的房间
+		for(History history: historyDao.findByBooking(booking))
+			historyDao.delete(history);
+		//删除它对应的支付信息
+		Pay pay=payDao.findByBooking(booking);
+		if(pay!=null)
+			payDao.delete(pay);
+		//删除评论
+		Comment comment=commentDao.findByBooking(booking);
+		if(comment!=null)
+			commentDao.delete(comment);
+		//删除订单
+		bookingDao.delete(booking);
+		return true;
 	}
 
 }

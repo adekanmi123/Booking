@@ -80,4 +80,18 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Booking> findWillTimoutBookings(Date time) {
+		String hql="from Booking where pay=false and timeout=false and createDate<=?";
+		return getHibernateTemplate().find(hql, time);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Booking> findWillStayedBookings(Date date) {
+		String hql="from Booking where pay=true and stayed=false and checkin<=?";
+		return getHibernateTemplate().find(hql, date);
+	}
+
 }

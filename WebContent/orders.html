@@ -70,14 +70,27 @@
 							</div>
 							<div class="col-xs-12 col-sm-7 col-md-9">
 								<div class="caption">
-									<h3>订单号：${bno}$ </h3>
+									<div class="order-payed text-success">
+										<i class="fa fa-check-circle-o"></i>
+										<p>已支付</p>
+									</div>
+									<div class="order-wait text-warning">
+										<i class="fa fa-clock-o"></i>
+										<p>待支付</p>
+									</div>
+									<div class="order-close text-danger">
+										<i class="fa fa-times-circle-o"></i>
+										<p>未支付</p>
+									</div>
+									<h3 class="order-bno">订单号：${bno}$ </h3>
 									<p>${rname}$，${number}$人房</p>
 									<p>${location}$</p>
 									<p>预订时间：${createDate}$</p>
 									<p>入住日期：${checkin}$，退房日期 ${checkout}$，共${days}$晚，￥${amount}$元</p>
-									<a href="pay.html?bno=${bno}$" class="btn btn-warning">支付订单</a>
-									<button class="btn btn-danger">取消订单</button>
-									<button class="btn btn-success order-list-write-comment">撰写评论</button>
+									<a href="pay.html?bno=${bno}$" class="btn btn-warning order-pay">支付订单</a>
+									<a href="pay.html?bno=${bno}$" class="btn btn-info order-show">查看订单</a>
+									<button class="btn btn-danger order-delete">删除订单</button>
+									<button class="btn btn-success order-comment">撰写评论</button>									
 								</div>
 							</div>
 						</div>

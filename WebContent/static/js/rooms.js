@@ -8,9 +8,15 @@ var SHOW_ALL_NUMBER=-1
 
 $(document).ready(function() {
 	$.messager.model = {
-			ok:{ text: "确定", classed: 'btn-danger' },
-			cancel: { text: "取消", classed: 'btn-default' }
-		};
+		ok:{ 
+			text: "确定", 
+			classed: "btn-danger" 
+		},
+		cancel: { 
+			text: "取消", 
+			classed: "btn-default" 
+		}
+	};
 	
 	checkAdminSession(function() {
 		searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);

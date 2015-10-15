@@ -9,6 +9,8 @@ import com.xwkj.booking.bean.BookingBean;
 
 public interface BookingManager {
 
+	public int getPayTimeOut();
+	
 	/**
 	 * 预定房间
 	 * @param checkin
@@ -51,5 +53,12 @@ public interface BookingManager {
 	 * @return
 	 */
 	BookingBean getBookingByBno(String bno);
+	
+	/**
+	 * 删除订单
+	 * @param bid
+	 * @return
+	 */
+	boolean deleteBooking(String bid);
 	
 }

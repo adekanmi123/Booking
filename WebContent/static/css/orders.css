@@ -44,5 +44,41 @@
 }
 
 #order-list .caption p {
-	margin: 3px 0;
+	margin: 4px 0;
 }
+
+#order-list .caption a,
+#order-list .caption button {
+	height: 30px;
+}
+
+#order-list .caption button {
+	line-height: 0;
+}
+
+#order-list .order-payed,
+#order-list .order-wait,
+#order-list .order-close {
+	float: right;
+	display: none;
+}
+
+#order-list .order-payed i, 
+#order-list .order-wait i, 
+#order-list .order-close i {
+	font-size: 70px;
+}
+
+#order-list .order-payed p, 
+#order-list .order-wait p,
+#order-list .order-close p {
+	text-align: center;
+}
+
+#order-list .order-pay,
+#order-list .order-show,
+#order-list .order-delete,
+#order-list .order-comment {
+	display: none;
+}
+

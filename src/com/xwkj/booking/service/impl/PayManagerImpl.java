@@ -9,7 +9,17 @@ import com.xwkj.booking.service.PayManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 
 public class PayManagerImpl extends ManagerTemplate implements PayManager {
+	
+	private int payedSMSTemplateID;
 
+	public int getPayedSMSTemplateID() {
+		return payedSMSTemplateID;
+	}
+
+	public void setPayedSMSTemplateID(int payedSMSTemplateID) {
+		this.payedSMSTemplateID = payedSMSTemplateID;
+	}
+	
 	@Override
 	public PayBean getPayByBno(String bno) {
 		Booking booking=bookingDao.findByBno(bno);

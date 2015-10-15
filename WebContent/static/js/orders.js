@@ -6,6 +6,16 @@ var writingCommentBid;
 var stars=5;
 
 $(document).ready(function() {
+	$.messager.model = {
+		ok:{ 
+			text: "确定", 
+			classed: "btn-danger" 
+		},
+		cancel: { 
+			text: "取消", 
+			classed: "btn-default" 
+		}
+	};
 
 	$("#head").load("head.html");
 	$("#foot").load("foot.html");  
@@ -144,9 +154,42 @@ function loadBookings() {
 				days: bookings[i].days,
 				amount: bookings[i].amount
 			});
+			
+			//确认订单超时状态和支付状态
+			//1、订单支付超时
+			if(bookings[i].timeout) {
+				$("#"+bookings[i].bid+" .order-close").show();
+				$("#"+bookings[i].bid+" .order-delete").show();
+			} else {
+				$("#"+bookings[i].bid+" .order-comment").show();
+			//2、订单已支付
+				if(bookings[i].pay) {
+					$("#"+bookings[i].bid+" .order-payed").show();
+					$("#"+bookings[i].bid+" .order-show").show();
+				} else {
+			//3、订单未支付，等待用户支付
+					$("#"+bookings[i].bid+" .order-wait").show();
+					$("#"+bookings[i].bid+" .order-pay").show();
+					$("#"+bookings[i].bid+" .order-delete").show();
+				}				
+			}
+
+			//未支付的订单可以删除
+			if(!bookings[i].pay) {
+				$("#"+bookings[i].bid+" .order-delete").click(function() {
+					var bid=$(this).parent().parent().parent().parent().attr("id");
+					var bno=$("#"+bid+" .order-bno").text();
+					$.messager.confirm("提示", "确认删除房订单"+bno+"吗？", function() { 
+						BookingManager.deleteBooking(bid, function(success) {
+							if(success) 
+								$("#"+bid).remove();
+						});
+					});
+				});
+			}
 
 			//撰写评论
-			$("#"+bookings[i].bid+" .order-list-write-comment").click(function() {
+			$("#"+bookings[i].bid+" .order-comment").click(function() {
 				writingCommentBid=$(this).parent().parent().parent().parent().attr("id");
 				BookingManager.getBooking(writingCommentBid, function(booking) {
 					fillText({

@@ -1,9 +1,6 @@
 package com.xwkj.booking.servlet;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +12,14 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alipay.service.AlipaySubmit;
+import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.domain.Pay;
+import com.xwkj.booking.domain.Room;
+import com.xwkj.booking.domain.User;
 import com.xwkj.booking.service.PayManager;
+import com.xwkj.booking.service.util.ManagerTemplate;
+import com.xwkj.common.util.DateTool;
+import com.xwkj.common.util.SMSService;
 
 @WebServlet("/AlipayPayedServlet")
 public class AlipayPayedServlet extends HttpServlet {
@@ -26,47 +30,29 @@ public class AlipayPayedServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		System.out.println("getRequestURL: "+request.getRequestURL());
-		System.out.println("getRequestURI: "+request.getRequestURI());
-		System.out.println("getQueryString: "+request.getQueryString());
-		System.out.println("getRemoteAddr: "+request.getRemoteAddr());
-		System.out.println("getRemoteHost: "+request.getRemoteHost());
-		System.out.println("getRemotePort: "+request.getRemotePort());
-		System.out.println("getRemoteUser: "+request.getRemoteUser());
-		System.out.println("getLocalAddr: "+request.getLocalAddr());
-		System.out.println("getLocalName: "+request.getLocalName());
-		System.out.println("getLocalPort: "+request.getLocalPort());
-		System.out.println("getMethod: "+request.getMethod());
-		System.out.println("-------request.getParamterMap()-------");
-		//得到请求的参数Map，注意map的value是String数组类型
-
-		Map<String, String[]> map = request.getParameterMap();
-		Set<String> keySet = map.keySet();
-		for (String key : keySet) {
-		String[] values = (String[]) map.get(key);
-		    for (String value : values)
-		        System.out.println(key+"="+value);
-		}
-		System.out.println("--------request.getHeader()--------");
-		//得到请求头的name集合
-
-		Enumeration<String> em = request.getHeaderNames();
-		while (em.hasMoreElements()) {
-		    String name = (String) em.nextElement();
-		    String value = request.getHeader(name);
-		    System.out.println(name+"="+value);
-		}
-		System.out.println("------------------------------------------");
-		System.out.println();
-		
-		//支付完成更新支付信息
 		String bno=request.getParameter("out_trade_no");
 		String notify_id=request.getParameter("notify_id");
-		if(AlipaySubmit.notifyVertify(notify_id)) {
-			WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-			PayManager pay=(PayManager)context.getBean("payManager");
-			pay.updatePayedState(bno);
+		System.out.println(bno+" has been paeded");
+		WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		ManagerTemplate managerTemplate=(ManagerTemplate)context.getBean("managerTemplate");
+		Booking booking=managerTemplate.getBookingDao().findByBno(bno);
+		//支付完成更新支付信息、支付宝服务器可能会发出多次请求、如果已经接受一次请求之后将屏蔽支付宝的请求
+		if(AlipaySubmit.notifyVertify(notify_id)&&!booking.getPay()) {
+			PayManager payManager=(PayManager)context.getBean("payManager");
+			payManager.updatePayedState(bno);
+			booking.setPay(true);
+			managerTemplate.getBookingDao().update(booking);
+			//支付成功后、房间的销售数量加1
+			Room room=booking.getRoom();
+			room.setSold(room.getSold()+1);
+			managerTemplate.getRoomDao().update(room);
+			//发送短息通知用户支付成功
+			SMSService sms=(SMSService)context.getBean("SMSService");
+			User user=booking.getUser();
+			Pay pay=managerTemplate.getPayDao().findByBooking(booking);
+			String value="#name#="+user.getUname()+"&#bno#="+booking.getBno()
+				+"&#payDate#="+DateTool.formatDate(pay.getPayDate(), DateTool.DATE_HOUR_MINUTE_FORMAT_CN)+"&#amount#="+booking.getAmount();
+			sms.send(user.getTelephone(), payManager.getPayedSMSTemplateID(), value);
 		}
 	}
 

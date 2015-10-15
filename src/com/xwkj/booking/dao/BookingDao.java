@@ -38,4 +38,18 @@ public interface BookingDao {
 	 */
 	Booking findByBno(String bno);
 	
+	/**
+	 * 查询超时未支付但还没标记超时的订单
+	 * @param time
+	 * @return
+	 */
+	List<Booking> findWillTimoutBookings(Date time);
+	
+	/**
+	 * 查询已入住但还没有标记入住的订单
+	 * @param date
+	 * @return
+	 */
+	List<Booking> findWillStayedBookings(Date date);
+	
 }

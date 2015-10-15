@@ -1,6 +1,7 @@
 package com.xwkj.booking.servlet;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.alipay.service.AlipayConfig;
 import com.alipay.service.AlipaySubmit;
 import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.service.BookingManager;
 import com.xwkj.booking.service.PayManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
@@ -52,15 +54,19 @@ public class AlipayServlet extends HttpServlet {
 	private void pay(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String bno=request.getParameter("bno");
 		WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		BookingManager bookingManager=(BookingManager)context.getBean("bookingManager");
 		ManagerTemplate manager=(ManagerTemplate)context.getBean("managerTemplate");
 		PayManager pay=(PayManager)context.getBean("payManager");
 		Booking booking=manager.getBookingDao().findByBno(bno);
+		int minutes=DateTool.minutesBetween(booking.getCreateDate(), new Date());
 		//支付类型
 		String payment_type = "1";
 		//服务器异步通知页面路径
 		String notify_url = "http://booking.xwzx198.com/AlipayPayedServlet";
 		//页面跳转同步通知页面路径
 		String return_url = "http://booking.xwzx198.com/pay.html?bno="+bno;
+		//支付超时
+		String it_b_pay=(bookingManager.getPayTimeOut()-minutes-1)+"m";
 		//商户订单号
 		String out_trade_no = booking.getBno();
 		//订单名称
@@ -96,6 +102,7 @@ public class AlipayServlet extends HttpServlet {
 		sParaTemp.put("show_url", show_url);
 		sParaTemp.put("anti_phishing_key", anti_phishing_key);
 		sParaTemp.put("exter_invoke_ip", exter_invoke_ip);
+		sParaTemp.put("it_b_pay", it_b_pay);
 		//建立请求
 		Map<String, Object> data= AlipaySubmit.buildRequest(sParaTemp,"get","确认");
 		System.out.println(data.get("sbHtml"));
