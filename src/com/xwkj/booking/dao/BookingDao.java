@@ -14,13 +14,32 @@ public interface BookingDao {
 	void delete(Booking booking);
 	
 	/**
+	 * 管理员获取订单数量
+	 * @param start
+	 * @param end
+	 * @param checkin
+	 * @param bno
+	 * @param pay
+	 * @param timeout
+	 * @param showAll
+	 * @return
+	 */
+	int getBookingsCountForAdmin(Date start, Date end, Date checkin, String bno, boolean pay, boolean timeout, boolean showAll);
+	
+	/**
 	 * 管理员查询订单
 	 * @param start
 	 * @param end
+	 * @param checkin
 	 * @param bno
+	 * @param pay
+	 * @param timeout
+	 * @param showAll
+	 * @param offset
+	 * @param pageSize
 	 * @return
 	 */
-	List<Booking> findForAdmin(Date start, Date end, Date checkin, String bno);
+	List<Booking> findForAdmin(Date start, Date end, Date checkin, String bno, boolean pay, boolean timeout, boolean showAll, int offset, int pageSize);
 	
 	/**
 	 * 查询用户的订单

@@ -1,8 +1,14 @@
 package com.xwkj.booking.dao.impl;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 
 import com.xwkj.booking.dao.BookingDao;
 import com.xwkj.booking.domain.Booking;
@@ -31,9 +37,46 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 		getHibernateTemplate().delete(booking);
 	}
 
+	@Override
+	public int getBookingsCountForAdmin(Date start, Date end, Date checkin, String bno, boolean pay, boolean timeout, boolean showAll) {
+		String hql="select count(*) from Booking where bno!=null ";
+		List<Object> objects=new ArrayList<>();
+		if(start!=null) {
+			hql+=" and createDate>=?";
+			objects.add(start);
+		}
+		if(end!=null) {
+			hql+=" and createDate<=?";
+			objects.add(end);
+		}
+		if(checkin!=null) {
+			hql+=" and checkin=?";
+			objects.add(checkin);
+		}
+		if(bno!=null&&!bno.equals("")) {
+			hql+="  and bno like ?";
+			objects.add("%"+bno+"%");
+		}
+		if(!showAll) {
+			hql+=" and pay=? and timeout=?";
+			objects.add(pay);
+			objects.add(timeout);
+		}
+		final String _hql=hql;
+		return getHibernateTemplate().execute(new HibernateCallback<Long>() {
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query=session.createQuery(_hql);
+				for(int i=0; i< objects.size(); i++)
+					query.setParameter(i, objects.get(i));
+				return (long)query.uniqueResult();
+			}
+		}).intValue();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Booking> findForAdmin(Date start, Date end, Date checkin, String bno) {
+	public List<Booking> findForAdmin(Date start, Date end, Date checkin, String bno, boolean pay, boolean timeout, boolean showAll, int offset, int pageSize) {
 		String hql="from Booking where bno!=null ";
 		List<Object> objects=new ArrayList<>();
 		if(start!=null) {
@@ -52,11 +95,16 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 			hql+="  and bno like ?";
 			objects.add("%"+bno+"%");
 		}
+		if(!showAll) {
+			hql+=" and pay=? and timeout=?";
+			objects.add(pay);
+			objects.add(timeout);
+		}
 		hql+=" order by createDate desc";
 		Object [] objs=new Object[objects.size()];
 		for(int i=0; i<objects.size(); i++)
 			objs[i]=objects.get(i);
-		return getHibernateTemplate().find(hql, objs);
+		return findByPage(hql, objs, offset, pageSize);
 	}
 
 	@SuppressWarnings({ "unchecked", "null" })

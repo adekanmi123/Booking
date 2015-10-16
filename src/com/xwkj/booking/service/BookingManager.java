@@ -22,14 +22,28 @@ public interface BookingManager {
 	Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session);
 	
 	/**
+	 * 管理员查询订单数量
+	 * @param start
+	 * @param end
+	 * @param checkin
+	 * @param bno
+	 * @param type
+	 * @return
+	 */
+	int getBookingsCountForAdmin(String start, String end, String checkin, String bno, int type);
+	
+	/**
 	 * 管理员查询订单
 	 * @param start
 	 * @param end
 	 * @param checkin
 	 * @param bno
+	 * @param type
+	 * @param page 页码
+	 * @param pageSize 页面长度
 	 * @return
 	 */
-	List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno);
+	List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno, int type, int page, int pageSize);
 	
 	/**
 	 * 用户获取自己的订单

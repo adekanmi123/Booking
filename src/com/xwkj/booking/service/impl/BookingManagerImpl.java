@@ -144,9 +144,36 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		}
 		return data;
 	}
+	
+	@Override
+	public int getBookingsCountForAdmin(String start, String end, String checkin, String bno, int type) {
+		Date startDate=null;
+		if(start!=null&&!start.equals(""))
+			startDate=DateTool.transferDate(start+" 00:00:00", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
+		Date endDate=null;
+		if(end!=null&&!end.equals(""))
+			endDate=DateTool.transferDate(end+" 23:59:59", DateTool.DATE_HOUR_MINUTE_SECOND_FORMAT);
+		Date checkinDate=null;
+		if(checkin!=null&&!checkin.equals(""))
+			checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
+		boolean pay=false, timeout=false, showAll=false;
+		if(type==0) {
+			pay=false;
+			timeout=true;
+		} else if( type==1) {
+			pay=false;
+			timeout=false;
+		} else if(type==2) {
+			pay=true;
+			timeout=false;
+		} else if( type==-1) {
+			showAll=true;
+		}
+		return bookingDao.getBookingsCountForAdmin(startDate, endDate, checkinDate, bno, pay, timeout, showAll);
+	}
 
 	@Override
-	public List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno) {
+	public List<BookingBean> searchBookingsForAdmin(String start, String end, String checkin, String bno, int type, int page, int pageSize) {
 		List<BookingBean> bookings=new ArrayList<>();
 		Date startDate=null;
 		if(start!=null&&!start.equals(""))
@@ -157,7 +184,21 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		Date checkinDate=null;
 		if(checkin!=null&&!checkin.equals(""))
 			checkinDate=DateTool.transferDate(checkin, DateTool.YEAR_MONTH_DATE_FORMAT);
-		for(Booking booking: bookingDao.findForAdmin(startDate, endDate, checkinDate, bno)) 
+		boolean pay=false, timeout=false, showAll=false;
+		if(type==0) {
+			pay=false;
+			timeout=true;
+		} else if( type==1) {
+			pay=false;
+			timeout=false;
+		} else if(type==2) {
+			pay=true;
+			timeout=false;
+		} else if( type==-1) {
+			showAll=true;
+		}
+		int offset=(page-1)*pageSize;
+		for(Booking booking: bookingDao.findForAdmin(startDate, endDate, checkinDate, bno, pay, timeout, showAll, offset, pageSize)) 
 			bookings.add(new BookingBean(booking));
 		return bookings;
 	}
