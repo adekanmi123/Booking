@@ -36,8 +36,9 @@ public class AlipayPayedServlet extends HttpServlet {
 		WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		ManagerTemplate managerTemplate=(ManagerTemplate)context.getBean("managerTemplate");
 		Booking booking=managerTemplate.getBookingDao().findByBno(bno);
+		AlipaySubmit alipaySubmit=(AlipaySubmit)context.getBean("AlipaySubmit");
 		//支付完成更新支付信息、支付宝服务器可能会发出多次请求、如果已经接受一次请求之后将屏蔽支付宝的请求
-		if(AlipaySubmit.notifyVertify(notify_id)&&!booking.getPay()) {
+		if(alipaySubmit.notifyVertify(notify_id)&&!booking.getPay()) {
 			PayManager payManager=(PayManager)context.getBean("payManager");
 			payManager.updatePayedState(bno);
 			booking.setPay(true);

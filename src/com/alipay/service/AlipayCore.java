@@ -24,6 +24,8 @@ import org.apache.commons.httpclient.methods.multipart.PartSource;
  */
 
 public class AlipayCore {
+	
+	private final static String log_path="/User/limeng/Document";
 
     /** 
      * 除去数组中的空值和签名参数
@@ -83,7 +85,7 @@ public class AlipayCore {
     public static void logResult(String sWord) {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(AlipayConfig.log_path + "alipay_log_" + System.currentTimeMillis()+".txt");
+            writer = new FileWriter(log_path + "alipay_log_" + System.currentTimeMillis()+".txt");
             writer.write(sWord);
         } catch (Exception e) {
             e.printStackTrace();

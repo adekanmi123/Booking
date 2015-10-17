@@ -15,6 +15,8 @@ import java.io.UnsupportedEncodingException;
  */
 
 public class HttpResponse {
+	
+	private static final String input_charset="utf-8";
 
     /**
      * 返回中的Header信息
@@ -58,7 +60,7 @@ public class HttpResponse {
             return stringResult;
         }
         if (byteResult != null) {
-            return new String(byteResult, AlipayConfig.input_charset);
+            return new String(byteResult, input_charset);
         }
         return null;
     }
