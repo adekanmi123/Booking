@@ -166,4 +166,10 @@ public class MessageManagerImpl extends ManagerTemplate implements MessageManage
 		return false;
 	}
 
+	@Override
+	public void removeMessage(String mid) {
+		Message message=messageDao.get(mid);
+		messageDao.delete(message);
+	}
+
 }

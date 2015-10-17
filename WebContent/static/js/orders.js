@@ -161,11 +161,13 @@ function loadBookings() {
 				$("#"+bookings[i].bid+" .order-close").show();
 				$("#"+bookings[i].bid+" .order-delete").show();
 			} else {
-				$("#"+bookings[i].bid+" .order-comment").show();
 			//2、订单已支付
 				if(bookings[i].pay) {
 					$("#"+bookings[i].bid+" .order-payed").show();
 					$("#"+bookings[i].bid+" .order-show").show();
+					//已支付并且也入住的订单才能发表评论
+					if(bookings[i].stayed)
+						$("#"+bookings[i].bid+" .order-comment").show();
 				} else {
 			//3、订单未支付，等待用户支付
 					$("#"+bookings[i].bid+" .order-wait").show();

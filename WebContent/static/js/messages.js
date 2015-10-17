@@ -3,6 +3,17 @@ var pageSize=15;
 var replyingMid;
 
 $(document).ready(function() {
+	$.messager.model = {
+		ok:{ 
+			text: "确定", 
+			classed: "btn-danger" 
+		},
+		cancel: { 
+			text: "取消", 
+			classed: "btn-default" 
+		}
+	};
+
 	checkAdminSession(function() {
 		searchMessages("", "", null, null, null, -1, 1);
 	})
@@ -132,6 +143,17 @@ function searchMessages(start, end, name, email, telephone, looked, page) {
 						"show-message-content": message.content
 					});
 					$("#show-message-modal").modal("show");
+				});
+			});
+
+			//删除留言
+			$("#"+messages[i].mid+" .message-list-delete").click(function() {
+				var mid=$(this).parent().attr("id");
+				var name=$("#"+mid+" .message-list-name").text();
+				$.messager.confirm("提示", "确认删除"+name+"的留言", function() { 
+					MessageManager.removeMessage(mid, function() {
+						$("#"+mid).remove();
+					});
 				});
 			});
 		}

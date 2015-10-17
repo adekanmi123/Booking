@@ -27,4 +27,9 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	$("body").keydown(function() {
+        if (event.keyCode==13) 
+        	$("#admin-submit-button").click();
+    });
 });

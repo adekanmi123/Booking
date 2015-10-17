@@ -186,6 +186,11 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	$("#user-login-modal").keydown(function() {
+        if (event.keyCode==13) 
+        	$("#user-login-submit").click();
+    });
 
 	//用户退出登录
 	$("#nav-logout").click(function() {

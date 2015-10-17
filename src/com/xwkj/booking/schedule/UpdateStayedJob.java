@@ -10,6 +10,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import com.xwkj.booking.dao.BookingDao;
 import com.xwkj.booking.domain.Booking;
 import com.xwkj.booking.service.util.ManagerTemplate;
+import com.xwkj.common.util.DateTool;
 
 /**
  * 更新用户入住信息，已支付的订单在入住之后的第二天订单将标记为已入住
@@ -26,7 +27,8 @@ public class UpdateStayedJob extends QuartzJobBean {
 	@Override
 	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
 		BookingDao bookingDao=managerTemplate.getBookingDao();
-		List<Booking> bookings=bookingDao.findWillStayedBookings(new Date());
+		Date date=DateTool.transferDate(DateTool.formatDate(new Date(), DateTool.YEAR_MONTH_DATE_FORMAT), DateTool.YEAR_MONTH_DATE_FORMAT);
+		List<Booking> bookings=bookingDao.findWillStayedBookings(date);
 		for(Booking booking: bookings) {
 			booking.setStayed(true);
 			bookingDao.update(booking);

@@ -138,7 +138,7 @@ public class BookingDaoHibernate extends PageHibernateDaoSupport implements Book
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Booking> findWillStayedBookings(Date date) {
-		String hql="from Booking where pay=true and stayed=false and checkin<=?";
+		String hql="from Booking where pay=true and stayed=false and checkin<?";
 		return getHibernateTemplate().find(hql, date);
 	}
 

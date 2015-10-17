@@ -70,4 +70,10 @@ public interface MessageManager {
 	 * @return
 	 */
 	boolean replyBySMS(String mid, String reply);
+	
+	/**
+	 * 删除留言
+	 * @param mid
+	 */
+	void removeMessage(String mid);
 }
