@@ -68,7 +68,7 @@ body a:hover{
 	-ms-transition: 0.5s all ease;
 }
 .header {
-	background: #0B540B;
+	background: #3496C9;
 }
 ul.navig {
 	padding: 0;
@@ -168,7 +168,7 @@ ul.navig {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: #82c841;
+	background: #36a9f8;
 	-webkit-transform: scaleY(0);
 	transform: scaleY(0);
 	-webkit-transform-origin: 50% 0;
@@ -190,8 +190,8 @@ ul.navig {
 	transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 ul.navig li a.active{
-	background:#82c841;
-	color:#403F45;
+	background:#36a9f8;
+	color:#2551ff;
 }
 /* Shutter Out Horizontal */
 .hvr-shutter-out-horizontal {
@@ -799,7 +799,7 @@ p.admin {
 	color:#fff;
 }
 .footer-top p a:hover{
-	color:#82c841;
+	color:#36a9f8;
 }
 /*--footer-end--*/
 /*--typo-start--*/
