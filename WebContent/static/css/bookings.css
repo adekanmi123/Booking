@@ -1,3 +1,7 @@
 #search-bookings-form div {
 	margin: 2px 0;
 }
+
+#show-booking-modal .modal-body .row div {
+	margin: 5px 0;
+}

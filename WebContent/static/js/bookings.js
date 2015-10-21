@@ -1,6 +1,17 @@
 var pageSize=15;
 
 $(document).ready(function() {
+	$.messager.model = {
+		ok:{ 
+			text: "确定", 
+			classed: "btn-danger" 
+		},
+		cancel: { 
+			text: "取消", 
+			classed: "btn-default" 
+		}
+	};
+
 	checkAdminSession(function() {
 		searchBookings("", "", null, null, -1, 1);
 	});
@@ -108,6 +119,7 @@ function searchBookings(start, end, checkin, bno, type, page) {
 					payState='<span class="text-warning">待支付</span>';
 				}				
 			}
+
 			$("#booking-list tbody").mengular(".booking-list-template", {
 				bid: bookings[i].bid,
 				bno: bookings[i].bno,
@@ -118,6 +130,46 @@ function searchBookings(start, end, checkin, bno, type, page) {
 				telephone: bookings[i].user.telephone,
 				pay: payState
 			});
+
+			//订单详情
+			$("#"+bookings[i].bid+" .booking-list-show").click(function() {
+				var bid=$(this).parent().attr("id");
+				BookingManager.getBooking(bid, function(booking) {
+					if(booking.stayed)
+						booking.stayed="已入住";
+					else
+						booking.stayed="未入住";
+					fillText({
+						"show-booking-bno": booking.bno,
+						"show-booking-createDate": booking.createDate.format(DATE_HOUR_MINUTE_SECOND_FORMAT),
+						"show-booking-rname": booking.room.rname,
+						"show-booking-uname": booking.user.uname,
+						"show-booking-telephone": booking.user.telephone,
+						"show-booking-checkin": booking.checkin.format(YEAR_MONTH_DATE_FORMAT),
+						"show-booking-checkout": booking.checkout.format(YEAR_MONTH_DATE_FORMAT),
+						"show-booking-days": booking.days,
+						"show-booking-price": booking.room.price,
+						"show-booking-amount": booking.amount,
+						"show-booking-stayed": booking.stayed
+					});
+				})
+				$("#show-booking-modal").modal("show");
+			});
+
+			//删除订单
+			$("#"+bookings[i].bid+" .booking-list-delete").click(function() {
+				var bid=$(this).parent().attr("id");
+				var bno=$("#"+bid+" .booking-list-bno").text();
+				$.messager.confirm("提示", "确认删除订单："+bno+"吗？", function() {
+					BookingManager.deleteBooking(bid, function(success) {
+						if(success)
+							$("#"+bid).remove();
+						else
+							$.messager.popup("该订单已支付，无法删除！");
+					});
+				});
+			});
+
 		}
 	});
 }

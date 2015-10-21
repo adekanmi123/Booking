@@ -120,13 +120,13 @@
                     <tbody>
                         <tr id="${bid}$" class="mengular-template booking-list-template">
                             <td>${createDate}$</td>
-                            <td>${bno}$</td>
+                            <td class="booking-list-bno">${bno}$</td>
                             <td>${checkin}$</td>
                             <td>${rname}$</td>
                             <td>${uname}$</td>
                             <td>${telephone}$</td>
                             <td>${pay}$</td>
-                            <td class="booking-list-manage"><i class="fa fa-gear fa-lg text-success"></i></td>
+                            <td class="booking-list-show"><i class="fa fa-gear fa-lg text-success"></i></td>
                             <td class="booking-list-delete"><i class="fa fa-trash-o fa-lg text-danger"></i></td>
                         </tr>
                     </tbody>
@@ -145,6 +145,45 @@
                                 <span class="input-group-addon">条，共<span id="page-count"></span>条</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="show-booking-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="glyphicon glyphicon-remove pull-right" data-dismiss="modal"></span>
+                        <h4 class="modal-title">订单详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">订单号</div>
+                            <div id="show-booking-bno" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">预定时间</div>
+                            <div id="show-booking-createDate" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">房间名称</div>
+                            <div id="show-booking-rname" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">联系人</div>
+                            <div id="show-booking-uname" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">联系电话</div>
+                            <div id="show-booking-telephone" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">入住时间</div>
+                            <div id="show-booking-checkin" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">退房时间</div>
+                            <div id="show-booking-checkout" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">入住天数</div>
+                            <div id="show-booking-days" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">单价</div>
+                            <div id="show-booking-price" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">支付总额</div>
+                            <div id="show-booking-amount" class="col-xs-12 col-md-9"></div>
+                            <div class="col-xs-12 col-md-3">入住状态</div>
+                            <div id="show-booking-stayed" class="col-xs-12 col-md-9"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
                     </div>
                 </div>
             </div>
