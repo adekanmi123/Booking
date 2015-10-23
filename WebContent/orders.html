@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>我的订单</title>
 		<link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
 		<link href="static/css/bootstrap.min.css" rel="stylesheet"/>
@@ -86,7 +87,7 @@
 									<p>${rname}$，${number}$人房</p>
 									<p>${location}$</p>
 									<p>预订时间：${createDate}$</p>
-									<p>入住日期：${checkin}$，退房日期 ${checkout}$，共${days}$晚，￥${amount}$元</p>
+									<p>入住日期：${checkin}$，退房日期 ${checkout}$，${insurances}$人份保险，共${days}$晚，￥${amount}$元</p>
 									<a href="pay.html?bno=${bno}$" class="btn btn-warning order-pay">支付订单</a>
 									<a href="pay.html?bno=${bno}$" class="btn btn-info order-show">查看订单</a>
 									<button class="btn btn-danger order-delete">删除订单</button>

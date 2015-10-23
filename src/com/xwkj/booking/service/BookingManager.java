@@ -19,7 +19,7 @@ public interface BookingManager {
 	 * @param session 用户信息从session中获取，未登录的用户不允许预定房间
 	 * @return
 	 */
-	Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session);
+	Map<String, Object> reserve(String checkin, String checkout, String rid, int insurances, HttpSession session);
 	
 	/**
 	 * 管理员查询订单数量

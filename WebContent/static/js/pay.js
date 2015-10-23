@@ -29,7 +29,8 @@ $(document).ready(function() {
 					"pay-checkin": booking.checkin.format(YEAR_MONTH_DATE_FORMAT_CN),
 					"pay-checkout": booking.checkout.format(YEAR_MONTH_DATE_FORMAT_CN),
 					"pay-days": booking.days,
-					"pay-amount": booking.amount
+					"pay-amount": booking.amount,
+					"pay-insurances": booking.insurances
 				});
 				$("#alipay-submit").attr("href","AlipayServlet?task=pay&bno="+bno);
 			})

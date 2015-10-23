@@ -13,6 +13,7 @@ public class Booking implements Serializable {
 	private Date checkin;
 	private Date checkout;
 	private Integer days;
+	private Integer insurances;
 	private Double amount;
 	private Date createDate;
 	private Boolean pay;
@@ -99,6 +100,12 @@ public class Booking implements Serializable {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Integer getInsurances() {
+		return insurances;
+	}
+	public void setInsurances(Integer insurances) {
+		this.insurances = insurances;
 	}
 	
 }

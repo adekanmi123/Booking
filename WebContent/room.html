@@ -3,6 +3,7 @@
 	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>房间详情</title>
 		<link href="static/images/favicon.ico" type="image/x-icon" rel="icon"> 
 		<link href="static/css/bootstrap.min.css" rel="stylesheet"/>
@@ -69,12 +70,14 @@
 					<div class="col-xs-12 col-md-4">
 						<div id="information-tips" class="panel panel-default">
 							<div class="panel-heading">
-								<h2 class="panel-title">保障</h2>
+								<h2 class="panel-title">说明</h2>
 							</div>
 							<div class="panel-body">
 		                        <p class="text-muted">1、成功预订即保障有房。</p>
 		                        <p class="text-muted">2、您成功入住后，商家才收到定金。</p>
 		                        <p class="text-muted">3、房间已经过实地验证，请放心预订。</p>
+		                        <p class="text-muted">4、入住需要购买保险：按人数计算(固定的)10元/人*人数。</p>
+		                        <p class="text-muted">5、房间价格按入住天数分三种情况进行折扣：1-2天、按100%房价计算，3-7天、按80%房价计算，8-30天、按60%房价计算，系统自动根据入住人数计算出保险金额及房价</p>
 							</div>
 						</div>
 					</div>
@@ -92,6 +95,10 @@
 		                        <div class="input-group">
 		                            <span class="input-group-addon form-icon"><i class="fa fa-calendar-minus-o fa-lg"></i></span>
 		                            <input id="booking-room-checkout" type="text" class="form-control input-lg" placeholder="退房日期" readonly>
+		                        </div>
+		                        <div class="input-group">
+		                            <span class="input-group-addon form-icon"><i class="fa fa-heart fa-lg"></i></span>
+		                            <select id="booking-room-insurance" class="form-control input-lg"></select>
 		                        </div>
 		                        <h4 class="text-muted">共<strong id="booking-room-days" class="text-success">0</strong>晚，合计￥<strong id="booking-room-money" class="text-success">0</strong>元。</h4>
 		                        <button id="booking-room-submit" class="btn btn-lg btn-danger btn-block" disabled>立即预定</button>

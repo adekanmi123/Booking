@@ -150,7 +150,8 @@ function searchBookings(start, end, checkin, bno, type, page) {
 						"show-booking-days": booking.days,
 						"show-booking-price": booking.room.price,
 						"show-booking-amount": booking.amount,
-						"show-booking-stayed": booking.stayed
+						"show-booking-stayed": booking.stayed,
+						"show-booking-insurances": booking.insurances
 					});
 				})
 				$("#show-booking-modal").modal("show");

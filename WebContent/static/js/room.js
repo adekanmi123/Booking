@@ -5,6 +5,9 @@ var checkout=request("checkout");
 var _room;
 var amount;
 
+var discountRule;
+var insurancePrice;
+
 $(document).ready(function() {
 	$.messager.model = {
 			ok:{ text: "确定", classed: 'btn-danger' },
@@ -28,7 +31,7 @@ $(document).ready(function() {
     });
 	
 	//当日日期值发生变化时更改订单总价
-	$("#booking-room-checkin, #booking-room-checkout").change(function() {
+	$("#booking-room-checkin, #booking-room-checkout, #booking-room-insurance").change(function() {
 		checkin=$("#booking-room-checkin").val();
 		checkout=$("#booking-room-checkout").val();
 		if(checkin!=""&&checkin!=null&&checkout!=""&&checkout!=null) {
@@ -47,7 +50,7 @@ $(document).ready(function() {
 			} else {
 				$("#booking-room-checkin, #booking-room-checkout").parent().removeClass("has-error");
 				$("#booking-room-submit").removeAttr("disabled");
-				amount=days*_room.price;
+				amount=calculateAmount(days, $("#booking-room-insurance").val())
 				fillText({
 					"booking-room-days": days,
 					"booking-room-money": amount
@@ -65,31 +68,46 @@ $(document).ready(function() {
 
 		_room=room;
 
-		//如果传入入住时间和退房时间，就填充其表单并计算价格
-		if(checkin!=""&&checkout!="") {
-			if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
-				$.messager.popup("入住日期必须在今日或今日以后！");
-				fillValue({
-			    	"booking-room-checkout": checkout
-			    });
-			} else {
-				var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
-			    if(days<=0) {
-			    	$.messager.popup("退房日期必须在入住日期之后！");
-			    } else {
-			    	$("#booking-room-submit").removeAttr("disabled");
-			    	fillValue({
-				    	"booking-room-checkin": checkin,
-				    	"booking-room-checkout": checkout
-				    });
-				   	amount=days*_room.price;
-				    fillText({
-						"booking-room-days": days,
-						"booking-room-money": amount
-					});
-			    }
-			}
+		//加载保险下拉菜单
+		for(var i=1; i<=_room.number; i++) {
+			var option=$("<option>").text("购买"+i+"人份保险").val(1);
+			if(i==_room.number)
+				option.attr("selected", "selected");
+			$("#booking-room-insurance").append(option);
 		}
+
+		//获取保险金额和折扣规则
+		BookingManager.getInsurancePrice(function(price) {
+			BookingManager.getDiscountRule(function(rule) {
+				insurancePrice=price;
+				discountRule=eval("("+rule+")");
+				//如果传入入住时间和退房时间，就填充其表单并计算价格
+				if(checkin!=""&&checkout!="") {
+					if(getDaysBetweenDates(new Date((new Date().format(YEAR_MONTH_DATE_FORMAT))), new Date(checkin))<0) {
+						$.messager.popup("入住日期必须在今日或今日以后！");
+						fillValue({
+					    	"booking-room-checkout": checkout
+					    });
+					} else {
+						var days=getDaysBetweenDates(new Date(checkin), new Date(checkout));
+					    if(days<=0) {
+					    	$.messager.popup("退房日期必须在入住日期之后！");
+					    } else {
+					    	$("#booking-room-submit").removeAttr("disabled");
+					    	fillValue({
+						    	"booking-room-checkin": checkin,
+						    	"booking-room-checkout": checkout
+						    });
+						    amount=calculateAmount(days, _room.number);
+						    fillText({
+								"booking-room-days": days,
+								"booking-room-money": amount
+							});
+					    }
+					}
+				}
+			});
+		});
 
 		//加载房间信息
 		fillText({
@@ -149,6 +167,7 @@ $(document).ready(function() {
 			if(user==null)
 				$.messager.popup("请先登录后再订房！");
 			else {
+				var insurances=$("#booking-room-insurance").val();
 				var message="房间信息：<br>"+
 					"房间名称："+_room.rname+"<br>"+
 					"房间类型："+_room.number+"人房<br>"+
@@ -158,10 +177,12 @@ $(document).ready(function() {
 					"联系人电话："+user.telephone+"<br><br>"+
 					"订单信息：<br>"+
 					"订单金额：￥"+amount+"元<br>"+
+					"保险人数："+insurances+"人<br>"+
 					"入住时间："+checkin+"<br>"+
 					"退房时间："+checkout;
+
 				$.messager.confirm("您等订单信息如下，请确认订房信息：", message, function() { 
-					BookingManager.reserve(checkin, checkout, rid, function(data) {
+					BookingManager.reserve(checkin, checkout, rid, insurances, function(data) {
 						if(data.success==false) {
 							if(data.unavailableDates!=null) {
 								var message="";
@@ -180,3 +201,14 @@ $(document).ready(function() {
 		});
 	});
 });
+
+function calculateAmount(days, insurances) {
+	var discount;
+	for(var i in discountRule) {
+		if(days>=discountRule[i].start&&days<=discountRule[i].end) {
+			discount=discountRule[i].discount;
+			break;
+		}
+	}
+	return (days*_room.price*discount+insurances*insurancePrice).toFixed(2);
+}

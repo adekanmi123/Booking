@@ -26,6 +26,7 @@ import com.xwkj.common.util.DateTool;
 import com.xwkj.common.util.MathTool;
 import com.xwkj.common.util.SMSService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class BookingManagerImpl extends ManagerTemplate implements BookingManager {
@@ -37,9 +38,12 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 	
 	//支付超时时长
 	private int payTimeOut;
-	
 	//订房成功发送短信模板id
 	private int BookingSuccessSMSTemplateID;
+	//保险单价
+	private double InsurancePrice;
+	//折扣规则
+	private String DiscountRule;
 
 	public void setReserveFailedDateError(String reserveFailedDateError) {
 		ReserveFailedDateError = reserveFailedDateError;
@@ -69,8 +73,44 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		return payTimeOut;
 	}
 
+	public double getInsurancePrice() {
+		return InsurancePrice;
+	}
+
+	public String getDiscountRule() {
+		return DiscountRule;
+	}
+
+	public void setInsurancePrice(double insurancePrice) {
+		InsurancePrice = insurancePrice;
+	}
+
+	public void setDiscountRule(String discountRule) {
+		DiscountRule = discountRule;
+	}
+	
+	/**
+	 * 计算总价
+	 * @param days 入住天数
+	 * @param price 单价
+	 * @param insurances 保险数量
+	 * @return
+	 */
+	private double calculateAmount(int days, double price, int insurances) {
+		double discount=1.0;
+		JSONArray rules=JSONArray.fromObject(DiscountRule);
+		for (Object object: rules) {
+		  JSONObject rule=JSONObject.fromObject(object);
+		  if(days>=Integer.parseInt(rule.get("start").toString())&&days<=Integer.parseInt(rule.get("end").toString())) {
+			  discount=Double.parseDouble(rule.get("discount").toString());
+			  break;
+		  }
+		}
+		return days*price*discount+insurances*InsurancePrice;
+	}
+
 	@Override
-	public Map<String, Object> reserve(String checkin, String checkout, String rid, HttpSession session) {
+	public Map<String, Object> reserve(String checkin, String checkout, String rid, int insurances, HttpSession session) {
 		Map<String, Object> data=new HashMap<>();
 		Room room=roomDao.get(rid);
 		//检查房间是否可用
@@ -112,7 +152,8 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		booking.setCheckin(checkinDate);
 		booking.setCheckout(checkoutDate);
 		booking.setDays(days);
-		booking.setAmount(days*room.getPrice());
+		booking.setInsurances(insurances);
+		booking.setAmount(calculateAmount(days, room.getPrice(), insurances));
 		booking.setPay(false);
 		booking.setTimeout(false);
 		booking.setCreateDate(new Date());

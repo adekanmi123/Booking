@@ -11,6 +11,7 @@ public class BookingBean {
 	private Date checkin;
 	private Date checkout;
 	private int days;
+	private int insurances;
 	private double amount;
 	private Date createDate;
 	private boolean pay;
@@ -91,6 +92,12 @@ public class BookingBean {
 	public void setUser(UserBean user) {
 		this.user = user;
 	}
+	public int getInsurances() {
+		return insurances;
+	}
+	public void setInsurances(int insurances) {
+		this.insurances = insurances;
+	}
 	
 	public BookingBean(Booking booking) {
 		super();
@@ -99,6 +106,7 @@ public class BookingBean {
 		this.checkin = booking.getCheckin();
 		this.checkout = booking.getCheckout();
 		this.days = booking.getDays();
+		this.insurances = booking.getInsurances();
 		this.amount = booking.getAmount();
 		this.pay = booking.getPay();
 		this.timeout = booking.getTimeout();
@@ -107,5 +115,6 @@ public class BookingBean {
 		this.room = new RoomBean(booking.getRoom());
 		this.user = new UserBean(booking.getUser());
 	}
+
 	
 }

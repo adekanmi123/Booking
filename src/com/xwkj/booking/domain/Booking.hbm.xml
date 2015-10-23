@@ -11,6 +11,7 @@
 		<property name="checkin" column="checkin" type="date" not-null="true"/>
 		<property name="checkout" column="checkout" type="date" not-null="true"/>
 		<property name="days" column="days" type="integer" not-null="true"/>
+		<property name="insurances" column="insurances" type="integer" not-null="true"/>
 		<property name="amount" column="amount" type="double" not-null="true"/>
 		<property name="createDate" column="createDate" type="java.util.Date" not-null="true"/>	
 		<property name="pay" column="pay" type="boolean" not-null="true"/>

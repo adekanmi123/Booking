@@ -152,7 +152,8 @@ function loadBookings() {
 				checkin: bookings[i].checkin.format(YEAR_MONTH_DATE_FORMAT_CN),
 				checkout: bookings[i].checkout.format(YEAR_MONTH_DATE_FORMAT_CN),
 				days: bookings[i].days,
-				amount: bookings[i].amount
+				amount: bookings[i].amount,
+				insurances: bookings[i].insurances
 			});
 			
 			//确认订单超时状态和支付状态
