@@ -69,8 +69,8 @@ $(document).ready(function() {
 		_room=room;
 
 		//加载保险下拉菜单
-		for(var i=1; i<=_room.number; i++) {
-			var option=$("<option>").text("购买"+i+"人份保险").val(1);
+		for(var i=1; i<=10; i++) {
+			var option=$("<option>").text("购买"+i+"人份保险").val(i);
 			if(i==_room.number)
 				option.attr("selected", "selected");
 			$("#booking-room-insurance").append(option);
