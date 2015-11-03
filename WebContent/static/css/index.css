@@ -21,16 +21,20 @@
 	margin: 5px 0;
 }
 
-#search-form .row div .input-group select {
+#search-room {
+	margin-top: 50px;
+}
+
+#search-room-number, #search-room-location {
 	padding: 0 10px;
+}
+
+#search-room div .input-group, #search-room div button {
+    margin: 5px 0;
 }
 
 #title h2 {
 	color: #fff;
-}
-
-#newest-room-list {
-	margin-top: 30px;
 }
 
 #user-comment div {
@@ -38,5 +42,36 @@
 }
 
 #user-comment div hr {
-	border-top: 1px solid #C7C7D2;
+	
+}
+
+#more-rooms {
+	font-size: 20px;
+	margin-top: 15px;
+}
+
+.events {
+	padding: 10px 0;
+}
+
+#left {
+	width: 100%;
+	height: 800px;
+}
+
+#mid {
+	width: 100%;
+	margin-top: 30px;
+}
+
+#about {
+	padding: 20px 0;
+}
+
+#about .line {
+	/* border-right: 1px solid #cecece; */
+}
+
+#valige img {
+	width: 100%;
 }

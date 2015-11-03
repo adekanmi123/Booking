@@ -112,7 +112,7 @@ $(document).ready(function() {
 	});
 	
 	//清除新增房间表单
-	$("#add-room-modal").on("hide.bs.modal", function (e) {
+	$("#add-room-modal").on("hidden.bs.modal", function (e) {
 		$("#add-room-form .input-group input").val("");
 		$("#add-room-form .input-group textarea").val("");
 		$("#add-room-form .input-group").removeClass("has-error");
