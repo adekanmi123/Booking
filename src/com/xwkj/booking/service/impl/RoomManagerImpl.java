@@ -122,6 +122,7 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 	public void enableRoom(String rid, boolean enable) {
 		Room room=roomDao.get(rid);
 		room.setEnable(enable);
+		room.setCreateDate(new Date());
 		roomDao.update(room);
 	}
 	

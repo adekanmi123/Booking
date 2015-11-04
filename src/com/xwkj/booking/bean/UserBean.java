@@ -11,6 +11,7 @@ public class UserBean {
 	private String uname;
 	private String password;
 	private Date registerDate;
+	
 	public String getUid() {
 		return uid;
 	}

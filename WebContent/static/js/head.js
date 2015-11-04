@@ -187,6 +187,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	//支持键盘return键登录
 	$("#user-login-modal").keydown(function() {
         if (event.keyCode==13) 
         	$("#user-login-submit").click();
