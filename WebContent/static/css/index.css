@@ -57,6 +57,7 @@
 #left {
 	width: 100%;
 	height: 800px;
+	margin-bottom: 20px;
 }
 
 #mid {
@@ -74,4 +75,8 @@
 
 #valige img {
 	width: 100%;
+}
+
+#valige div {
+	margin: 5px 0;
 }
