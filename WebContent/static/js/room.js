@@ -127,12 +127,26 @@ $(document).ready(function() {
 				});
 			}
 			for(var i in photos) {
-				$("#room-photo-list").mengular(".room-photo-list-template", {
+				var indicator=$("<li>").attr("data-target", "#room-photo-list")
+					.attr("data-slide-to", i)
+					.attr("style","background-image: url(upload/"+rid+"/"+photos[i].filename+")");
+				if(i==0)
+					indicator.addClass("active");
+				$("#room-photo-list .carousel-indicators").append(indicator);
+			}
+
+			for(var i in photos) {
+				$("#room-photo-list .carousel-inner").mengular(".room-photo-list-template", {
 					pid: photos[i].pid,
 					src: "upload/"+rid+"/"+photos[i].filename,
 					rname: room.rname
 				});
+				if(i==0) {
+					$("#"+photos[i].pid).addClass("active");
+				}
+
 			}
+			$("#room-photo-list .mengular-template").remove();
 		});
 
 		//加载房间评论

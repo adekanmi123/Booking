@@ -39,6 +39,22 @@
 	width: 100%;
 }
 
+#room-photo-list .carousel-indicators li {
+	width: 52px;
+    height: 39px;
+    background-size: cover;
+}
+
+#room-photo-list .carousel-indicators .active {
+	margin-bottom: 5px;
+}
+
+#room-photo-list .carousel-control {
+	height: 98%;
+	top: 5px;	
+}
+
 #booking-room-insurance {
 	padding: 0 10px;
 }
+
