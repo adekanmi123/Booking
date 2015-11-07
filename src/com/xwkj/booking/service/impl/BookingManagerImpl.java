@@ -148,7 +148,7 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		String uid=((UserBean)session.getAttribute(UserManager.USER_FLAG)).getUid();
 		User user=userDao.get(uid);
 		Booking booking=new Booking();
-		booking.setBno(DateTool.formatDate(new Date(), "yyyyMMddHHmmss")+MathTool.getRandomStr(6));
+		booking.setBno("B"+DateTool.formatDate(new Date(), "yyyyMMddHHmmss")+MathTool.getRandomStr(6));
 		booking.setCheckin(checkinDate);
 		booking.setCheckout(checkoutDate);
 		booking.setDays(days);
