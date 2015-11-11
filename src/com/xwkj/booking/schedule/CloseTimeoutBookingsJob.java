@@ -28,7 +28,7 @@ public class CloseTimeoutBookingsJob extends QuartzJobBean {
 	}
 
 	@Override
-	protected void executeInternal(JobExecutionContext arg0) throws JobExecutionException {
+	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		BookingDao bookingDao=managerTemplate.getBookingDao();
 		HistoryDao historyDao=managerTemplate.getHistoryDao();
 		Date time=DateTool.nextMinute(new Date(), -bookingManager.getPayTimeOut());

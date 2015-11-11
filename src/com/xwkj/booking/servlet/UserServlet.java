@@ -34,7 +34,9 @@ public class UserServlet extends HttpServlet {
 		case "login":
 			login(request, response);
 			break;
-
+		case "getTelephone":
+			getTelephone(request, response);
+			break;
 		default:
 			break;
 		}
@@ -66,6 +68,13 @@ public class UserServlet extends HttpServlet {
 		data.put("success", true);
 		data.put("user", new UserBean(user));
 		response.getWriter().print(data.toString());
+	}
+
+	private void getTelephone(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String uid=request.getParameter("uid");
+		UserDao userDao=(UserDao)context.getBean("userDao");
+		User user=userDao.get(uid);
+		response.getWriter().print(user.getTelephone());
 	}
 
 }
