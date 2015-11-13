@@ -23,6 +23,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.xwkj.booking.dao.PhotoDao;
+import com.xwkj.booking.dao.RoomDao;
 import com.xwkj.booking.domain.Photo;
 import com.xwkj.booking.domain.Room;
 import com.xwkj.booking.service.util.ManagerTemplate;
@@ -31,6 +33,18 @@ import com.xwkj.common.util.ImageTool;
 
 import net.sf.json.JSONObject;
 
+/**
+ * @author limeng
+ *
+ */
+/**
+ * @author limeng
+ *
+ */
+/**
+ * @author limeng
+ *
+ */
 @WebServlet("/PhotoServlet")
 public class PhotoServlet extends HttpServlet 
 {
@@ -64,6 +78,9 @@ public class PhotoServlet extends HttpServlet
 		{
 		case "download":
 			download(request,response);
+			break;
+		case "clearUnusefulPhotos":
+			clearUnusefulPhotos(request,response);
 			break;
 		default:
 			break;
@@ -221,5 +238,40 @@ public class PhotoServlet extends HttpServlet
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 清除无用照片
+	 * @param request
+	 * @param response
+	 * @throws IOException 
+	 */
+	private void clearUnusefulPhotos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		WebApplicationContext context= WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		String rootPath=getServletConfig().getServletContext().getRealPath("/");
+		RoomDao roomDao=(RoomDao)context.getBean("roomDao");
+		PhotoDao photoDao=(PhotoDao)context.getBean("photoDao");
+		String message = "";
+		for(Room room: roomDao.findAll()) {
+			String folder=rootPath+"/"+PHOTO_FOLDER+"/"+room.getRid();
+			File files=new File(folder);
+			List<Photo> photos=photoDao.findByRoom(room);
+			for(File file: files.listFiles()) {
+				boolean exist=false;
+				for(Photo photo: photos) {
+					if(photo.getFilename().equals(file.getName())) {
+						exist=true;
+						photos.remove(photo);
+						break;
+					}
+				}
+				if(!exist) {
+					message+="Delete file "+folder+"/"+file.getName()+"\n";
+					file.delete();
+				}
+			}
+		}
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().println(message);
 	}
 }

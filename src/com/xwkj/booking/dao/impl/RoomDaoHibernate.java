@@ -38,6 +38,12 @@ public class RoomDaoHibernate extends PageHibernateDaoSupport implements RoomDao
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Room> findAll() {
+		return getHibernateTemplate().find("from Room");
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Room> searchRoom(String rname, Integer number, String location, Double minArea, Double maxArea,
 			Double minPrice, Double maxPrice, Date start, Date end, boolean all, boolean enable) {
 		List<Object> objects=new ArrayList<>();

@@ -11,6 +11,7 @@ public interface RoomDao {
 	String save(Room room);
 	void update(Room room);
 	void delete(Room room);
+	List<Room> findAll();
 
 	/**
 	 * 搜索房间

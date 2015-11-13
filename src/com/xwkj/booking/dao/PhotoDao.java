@@ -17,5 +17,5 @@ public interface PhotoDao {
 	 * @return
 	 */
 	List<Photo> findByRoom(Room room);
-	
+
 }

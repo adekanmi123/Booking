@@ -80,3 +80,7 @@
 #valige div {
 	margin: 5px 0;
 }
+
+.carousel-inner .item img {	
+	min-height: 150px;
+}
