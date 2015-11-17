@@ -140,9 +140,13 @@ function loadBookings() {
 	BookingManager.getBookingsByUid(uid, orderby, desc, function(bookings) {
 		$("#order-list").mengularClear();
 		for(var i in bookings) {
+			var src="static/images/noImage.jpg";
+			if(bookings[i].room.cover!=null) {
+				src= "upload"+"/"+bookings[i].room.rid+"/"+bookings[i].room.cover.filename;
+			}
 			$("#order-list").mengular(".order-list-template", {
 				bid: bookings[i].bid,
-				src: "upload"+"/"+bookings[i].room.rid+"/"+bookings[i].room.cover.filename,
+				src: src,
 				bno: bookings[i].bno,
 				rid: bookings[i].room.rid,
 				rname: bookings[i].room.rname,
