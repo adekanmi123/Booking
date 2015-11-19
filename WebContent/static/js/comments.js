@@ -24,12 +24,13 @@ $(document).ready(function() {
     });
 
 	//加载每页显示条数的下拉菜单
-	for(var i=0;i<=100;i++) {
+	for(var i=1; i<=100; i++) {
 		var option=$("<option>").val(i).text(i);
 		if(pageSize==i)
 			option.attr("selected","selected");
 		$("#page-size").append(option);
 	}
+	
 	//更改每页显示的条数
 	$("#page-size").change(function() {
 		pageSize=$(this).val();
