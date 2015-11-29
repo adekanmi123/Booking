@@ -20,7 +20,7 @@ $(document).ready(function() {
 	
 	checkAdminSession(function() {
 		searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);
-	})
+	});
 
 	//加载每页显示条数的下拉菜单
 	for(var i=1;i<=100;i++) {
