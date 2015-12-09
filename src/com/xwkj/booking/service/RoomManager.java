@@ -11,12 +11,18 @@ public interface RoomManager {
 	 * @param rname
 	 * @param number
 	 * @param location
+	 * @param transportation 交通指南
+	 * @param latitude 纬度
+	 * @param longitude 经度
+	 * @param level 地图层级
 	 * @param area
 	 * @param price
+	 * @param available
 	 * @param descriptor
 	 * @return
 	 */
-	String addRoom(String rname, int number, String location, double area, double price, int available, String descriptor);
+	String addRoom(String rname, int number, String location, String transportation, double latitude, double longitude, 
+			int level, double area, double price, int available, String descriptor);
 	
 	/**
 	 * 修改房间
@@ -28,7 +34,8 @@ public interface RoomManager {
 	 * @param price
 	 * @param descriptor
 	 */
-	void modifyRoom(String rid, String rname, int number, String location, double area, double price, int available, String descriptor);
+	void modifyRoom(String rid, String rname, int number, String location, String transportation, double latitude, double longitude, 
+			int level, double area, double price, int available, String descriptor);
 	
 	/**
 	 * 删除房间

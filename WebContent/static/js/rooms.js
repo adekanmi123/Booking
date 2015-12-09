@@ -62,10 +62,14 @@ $(document).ready(function() {
 		var rname=$("#add-room-rname").val();
 		var number=$("#add-room-number").val();
 		var location=$("#add-room-location").val();
+		var longitude=$("#add-room-longitude").val();
+		var latitude=$("#add-room-latitude").val();
+		var level=$("#add-room-level").val();
 		var area=$("#add-room-area").val();
 		var price=$("#add-room-price").val();
 		var available=$("#add-room-available").val();
 		var descriptor=$("#add-room-descriptor").val();
+		var transportation=$("#add-room-transportation").val();
 		var validate=true;
 		if(rname==""||rname==null) {
 			validate=false;
@@ -78,6 +82,18 @@ $(document).ready(function() {
 			$("#add-room-location").parent().addClass("has-error");
 		} else {
 			$("#add-room-location").parent().removeClass("has-error");
+		}
+		if(latitude==""||latitude==null||!isNum(latitude)||latitude<-90.0||latitude>90.0) {
+			validate=false;
+			$("#add-room-latitude").parent().addClass("has-error");
+		} else {
+			$("#add-room-latitude").parent().removeClass("has-error");
+		}
+		if(longitude==""||longitude==null||!isNum(longitude)||longitude<-180.0||longitude>180.0) {
+			validate=false;
+			$("#add-room-longitude").parent().addClass("has-error");
+		} else {
+			$("#add-room-longitude").parent().removeClass("has-error");
 		}
 		if(area==""||area==null||!isNum(area)) {
 			validate=false;
@@ -103,8 +119,15 @@ $(document).ready(function() {
 		} else {
 			$("#add-room-descriptor").parent().removeClass("has-error");
 		}
+		if(transportation==""||transportation==null) {
+			validate=false;
+			$("#add-room-transportation").parent().addClass("has-error");
+		} else {
+			$("#add-room-transportation").parent().removeClass("has-error");
+		}
 		if(validate) {
-			RoomManager.addRoom(rname, number, location, area, price, available, descriptor, function(rid){
+			RoomManager.addRoom(rname, number, location, transportation, latitude, longitude, 
+					level, area, price, available, descriptor, function(rid){
 				$("#add-room-modal").modal("hide");
 				searchRooms("", "", SHOW_ALL_NUMBER, SHOW_ALL_ENABLE, 1);
 			});
@@ -123,10 +146,14 @@ $(document).ready(function() {
 		var rname=$("#modify-room-rname").val();
 		var number=$("#modify-room-number").val();
 		var location=$("#modify-room-location").val();
+		var longitude=$("#modify-room-longitude").val();
+		var latitude=$("#modify-room-latitude").val();
+		var level=$("#modify-room-level").val();
 		var area=$("#modify-room-area").val();
 		var price=$("#modify-room-price").val();
 		var available=$("#modify-room-available").val();
 		var descriptor=$("#modify-room-descriptor").val();
+		var transportation=$("#modify-room-transportation").val();
 		var validate=true;
 		if(rname==""||rname==null) {
 			validate=false;
@@ -139,6 +166,18 @@ $(document).ready(function() {
 			$("#modify-room-location").parent().addClass("has-error");
 		} else {
 			$("#modify-room-location").parent().removeClass("has-error");
+		}
+		if(latitude==""||latitude==null||!isNum(latitude)||latitude<-90.0||latitude>90.0) {
+			validate=false;
+			$("#modify-room-latitude").parent().addClass("has-error");
+		} else {
+			$("#modify-room-latitude").parent().removeClass("has-error");
+		}
+		if(longitude==""||longitude==null||!isNum(longitude)||longitude<-180.0||longitude>180.0) {
+			validate=false;
+			$("#modify-room-longitude").parent().addClass("has-error");
+		} else {
+			$("#modify-room-longitude").parent().removeClass("has-error");
 		}
 		if(area==""||area==null||!isNum(area)) {
 			validate=false;
@@ -164,8 +203,15 @@ $(document).ready(function() {
 		} else {
 			$("#modify-room-descriptor").parent().removeClass("has-error");
 		}
+		if(transportation==""||transportation==null) {
+			validate=false;
+			$("#modify-room-transportation").parent().addClass("has-error");
+		} else {
+			$("#modify-room-transportation").parent().removeClass("has-error");
+		}
 		if(validate) {
-			RoomManager.modifyRoom(modifyingRid , rname, number, location, area, price, available, descriptor, function(rid){
+			RoomManager.modifyRoom(modifyingRid , rname, number, location, transportation, latitude, longitude, 
+					level, area, price, available, descriptor, function(rid){
 				$.messager.popup("修改成功！");
 				var location=$("#search-room-location").val();
 		    	var rname=$("#search-room-rname").val();
@@ -231,10 +277,14 @@ function searchRooms(location, rname, number, enable, page) {
 						"modify-room-rname": room.rname,
 						"modify-room-number": room.number,
 						"modify-room-location": room.location,
+						"modify-room-latitude": room.latitude,
+						"modify-room-longitude": room.longitude,
+						"modify-room-level": room.level,
 						"modify-room-area": room.area,
 						"modify-room-price": room.price,
 						"modify-room-available": room.available,
-						"modify-room-descriptor": room.descriptor
+						"modify-room-descriptor": room.descriptor,
+						"modify-room-transportation": room.transportation
 					});
 					//加载照片
 					$("#room-photo-list").mengularClear();

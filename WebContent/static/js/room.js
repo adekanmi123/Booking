@@ -61,11 +61,15 @@ $(document).ready(function() {
 	
 	//加载房间信息
 	RoomManager.getRoom(rid, function(room) {
-		if(room==null||room.enable==false) {
-			location.href="urlError.html";
-			return;
-		}
-
+		AdminManager.checkSession(function(username) {
+			if(username==null) {
+				if(room==null||room.enable==false) {
+					location.href="urlError.html";
+					return;
+				}
+			} 
+		});
+		
 		_room=room;
 
 		//加载保险下拉菜单
@@ -116,8 +120,12 @@ $(document).ready(function() {
 			"room-area": room.area,
 			"room-descriptor": room.descriptor,
 			"room-price": room.price,
-			"room-location": room.location
+			"room-location": room.location,
+			"room-transportation": room.transportation
 		});
+
+		//加载百度地图
+		loadBaiduMap("baidu-map", room.longitude, room.latitude, room.level);
 
 		//加载房间图片
 		PhotoManager.getPhotosByRid(rid, function(photos) {
@@ -216,6 +224,12 @@ $(document).ready(function() {
 	});
 });
 
+/**
+ * 计算订单总务
+ * @param days 订单天数
+ * @param insurances 保险人数
+ * @returns
+ */
 function calculateAmount(days, insurances) {
 	var discount;
 	for(var i in discountRule) {
@@ -225,4 +239,22 @@ function calculateAmount(days, insurances) {
 		}
 	}
 	return (days*_room.price*discount+insurances*insurancePrice).toFixed(2);
+}
+
+/**
+ * 加载百度地图
+ * @param longitude
+ * @param latitude
+ * @param level
+ */
+function loadBaiduMap(id, longitude, latitude, level) {
+	var map = new BMap.Map(id);    // 创建Map实例
+	var point = new BMap.Point(longitude, latitude);
+	map.centerAndZoom(point, level);  // 初始化地图,设置中心点坐标和地图级别
+	map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+	map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+	var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 }

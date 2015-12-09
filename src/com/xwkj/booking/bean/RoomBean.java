@@ -9,6 +9,10 @@ public class RoomBean {
 	private String rname;
 	private int number;
 	private String location;
+	private String transportation;
+	private double latitude;
+	private double longitude;
+	private int level;
 	private double area;
 	private double price;
 	private String descriptor;
@@ -90,12 +94,41 @@ public class RoomBean {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
+	public String getTransportation() {
+		return transportation;
+	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setTransportation(String transportation) {
+		this.transportation = transportation;
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
 	public RoomBean(Room room) {
 		super();
 		this.rid = room.getRid();
 		this.rname = room.getRname();
 		this.number = room.getNumber();
 		this.location = room.getLocation();
+		this.transportation= room.getTransportation();
+		this.latitude= room.getLatitude();
+		this.longitude=room.getLongitude();
+		this.level=room.getLevel();
 		this.area = room.getArea();
 		this.price = room.getPrice();
 		this.descriptor = room.getDescriptor();

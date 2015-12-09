@@ -85,13 +85,6 @@
                                     <option value="1">单人间</option>
                                     <option value="2">双人间</option>
                                     <option value="3">三人间</option>
-                                    <option value="4">四人间</option>
-                                    <option value="5">五人间</option>
-                                    <option value="6">六人间</option>
-                                    <option value="7">七人间</option>
-                                    <option value="8">八人间</option>
-                                    <option value="9">九人间</option>
-                                    <option value="10">十人间</option>
                                 </select>
                             </div>
                         </div>
@@ -122,6 +115,7 @@
                             <th>房间数量</th>
                             <th>销售数量</th>
                             <th>是否可用</th>
+                            <th>预览</th>
                             <th>管理</th>
                             <th>删除</th>
                         </tr>
@@ -134,6 +128,7 @@
                             <td>${available}$</td>
                             <td>${sold}$</td>
                             <td class="room-list-enable"><input type="checkbox" data-size="mini" data-on-text="可用" data-off-text="暂停"></td>
+                            <td><a href="room.html?rid=${rid}$" target="_blank"><i class="fa fa-eye fa-lg text-info"></i></a></td>
                             <td class="room-list-manage"><i class="fa fa-gear fa-lg text-success"></i></td>
                             <td class="room-list-delete"><i class="fa fa-trash-o fa-lg text-danger"></i></td>
                         </tr>
@@ -175,18 +170,45 @@
 								<option value="1">单人间</option>
                                 <option value="2">双人间</option>
                                 <option value="3">三人间</option>
-                                <option value="4">四人间</option>
-                                <option value="5">五人间</option>
-                                <option value="6">六人间</option>
-                                <option value="7">七人间</option>
-                                <option value="8">八人间</option>
-                                <option value="9">九人间</option>
-                                <option value="10">十人间</option>
                             </select>
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <span class="input-group-addon form-icon"><i class="fa fa-map fa-lg"></i></span>
                             <input id="add-room-location" type="text" class="form-control" placeholder="房间位置">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <input id="add-room-longitude" type="text" class="form-control" placeholder="经度">
+                            <span class="input-group-addon">度</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <input id="add-room-latitude" type="text" class="form-control" placeholder="纬度">
+                            <span class="input-group-addon">度</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-sort-numeric-asc fa-lg"></i></span>
+                            <select id="add-room-level" class="form-control">
+                                <option value="1">1级大小</option>
+                                <option value="2">2级大小</option>
+                                <option value="3">3级大小</option>
+                                <option value="4">4级大小</option>
+                                <option value="5">5级大小</option>
+                                <option value="6">6级大小</option>
+                                <option value="7">7级大小</option>
+                                <option value="8">8级大小</option>
+                                <option value="9">9级大小</option>
+                                <option value="10">10级大小</option>
+                                <option value="11">11级大小</option>
+                                <option value="12">12级大小</option>
+                                <option value="13">13级大小</option>
+                                <option value="14">14级大小</option>
+                                <option value="15" selected>15级大小</option>
+                                <option value="16">16级大小</option>
+                                <option value="17">17级大小</option>
+                                <option value="18">18级大小</option>
+                                <option value="19">19级大小</option>
+                            </select>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon form-icon"><i class="fa fa-circle-thin fa-lg"></i></span>
@@ -205,7 +227,11 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon form-icon"><i class="fa fa-sticky-note-o fa-lg"></i></span>
-                            <textarea id="add-room-descriptor" class="form-control" placeholder="房间描述" rows="3"></textarea>
+                            <textarea id="add-room-descriptor" class="form-control" placeholder="房间描述" rows="4"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-bus fa-lg"></i></span>
+                            <textarea id="add-room-transportation" class="form-control" placeholder="交通线路" rows="4"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -233,18 +259,45 @@
                                 <option value="1">单人间</option>
                                 <option value="2">双人间</option>
                                 <option value="3">三人间</option>
-                                <option value="4">四人间</option>
-                                <option value="5">五人间</option>
-                                <option value="6">六人间</option>
-                                <option value="7">七人间</option>
-                                <option value="8">八人间</option>
-                                <option value="9">九人间</option>
-                                <option value="10">十人间</option>
                             </select>
                         </div>
                         <div class="input-group">
-                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <span class="input-group-addon form-icon"><i class="fa fa-map fa-lg"></i></span>
                             <input id="modify-room-location" type="text" class="form-control" placeholder="房间位置">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <input id="modify-room-longitude" type="text" class="form-control" placeholder="经度">
+                            <span class="input-group-addon">度</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-map-pin fa-lg"></i></span>
+                            <input id="modify-room-latitude" type="text" class="form-control" placeholder="纬度">
+                            <span class="input-group-addon">度</span>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-sort-numeric-asc fa-lg"></i></span>
+                            <select id="modify-room-level" class="form-control">
+                                <option value="1">1级大小</option>
+                                <option value="2">2级大小</option>
+                                <option value="3">3级大小</option>
+                                <option value="4">4级大小</option>
+                                <option value="5">5级大小</option>
+                                <option value="6">6级大小</option>
+                                <option value="7">7级大小</option>
+                                <option value="8">8级大小</option>
+                                <option value="9">9级大小</option>
+                                <option value="10">10级大小</option>
+                                <option value="11">11级大小</option>
+                                <option value="12">12级大小</option>
+                                <option value="13">13级大小</option>
+                                <option value="14">14级大小</option>
+                                <option value="15" selected>15级大小</option>
+                                <option value="16">16级大小</option>
+                                <option value="17">17级大小</option>
+                                <option value="18">18级大小</option>
+                                <option value="19">19级大小</option>
+                            </select>
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon form-icon"><i class="fa fa-circle-thin fa-lg"></i></span>
@@ -263,7 +316,11 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon form-icon"><i class="fa fa-sticky-note-o fa-lg"></i></span>
-                            <textarea id="modify-room-descriptor" class="form-control" placeholder="房间描述" rows="3"></textarea>
+                            <textarea id="modify-room-descriptor" class="form-control" placeholder="房间描述" rows="4"></textarea>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon form-icon"><i class="fa fa-bus fa-lg"></i></span>
+                            <textarea id="modify-room-transportation" class="form-control" placeholder="交通线路" rows="4"></textarea>
                         </div>
                         <div id="room-photo-list">
                             <div id="${pid}$" class="thumbnail mengular-template room-photo-template">

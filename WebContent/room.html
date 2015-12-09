@@ -24,11 +24,13 @@
         <script src="static/js/bootstrap-datetimepicker.min.js"></script>
         <script src="static/js/bootstrap-datetimepicker.zh-CN.js"></script>
         <script src="static/js/mengular-2.0.js"></script>
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=3bc30f746ca068fb43881728a31dd9e1"></script>
         <script src="dwr/engine.js"></script>
         <script src="dwr/interface/RoomManager.js"></script>
         <script src="dwr/interface/PhotoManager.js"></script>
         <script src="dwr/interface/BookingManager.js"></script>
         <script src="dwr/interface/CommentManager.js"></script>
+        <script src="dwr/interface/AdminManager.js"></script>
         <script src="static/js/tools.js"></script>
         <script src="static/js/room.js"></script>
 	</head>
@@ -88,41 +90,8 @@
 								<h2 class="panel-title">交通线路</h2>
 							</div>
 							<div class="panel-body">
-								<div class="media">
-									<div class="media-left">
-										<i class="fa fa-taxi media-object text-danger" style="font-size: 26px;"></i>
-									</div>
-									<div class="media-body">
-										<h3 class="media-heading">自驾线路</h3>
-										<p class="text-muted">汉口———九资河</p>
-										<p class="text-muted">汉口-堤角-谌家矶-上武英高速---淋山河(31.1km)---总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨景区接待中心</p>
-										<br>
-										<p class="text-muted">武昌———九资河</p>
-										<p class="text-muted">从武昌出发A线路：武昌—友谊大道—天兴洲大桥—武英高速—罗田、大别山出口—湖北罗田天堂寨风景区</p>
-										<p class="text-muted">从武昌出发B线路：武昌—武黄高速—鄂黄大桥—江北一级公路—浠水—罗田—湖北罗田天堂寨风景区</p>
-										<p class="text-muted">补充说明：武汉外环(武昌过天兴洲大桥)周铺互通上武英高速---淋山河(31.1km)---总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨</p>
-										<br>
-										<p class="text-muted">鄂州———九资河</p>
-										<p class="text-muted">A线路：鄂州—鄂黄大桥—黄州东方广场—总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨景区接待中心—湖北罗田天堂寨风景区</p>
-										<p class="text-muted">B线路：鄂州—鄂黄大桥—江北一级公路—浠水—总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨景区接待中心—湖北罗田天堂寨风景区</p>
-										<br>
-										<p class="text-muted">黄州———九资河</p>
-										<p class="text-muted">从黄州出发线路：黄州—总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨景区接待中心</p>
-										<br>
-										<p class="text-muted">黄石———九资河</p>
-										<p class="text-muted">黄石—浠水—总路咀(16.1km)---大别山出口下高速(40.4km)-大河岸镇（3km）-白庙河乡(22km)-河西畈(此处有加油站)(4km)-九资河镇圣人堂村(3km)-天堂寨景区接待中心—湖北罗田天堂寨风景区</p>
-									</div>
-								</div>
-								<div class="media">
-									<div class="media-left">
-										<i class="fa fa-bus text-success media-object" style="font-size: 26px;"></i>
-									</div>
-									<div class="media-body">
-										<h3 class="media-heading">乘车线路</h3>
-										<p class="text-muted">武汉到九资河/天堂寨搭车自助游乘车路线：</p>
-										<p class="text-muted">武昌付家坡长途汽车站每天14：10有直达天堂寨的旅游专线车。全程210公里，票价95元 汉口新荣汽车站是流水发车，车票86元；到了罗田，打的士到桥南客运站，打车8元；再转车去九资河，车票17元，加5元钱可要司机送到天堂寨景区门口。</p>
-									</div>
-								</div>
+								<pre id="room-transportation" class="text-muted"></pre>
+								<div id="baidu-map"></div>
 							</div>
 						</div>
 					</div>

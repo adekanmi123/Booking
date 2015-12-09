@@ -12,6 +12,10 @@ public class Room implements Serializable {
 	private String rname;
 	private Integer number;
 	private String location;
+	private String transportation;
+	private Double latitude;
+	private Double longitude;
+	private Integer level;
 	private Double area;
 	private Double price;
 	private String descriptor;
@@ -25,80 +29,104 @@ public class Room implements Serializable {
 	public String getRid() {
 		return rid;
 	}
-	public void setRid(String rid) {
-		this.rid = rid;
-	}
 	public String getRname() {
 		return rname;
-	}
-	public void setRname(String rname) {
-		this.rname = rname;
 	}
 	public Integer getNumber() {
 		return number;
 	}
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
 	public String getLocation() {
 		return location;
 	}
-	public void setLocation(String location) {
-		this.location = location;
+	public String getTransportation() {
+		return transportation;
+	}
+	public Double getLatitude() {
+		return latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public Integer getLevel() {
+		return level;
 	}
 	public Double getArea() {
 		return area;
 	}
-	public void setArea(Double area) {
-		this.area = area;
-	}
 	public Double getPrice() {
 		return price;
-	}
-	public void setPrice(Double price) {
-		this.price = price;
 	}
 	public String getDescriptor() {
 		return descriptor;
 	}
-	public void setDescriptor(String descriptor) {
-		this.descriptor = descriptor;
-	}
 	public Date getCreateDate() {
 		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public Set<Photo> getPhotos() {
-		return photos;
-	}
-	public void setPhotos(Set<Photo> photos) {
-		this.photos = photos;
 	}
 	public Photo getCover() {
 		return cover;
 	}
-	public void setCover(Photo cover) {
-		this.cover = cover;
+	public Set<Photo> getPhotos() {
+		return photos;
 	}
 	public Integer getSold() {
 		return sold;
 	}
-	public void setSold(Integer sold) {
-		this.sold = sold;
-	}
 	public Integer getAvailable() {
 		return available;
-	}
-	public void setAvailable(Integer available) {
-		this.available = available;
 	}
 	public boolean isEnable() {
 		return enable;
 	}
+	public void setRid(String rid) {
+		this.rid = rid;
+	}
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public void setTransportation(String transportation) {
+		this.transportation = transportation;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+	public void setArea(Double area) {
+		this.area = area;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public void setDescriptor(String descriptor) {
+		this.descriptor = descriptor;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public void setCover(Photo cover) {
+		this.cover = cover;
+	}
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
+	public void setSold(Integer sold) {
+		this.sold = sold;
+	}
+	public void setAvailable(Integer available) {
+		this.available = available;
+	}
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
-
+	
 }

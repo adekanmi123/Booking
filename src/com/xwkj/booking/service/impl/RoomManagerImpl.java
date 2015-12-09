@@ -18,11 +18,16 @@ import com.xwkj.common.util.FileTool;
 public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 
 	@Override
-	public String addRoom(String rname, int number, String location, double area, double price, int available, String descriptor) {
+	public String addRoom(String rname, int number, String location, String transportation, double latitude, double longitude, int level,
+			double area, double price, int available, String descriptor) {
 		Room room=new Room();
 		room.setRname(rname);
 		room.setNumber(number);
 		room.setLocation(location);
+		room.setTransportation(transportation);
+		room.setLatitude(latitude);
+		room.setLongitude(longitude);
+		room.setLevel(level);
 		room.setArea(area);
 		room.setPrice(price);
 		room.setDescriptor(descriptor);
@@ -34,11 +39,16 @@ public class RoomManagerImpl extends ManagerTemplate implements RoomManager {
 	}
 
 	@Override
-	public void modifyRoom(String rid, String rname, int number, String location, double area, double price, int available, String descriptor) {
+	public void modifyRoom(String rid, String rname, int number, String location, String transportation, double latitude, double longitude, 
+			int level, double area, double price, int available, String descriptor) {
 		Room room=roomDao.get(rid);
 		room.setRname(rname);
 		room.setNumber(number);
 		room.setLocation(location);
+		room.setTransportation(transportation);
+		room.setLatitude(latitude);
+		room.setLongitude(longitude);
+		room.setLevel(level);
 		room.setArea(area);
 		room.setPrice(price);
 		room.setAvailable(available);
