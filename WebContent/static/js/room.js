@@ -54,7 +54,7 @@ $(document).ready(function() {
 				fillText({
 					"booking-room-days": days,
 					"booking-room-money": amount
-				})
+				});
 			}
 		}
 	});
