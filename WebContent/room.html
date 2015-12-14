@@ -125,8 +125,11 @@
 		                            <input id="booking-room-checkout" type="text" class="form-control input-lg" placeholder="退房日期" readonly>
 		                        </div>
 		                        <div class="input-group">
-		                            <span class="input-group-addon form-icon"><i class="fa fa-heart fa-lg"></i></span>
-		                            <select id="booking-room-insurance" class="form-control input-lg"></select>
+		                            <span class="input-group-addon form-icon">购买</span>
+		                            <span id="booking-room-insurance-minus" class="input-group-addon form-icon"><i class="fa fa-minus fa-lg"></i></span>
+		                            <input id="booking-room-insurance" class="form-control input-lg" value="1">
+		                            <span id="booking-room-insurance-plus" class="input-group-addon form-icon"><i class="fa fa-plus fa-lg"></i></span>
+		                            <span class="input-group-addon form-icon">份保险</span>
 		                        </div>
 		                        <h4 class="text-muted">共<strong id="booking-room-days" class="text-success">0</strong>晚，合计￥<strong id="booking-room-money" class="text-success">0</strong>元。</h4>
 		                        <button id="booking-room-submit" class="btn btn-lg btn-danger btn-block" disabled>立即预定</button>
@@ -161,11 +164,9 @@
 							</div>
 						</div>
 					</div>
-					
 				</div>
 			</div>
 		</div>
-
 		<div id="foot"></div>
 	</body>
 </html>

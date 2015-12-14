@@ -32,6 +32,12 @@ $(document).ready(function() {
 	
 	//当日日期值发生变化时更改订单总价
 	$("#booking-room-checkin, #booking-room-checkout, #booking-room-insurance").change(function() {
+		var count=$("#booking-room-insurance").val();
+		if(!isInteger(count)||count<1) {
+			$.messager.popup("请填写一个正整数！");
+			$("#booking-room-insurance").val(1).change();
+			return;
+		}
 		checkin=$("#booking-room-checkin").val();
 		checkout=$("#booking-room-checkout").val();
 		if(checkin!=""&&checkin!=null&&checkout!=""&&checkout!=null) {
@@ -50,13 +56,28 @@ $(document).ready(function() {
 			} else {
 				$("#booking-room-checkin, #booking-room-checkout").parent().removeClass("has-error");
 				$("#booking-room-submit").removeAttr("disabled");
-				amount=calculateAmount(days, $("#booking-room-insurance").val())
+				amount=calculateAmount(days, count);
 				fillText({
 					"booking-room-days": days,
 					"booking-room-money": amount
 				});
 			}
 		}
+	});
+	
+	$("#booking-room-insurance-minus").click(function() {
+		var count=parseInt($("#booking-room-insurance").val());
+		if(count==1) {
+			return;
+		}
+		count-=1;
+		$("#booking-room-insurance").val(count).change();
+	});
+
+	$("#booking-room-insurance-plus").click(function() {
+		var count=parseInt($("#booking-room-insurance").val());
+		count+=1;
+		$("#booking-room-insurance").val(count).change();
 	});
 	
 	//加载房间信息
@@ -71,14 +92,6 @@ $(document).ready(function() {
 		});
 		
 		_room=room;
-
-		//加载保险下拉菜单
-		for(var i=1; i<=10; i++) {
-			var option=$("<option>").text("购买"+i+"人份保险").val(i);
-			if(i==1)
-				option.attr("selected", "selected");
-			$("#booking-room-insurance").append(option);
-		}
 
 		//获取保险金额和折扣规则
 		BookingManager.getInsurancePrice(function(price) {
