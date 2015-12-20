@@ -131,11 +131,12 @@ $(document).ready(function() {
 			"room-rname": room.rname,
 			"room-number": room.number,
 			"room-area": room.area,
-			"room-descriptor": room.descriptor,
 			"room-price": room.price,
 			"room-location": room.location,
 			"room-transportation": room.transportation
 		});
+		
+		$("#room-descriptor").html(room.descriptor);
 
 		//加载百度地图
 		loadBaiduMap("baidu-map", room.longitude, room.latitude, room.level);
