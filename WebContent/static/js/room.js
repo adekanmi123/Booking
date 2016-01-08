@@ -200,9 +200,9 @@ $(document).ready(function() {
 	//预定房间
 	$("#booking-room-submit").click(function() {
 		checkSession(function(user) {
-			if(user==null)
-				$.messager.popup("请先登录后再订房！");
-			else {
+			if(user==null) {
+				$("#user-login-modal").modal("show");
+			} else {
 				var insurances=$("#booking-room-insurance").val();
 				var message="房间信息：<br>"+
 					"房间名称："+_room.rname+"<br>"+
