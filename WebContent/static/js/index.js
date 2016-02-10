@@ -63,27 +63,4 @@ $(document).ready(function($) {
 		}
 	});
 
-	//加载最新的4个用户评论
-//	CommentManager.getNewestComments(4, function(comments) {
-//		$("#user-comment").mengularClear();
-//		for(var i in comments) {
-//			$("#user-comment").mengular(".user-comment-template", {
-//				cid: comments[i].cid,
-//				rid: comments[i].booking.room.rid,
-//				src: "upload/"+comments[i].booking.room.rid+"/"+comments[i].booking.room.cover.filename,
-//				rname: comments[i].booking.room.rname,
-//				uname: comments[i].booking.user.uname,
-//				commentDate: comments[i].commentDate.format(DATE_HOUR_MINUTE_FORMAT_CN),
-//				content: comments[i].content
-//			});
-//
-//			//加载评分星级
-//			$("#"+comments[i].cid+" .comment-star i").each(function(index) {
-//				if(index+1<=comments[i].stars)
-//					$(this).addClass("fa-star");
-//				else
-//					$(this).addClass("fa-star-o");
-//			});
-//		}
-//	});
 });
