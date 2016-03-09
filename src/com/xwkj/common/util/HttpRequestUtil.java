@@ -3,7 +3,8 @@ package com.xwkj.common.util;
 import java.io.BufferedReader;  
 import java.io.IOException;
 import java.io.InputStream;  
-import java.io.InputStreamReader;  
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;  
 import java.net.HttpURLConnection;  
@@ -13,6 +14,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
  
 /** 
  * Http请求工具类 
@@ -242,10 +245,37 @@ public class HttpRequestUtil {
         return result;
     }    
     
-    public static void main(String[] args) {
-        //demo:代理访问
-        String url = "http://61.183.239.66:8081/notice/noticeserver/noticeserver.ashx?strartdate=1435680000&enddate=1439568000&citycode=WUH&noticetype=0&sign=1A42A51D49459AD0F5EF6223BB675652";         
-        String sr=HttpRequestUtil.httpRequest(url);
-        System.out.println(sr);
+    public static String postWithString(String requestUrl, String output) {
+    	try{  
+            URL url = new URL(requestUrl);  
+            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();  
+            connection.setDoOutput(true);  
+            connection.setDoInput(true);  
+            connection.setUseCaches(false);  
+            connection.setRequestMethod("POST");  
+            if (null != output) {  
+                OutputStream outputStream = connection.getOutputStream();  
+                outputStream.write(output.getBytes("UTF-8"));  
+                outputStream.close();  
+            }  
+            // 从输入流读取返回内容  
+            InputStream inputStream = connection.getInputStream();  
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");  
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  
+            String str = null;  
+            StringBuffer buffer = new StringBuffer();  
+            while ((str = bufferedReader.readLine()) != null) {  
+                buffer.append(str);  
+            }  
+            bufferedReader.close();  
+            inputStreamReader.close();  
+            inputStream.close();  
+            inputStream = null;  
+            connection.disconnect();  
+            return buffer.toString();  
+        }catch(Exception ex){  
+            ex.printStackTrace();  
+        }  
+        return null;  
     }
 }

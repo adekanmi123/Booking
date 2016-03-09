@@ -82,12 +82,15 @@ $(document).ready(function() {
 	
 	//加载房间信息
 	RoomManager.getRoom(rid, function(room) {
+		if(room==null) {
+			location.href="urlError.html";
+			return;
+		}
+		
 		AdminManager.checkSession(function(username) {
 			if(username==null) {
-				if(room==null||room.enable==false) {
-					location.href="urlError.html";
-					return;
-				}
+				location.href="urlError.html";
+				return;
 			} 
 		});
 		

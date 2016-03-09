@@ -1,0 +1,25 @@
+#main-container {
+	margin-bottom: 50px;
+}
+
+#qrcode i {
+	font-size: 3.5em;
+    margin: 30px;
+    color: #00C800;
+}
+
+#order-button {
+	width: 260px;
+	margin: 10px auto;
+}
+
+#qrcode {
+	width: 260px;
+	margin: 10px auto;
+}
+
+#qrcode i {
+	font-size: 3.5em;
+    margin: 30px;
+    color: #00C800;
+}

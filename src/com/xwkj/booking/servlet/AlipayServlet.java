@@ -15,14 +15,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alipay.service.AlipaySubmit;
 import com.xwkj.booking.domain.Booking;
+import com.xwkj.booking.domain.Pay;
 import com.xwkj.booking.service.BookingManager;
-import com.xwkj.booking.service.PayManager;
 import com.xwkj.booking.service.util.ManagerTemplate;
 import com.xwkj.common.util.DateTool;
 
-/**
- * Servlet implementation class AlipayServlet
- */
 @WebServlet("/AlipayServlet")
 public class AlipayServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,12 +28,8 @@ public class AlipayServlet extends HttpServlet {
     
     public AlipayServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		task=request.getParameter("task");
 		switch (task) {
@@ -54,7 +47,6 @@ public class AlipayServlet extends HttpServlet {
 		WebApplicationContext context=WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		BookingManager bookingManager=(BookingManager)context.getBean("bookingManager");
 		ManagerTemplate manager=(ManagerTemplate)context.getBean("managerTemplate");
-		PayManager pay=(PayManager)context.getBean("payManager");
 		Booking booking=manager.getBookingDao().findByBno(bno);
 		AlipaySubmit alipaySubmit=(AlipaySubmit)context.getBean("AlipaySubmit");
 		//订单描述
@@ -65,20 +57,18 @@ public class AlipayServlet extends HttpServlet {
 		int minutes=bookingManager.getPayTimeOut()-DateTool.minutesBetween(booking.getCreateDate(), new Date());
 		//建立请求
 		Map<String, Object> data= alipaySubmit.buildRequest(minutes, booking.getBno(), booking.getRoom().getRname(), booking.getAmount(), body);
-		System.out.println(data.get("sbHtml"));
 		//把签名写入数据库
-		pay.writeSign(bno, data.get("sign").toString());
+		Pay pay=manager.getPayDao().findByBooking(booking);
+		pay.setSign(data.get("sign").toString());
+		pay.setPayWay("alipay");
+		manager.getPayDao().update(pay);
 		//跳转页面
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html");  
 		response.getWriter().print(data.get("sbHtml"));
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

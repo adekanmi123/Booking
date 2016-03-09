@@ -75,4 +75,11 @@ public interface BookingManager {
 	 */
 	boolean deleteBooking(String bid);
 	
+	/**
+	 * 检查订单支付状态
+	 * @param bno
+	 * @return
+	 */
+	boolean checkPayState(String bno);
+	
 }

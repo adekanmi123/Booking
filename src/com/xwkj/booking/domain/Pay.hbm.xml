@@ -10,6 +10,8 @@
 		<property name="payed" column="payed" type="boolean" not-null="true"/>
 		<property name="payDate" column="payDate" type="java.util.Date"/>	
 		<property name="sign" column="sign" type="string"/>
+		<property name="payWay" type="string"/>
+		<property name="wechatNonce" type="string"/>
 		<many-to-one name="booking" column="bid" class="Booking"  lazy="false" unique="true"/>
 	</class>
 </hibernate-mapping>

@@ -1,8 +1,15 @@
-#alipay-logo {
-	max-height: 46px;
-}
 
 .jumbotron {
 	margin-top: 20px;
 	display: none;
+}
+
+#alipay-logo,
+#wechat-logo {
+	height: 50px;
+}
+
+#pay-panel img,
+#pay-panel  a{
+	margin: 5px;
 }

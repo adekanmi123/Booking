@@ -33,6 +33,7 @@ $(document).ready(function() {
 					"pay-insurances": booking.insurances
 				});
 				$("#alipay-submit").attr("href","AlipayServlet?task=pay&bno="+bno);
+				$("#wechat-submit").attr("href", "wechatNativePay.html?bno="+bno);
 			})
 			
 		}

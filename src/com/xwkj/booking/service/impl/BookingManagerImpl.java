@@ -290,4 +290,12 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		return true;
 	}
 
+	@Override
+	public boolean checkPayState(String bno) {
+		Booking booking=bookingDao.findByBno(bno);
+		if(booking==null)
+			return false;
+		return booking.getPay();
+	}
+
 }

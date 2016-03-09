@@ -5,12 +5,14 @@ import java.util.Date;
 
 public class Pay implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6762692634719686100L;
 	
 	private String pid; 
 	private Boolean payed;
 	private Date payDate;
 	private String sign;
+	private String payWay;
+	private String wechatNonce;
 	private Booking booking;
 	
 	public String getPid() {
@@ -43,6 +45,17 @@ public class Pay implements Serializable {
 	public void setBooking(Booking booking) {
 		this.booking = booking;
 	}
-	
+	public String getPayWay() {
+		return payWay;
+	}
+	public String getWechatNonce() {
+		return wechatNonce;
+	}
+	public void setPayWay(String payWay) {
+		this.payWay = payWay;
+	}
+	public void setWechatNonce(String wechatNonce) {
+		this.wechatNonce = wechatNonce;
+	}
 	
 }

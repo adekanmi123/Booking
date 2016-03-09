@@ -28,6 +28,9 @@
 		<create creator="spring" javascript="PayManager"> 
 			<param name="beanName" value="payManager"/>
 		</create>
+		<create creator="spring" javascript="WeChatPayManager"> 
+			<param name="beanName" value="weChatPayManager"/>
+		</create>
 		<!-- 定义使用Bean转换器处理如下Java类 -->
 		<convert converter="bean" match="com.xwkj.booking.bean.RoomBean"/>
 		<convert converter="bean" match="com.xwkj.booking.bean.PhotoBean"/>

@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.Set;
 
 public class Booking implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = -6875322140330721106L;
 	
 	private String bid;
 	private String bno;
@@ -38,6 +38,9 @@ public class Booking implements Serializable {
 	public Integer getDays() {
 		return days;
 	}
+	public Integer getInsurances() {
+		return insurances;
+	}
 	public Double getAmount() {
 		return amount;
 	}
@@ -49,9 +52,6 @@ public class Booking implements Serializable {
 	}
 	public Boolean getTimeout() {
 		return timeout;
-	}
-	public void setTimeout(Boolean timeout) {
-		this.timeout = timeout;
 	}
 	public Boolean getStayed() {
 		return stayed;
@@ -80,6 +80,9 @@ public class Booking implements Serializable {
 	public void setDays(Integer days) {
 		this.days = days;
 	}
+	public void setInsurances(Integer insurances) {
+		this.insurances = insurances;
+	}
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
@@ -88,6 +91,9 @@ public class Booking implements Serializable {
 	}
 	public void setPay(Boolean pay) {
 		this.pay = pay;
+	}
+	public void setTimeout(Boolean timeout) {
+		this.timeout = timeout;
 	}
 	public void setStayed(Boolean stayed) {
 		this.stayed = stayed;
@@ -100,12 +106,6 @@ public class Booking implements Serializable {
 	}
 	public void setUser(User user) {
 		this.user = user;
-	}
-	public Integer getInsurances() {
-		return insurances;
-	}
-	public void setInsurances(Integer insurances) {
-		this.insurances = insurances;
 	}
 	
 }
