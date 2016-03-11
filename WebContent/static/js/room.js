@@ -88,7 +88,7 @@ $(document).ready(function() {
 		}
 		
 		AdminManager.checkSession(function(username) {
-			if(username==null) {
+			if(room==null||room.enable==false) {
 				location.href="urlError.html";
 				return;
 			} 
