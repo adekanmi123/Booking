@@ -29,7 +29,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 	//验证时长
 	private int verificationTimeout;
 	//短信模板ID
-	private int SMSTemplateID;
+	private String SMSTemplateID;
 	//安全码错误提示
 	private String securityCodeWrongTip;
 	
@@ -44,7 +44,7 @@ public class UserManagerImpl extends ManagerTemplate implements UserManager {
 		this.verificationTimeout = verificationTimeout;
 	}
 
-	public void setSMSTemplateID(int sMSTemplateID) {
+	public void setSMSTemplateID(String sMSTemplateID) {
 		SMSTemplateID = sMSTemplateID;
 	}
 

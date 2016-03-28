@@ -10,16 +10,25 @@ import com.xwkj.booking.service.util.ManagerTemplate;
 
 public class PayManagerImpl extends ManagerTemplate implements PayManager {
 	
-	private int payedSMSTemplateID;
+	private String payedSMSTemplateID;
+	private String adminTelephone;
 
-	public int getPayedSMSTemplateID() {
+	public String getPayedSMSTemplateID() {
 		return payedSMSTemplateID;
 	}
 
-	public void setPayedSMSTemplateID(int payedSMSTemplateID) {
+	public void setPayedSMSTemplateID(String payedSMSTemplateID) {
 		this.payedSMSTemplateID = payedSMSTemplateID;
 	}
-	
+
+	public String getAdminTelephone() {
+		return adminTelephone;
+	}
+
+	public void setAdminTelephone(String adminTelephone) {
+		this.adminTelephone = adminTelephone;
+	}
+
 	@Override
 	public PayBean getPayByBno(String bno) {
 		Booking booking=bookingDao.findByBno(bno);

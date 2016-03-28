@@ -54,6 +54,7 @@ public class AlipayPayedServlet extends HttpServlet {
 			String value="#name#="+user.getUname()+"&#bno#="+booking.getBno()
 				+"&#payDate#="+DateTool.formatDate(pay.getPayDate(), DateTool.DATE_HOUR_MINUTE_FORMAT_CN)+"&#amount#="+booking.getAmount();
 			sms.send(user.getTelephone(), payManager.getPayedSMSTemplateID(), value);
+			sms.send(payManager.getAdminTelephone(), payManager.getPayedSMSTemplateID(), value);
 			response.getWriter().println("success");
 		}
 	}

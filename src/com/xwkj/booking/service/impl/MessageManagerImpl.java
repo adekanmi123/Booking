@@ -25,7 +25,7 @@ public class MessageManagerImpl extends ManagerTemplate implements MessageManage
 	private String username;
 	private String password;
 	
-	private int SMSTemplateID;
+	private String SMSTemplateID;
 	
 	private String replyMessageSubject;
 	private String replyMessageHead;
@@ -43,7 +43,7 @@ public class MessageManagerImpl extends ManagerTemplate implements MessageManage
 		this.password = password;
 	}
 
-	public void setSMSTemplateID(int sMSTemplateID) {
+	public void setSMSTemplateID(String sMSTemplateID) {
 		this.SMSTemplateID = sMSTemplateID;
 	}
 

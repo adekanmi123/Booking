@@ -39,7 +39,7 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 	//支付超时时长
 	private int payTimeOut;
 	//订房成功发送短信模板id
-	private int BookingSuccessSMSTemplateID;
+	private String BookingSuccessSMSTemplateID;
 	//保险单价
 	private double InsurancePrice;
 	//折扣规则
@@ -61,7 +61,7 @@ public class BookingManagerImpl extends ManagerTemplate implements BookingManage
 		ReserveFailedRoomNotEnable = reserveFailedRoomNotEnable;
 	}
 
-	public void setBookingSuccessSMSTemplateID(int bookingSuccessSMSTemplateID) {
+	public void setBookingSuccessSMSTemplateID(String bookingSuccessSMSTemplateID) {
 		BookingSuccessSMSTemplateID = bookingSuccessSMSTemplateID;
 	}
 	

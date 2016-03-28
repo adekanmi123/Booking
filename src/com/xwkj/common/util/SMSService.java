@@ -20,7 +20,7 @@ public class SMSService {
 		SMSKey = sMSKey;
 	}
 	
-	public JSONObject send(String telephone, int templateId, String templateValue)  {
+	public JSONObject send(String telephone, String templateId, String templateValue)  {
 		JSONObject result=null;
 		try {
 			String url = SMSUrl+"?mobile="+telephone+"&tpl_id="+templateId+"&tpl_value="
