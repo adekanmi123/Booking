@@ -2,8 +2,7 @@ package com.xwkj.booking.service;
 
 import javax.servlet.http.HttpSession;
 
-public interface AdminManager 
-{
+public interface AdminManager {
 	public static final String ADMIN_FLAG="402881ef4fcab170014fcae3d80b001c";
 	
 	/**
